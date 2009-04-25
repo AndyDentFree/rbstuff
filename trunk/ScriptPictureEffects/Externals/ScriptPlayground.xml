@@ -1,0 +1,1089 @@
+<?xml version="1.0"?>
+<RBProject version="2009r2.1">
+<block type="Window" ID="-1124188336">
+ <ObjName>ScriptPlayground</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>Window</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>Open</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Open()</SourceLine>
+   <SourceLine>mPEScripter = new PictureEffectsScripter</SourceLine>
+   <SourceLine>DestCanvas.Backdrop = NewPicture(DestCanvas.Width, DestCanvas.Height, 32)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <MenuHandler>
+  <ItemName>TestApplyScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TestApplyScript() As Boolean Handles TestApplyScript.Action</SourceLine>
+   <SourceLine>ApplyScript</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </MenuHandler>
+ <MenuHandler>
+  <ItemName>FileOpenImage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FileOpenImage() As Boolean Handles FileOpenImage.Action</SourceLine>
+   <SourceLine>OpenImage</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </MenuHandler>
+ <MenuHandler>
+  <ItemName>EditSelectAll</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function EditSelectAll() As Boolean Handles EditSelectAll.Action</SourceLine>
+   <SourceLine>' quick hack because only one edit field</SourceLine>
+   <SourceLine>ScriptEntry.SelStart = 0</SourceLine>
+   <SourceLine>ScriptEntry.SelLength = ScriptEntry.Text.Len</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </MenuHandler>
+ <MenuHandler>
+  <ItemName>TestInsertScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TestInsertScript() As Boolean Handles TestInsertScript.Action</SourceLine>
+   <SourceLine>InsertScript</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </MenuHandler>
+ <Method>
+  <ItemName>ApplyScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ApplyScript()</SourceLine>
+   <SourceLine>if ScriptEntry.text.len=0 then</SourceLine>
+   <SourceLine>MsgBox "You must enter some RBScript to apply"</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>mPEScripter.UseImages SourceWell.Image, DestCanvas.Backdrop</SourceLine>
+   <SourceLine>script.Context = mPEScripter</SourceLine>
+   <SourceLine>Script.Source = ScriptEntry.text</SourceLine>
+   <SourceLine>script.Run</SourceLine>
+   <SourceLine>Refresh</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Action</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Action() As Boolean</SourceLine>
+   <SourceLine>' quick hack of select all in the only text field</SourceLine>
+   <SourceLine>ScriptEntry.selStart = 0</SourceLine>
+   <SourceLine>ScriptEntry.SelLength = ScriptEntry.text.Len</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>InsertScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub InsertScript()</SourceLine>
+   <SourceLine>' if you want a true Insert, use .SelText below instead of .Text</SourceLine>
+   <SourceLine>select case ScriptsPopup.ListIndex</SourceLine>
+   <SourceLine>case 0</SourceLine>
+   <SourceLine>ScriptEntry.Text = kOrangeFillScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 1</SourceLine>
+   <SourceLine>ScriptEntry.Text = kDarkenBitScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 2</SourceLine>
+   <SourceLine>ScriptEntry.Text = kBlurScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 3</SourceLine>
+   <SourceLine>ScriptEntry.Text = kBrightenScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 4</SourceLine>
+   <SourceLine>ScriptEntry.Text = kDrawStuffScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 5</SourceLine>
+   <SourceLine>ScriptEntry.Text = kRandomRetintScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 6</SourceLine>
+   <SourceLine>ScriptEntry.Text = kMeaslesScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case 7</SourceLine>
+   <SourceLine>ScriptEntry.Text = kCascadeEffectsScript</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>end select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>OpenImage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub OpenImage()</SourceLine>
+   <SourceLine>dim dlg as openDialog</SourceLine>
+   <SourceLine>dim f as folderitem</SourceLine>
+   <SourceLine>dim p,scaleP, clipP as Picture</SourceLine>
+   <SourceLine>dim scalePWidth, scalePHeight as integer</SourceLine>
+   <SourceLine>dim heightScaleRatio, widthScaleRatio as double</SourceLine>
+   <SourceLine>dlg = new OpenDialog</SourceLine>
+   <SourceLine>dlg.Filter = kImageFilters</SourceLine>
+   <SourceLine><Hex bytes="49">2F2F546865204F70656E4469616C6F6720636C61737320737570706F72747320637573746F6D2070726F6D707473E280A6</Hex></SourceLine>
+   <SourceLine>dlg.PromptText = "Choose an Image"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine><Hex bytes="23">2F2FE280A6616E6420637573746F6D207469746C652773</Hex></SourceLine>
+   <SourceLine>dlg.Title = "Open Image"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>f = dlg.ShowModalWithin(self)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if f &lt;&gt; nil then</SourceLine>
+   <SourceLine>p = f.OpenAsPicture</SourceLine>
+   <SourceLine>if p=nil then</SourceLine>
+   <SourceLine>MsgBox "Sorry, "+f.Name+" is not an image file"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if ScaleCheck.value then</SourceLine>
+   <SourceLine>scaleP = NewPicture(SourceWell.Width, SourceWell.Height, 32)</SourceLine>
+   <SourceLine>if ImagesKeepProportioncheck.Value then</SourceLine>
+   <SourceLine>' work out some scaled input rect sizes to make it warp</SourceLine>
+   <SourceLine>' scale both dimensions by the one that needs to change most</SourceLine>
+   <SourceLine>widthScaleRatio = scaleP.Width/p.Width</SourceLine>
+   <SourceLine>heightScaleRatio = scaleP.Height/p.Height</SourceLine>
+   <SourceLine>if heightScaleRatio &lt; widthScaleRatio then</SourceLine>
+   <SourceLine>scalePHeight = p.Height * heightScaleRatio</SourceLine>
+   <SourceLine>scalePWidth = p.Width * heightScaleRatio</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>scalePHeight = p.Width * widthScaleRatio</SourceLine>
+   <SourceLine>scalePWidth = p.Height * widthScaleRatio</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>' copy entire picture to scaled rectangle</SourceLine>
+   <SourceLine>scaleP.Graphics.DrawPicture p, _</SourceLine>
+   <SourceLine>0,0,scalePWidth, scalePHeight, _</SourceLine>
+   <SourceLine>0, 0, p.Width, p.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>' let RB do it, breaking proportions</SourceLine>
+   <SourceLine>scaleP.Graphics.DrawPicture p, _</SourceLine>
+   <SourceLine>0,0,scaleP.Width, scaleP.Height, _</SourceLine>
+   <SourceLine>0, 0, p.Width, p.Height</SourceLine>
+   <SourceLine>end if ' keeping proportion</SourceLine>
+   <SourceLine>SourceWell.Image = scaleP</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if p.width&gt;SourceWell.width or p.Height&gt;SourceWell.Height then</SourceLine>
+   <SourceLine>' draw top left chunk of incoming picture</SourceLine>
+   <SourceLine>clipP = NewPicture(SourceWell.Width, SourceWell.Height, 32)</SourceLine>
+   <SourceLine>clipP.Graphics.DrawPicture p, _</SourceLine>
+   <SourceLine>0,0,clipP.Width, clipP.Height, _</SourceLine>
+   <SourceLine>0, 0, clipP.Width, clipP.Height</SourceLine>
+   <SourceLine>SourceWell.Image = clipP</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>SourceWell.Image = p</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'SourceWell.Image.Graphics.DrawPicture p,0,0</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>mPEScripter</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mPEScripter As PictureEffectsScripter</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mPEScripter As PictureEffectsScripter</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <PropertyVal Name="ImplicitInstance">True</PropertyVal>
+ <PropertyVal Name="MenuBar">-1124188337</PropertyVal>
+ <PropertyVal Name="MacProcID">0</PropertyVal>
+ <PropertyVal Name="MinimizeButton">False</PropertyVal>
+ <PropertyVal Name="MaximizeButton">False</PropertyVal>
+ <PropertyVal Name="LiveResize">False</PropertyVal>
+ <PropertyVal Name="Resizeable">False</PropertyVal>
+ <PropertyVal Name="CloseButton">True</PropertyVal>
+ <PropertyVal Name="MenuBarVisible">True</PropertyVal>
+ <PropertyVal Name="FullScreen">False</PropertyVal>
+ <PropertyVal Name="Visible">True</PropertyVal>
+ <PropertyVal Name="Title">Untitled</PropertyVal>
+ <PropertyVal Name="Backdrop">0</PropertyVal>
+ <PropertyVal Name="BackColor">16777215</PropertyVal>
+ <PropertyVal Name="HasBackColor">False</PropertyVal>
+ <PropertyVal Name="Composite">False</PropertyVal>
+ <PropertyVal Name="Frame">0</PropertyVal>
+ <PropertyVal Name="MaxHeight">32000</PropertyVal>
+ <PropertyVal Name="MaxWidth">32000</PropertyVal>
+ <PropertyVal Name="MinHeight">64</PropertyVal>
+ <PropertyVal Name="MinWidth">64</PropertyVal>
+ <PropertyVal Name="Height">768</PropertyVal>
+ <PropertyVal Name="Width">853</PropertyVal>
+ <PropertyVal Name="Placement">0</PropertyVal>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Interfaces</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Placement</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <EditorType>Enum</EditorType>
+   <InheritsFrom>Window</InheritsFrom>
+   <Enumeration>
+    <ItemDef>0 - Default</ItemDef>
+    <ItemDef>1 - Parent Window</ItemDef>
+    <ItemDef>2 - Main Screen</ItemDef>
+    <ItemDef>3 - Parent Window Screen</ItemDef>
+    <ItemDef>4 - Stagger</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Width</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>600</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Height</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>400</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MinWidth</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>64</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MinHeight</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>64</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MaxWidth</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>32000</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MaxHeight</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>32000</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Frame</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <EditorType>Enum</EditorType>
+   <InheritsFrom>Window</InheritsFrom>
+   <Enumeration>
+    <ItemDef>0 - Document</ItemDef>
+    <ItemDef>1 - Movable Modal</ItemDef>
+    <ItemDef>2 - Modal Dialog</ItemDef>
+    <ItemDef>3 - Floating Window</ItemDef>
+    <ItemDef>4 - Plain Box</ItemDef>
+    <ItemDef>5 - Shadowed Box</ItemDef>
+    <ItemDef>6 - Rounded Window</ItemDef>
+    <ItemDef>7 - Global Floating Window</ItemDef>
+    <ItemDef>8 - Sheet Window</ItemDef>
+    <ItemDef>9 - Metal Window</ItemDef>
+    <ItemDef>10 - Drawer Window</ItemDef>
+    <ItemDef>11 - Modeless Dialog</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Composite</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasBackColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>BackColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>&amp;hFFFFFF</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Backdrop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <ItemType>Picture</ItemType>
+   <EditorType>Picture</EditorType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Title</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>Untitled</PropertyValue>
+   <ItemType>String</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Visible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FullScreen</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MenuBarVisible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CloseButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Resizeable</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>LiveResize</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MaximizeButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MinimizeButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MacProcID</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MenuBar</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <ItemType>MenuBar</ItemType>
+   <EditorType>MenuBar</EditorType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ImplicitInstance</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Appearance</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <EditorType>Boolean</EditorType>
+   <InheritsFrom>Window</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>kImageFilters</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kImageFilters</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>image/tiff;image/x-bmp;image/x-photoshop;image/jpeg;image/png;image/gif</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kDarkenBitScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kDarkenBitScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef><Hex bytes="235">64696D20692C6A20617320696E74656765720D64696D20682C20732C207620617320646F75626C650D64696D206320617320636F6C6F720D46696C6C446573742026634646323032300D666F7220693D353020646F776E746F20300D666F72206A3D353020646F776E746F20300D676574706978656C20692C6A2C20682C20732C20760D76203D20762A302E370D63203D2048535628682C20732C2076290D2720637261736820696620756E636F6D6D656E742074686973206C696E650D272076203D20632E56616C75650D736574706978656C20692C206A2C20630D6E657874206A0D6E65787420690D</Hex></ItemDef>
+  <ItemFlags>1</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kOrangeFillScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kOrangeFillScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>FillDest &amp;cFF2020</ItemDef>
+  <ItemFlags>1</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kBlurScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kBlurScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>Blur</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kBrightenScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kBrightenScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>Brightness 60</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kDrawStuffScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kDrawStuffScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef><Hex bytes="147">466F7265436F6C6F72203D2026434646313033320D636C6561725265637420302C20302C203230302C3230300D5465787453697A65203D2032340D54657874466F6E74203D2022417269616C220D4974616C69633D747275650D64726177737472696E6720224869204A6F65222C31302C32302C2034300D647261776C696E65203132302C2034302C20203230302C20323030</Hex></ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kRandomRetintScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kRandomRetintScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef><Hex bytes="511">272072616E646F6D6C79206368616E676520687565206F6620646F74730D64696D20726F772C20636F6C20617320696E74656765720D64696D20682C20732C207620617320646F75626C650D64696D206320617320636F6C6F720D636F7079496D6167650D666F7220726F773D6865696768742D3120646F776E746F20300D2020666F7220636F6C3D77696474682D3120646F776E746F20300D20202020676574706978656C20636F6C2C20726F772C20682C20732C20760D0D2020202068203D2068202A2072616E646F6D2831302C3830292F3130302E302020200D2720207468652076616C75657320696E2074686520627261636B6574732063616E2062652030202D203130300D2720612072616E6765206C696B652032302D3430206769766573207265646469736820687565732C2034302D383020677265656E6973680D0D27206C65617665207620666F722056616C756520617320697320736F20646F6E2774206461726B656E2074686520706963747572650D2720696620796F75206368616E6765207320666F722053617475726174696F6E2077696C6C20746F6E6520646F776E20636F6C6F727320746F776172647320677265790D2020202063203D2048535628682C20732C2076290D20202020736574706978656C20636F6C2C20726F772C20630D20206E65787420636F6C0D6E65787420726F770D</Hex></ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kMeaslesScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kMeaslesScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef><Hex bytes="302">272072616E646F6D6C7920647261772072656420636972636C65730D64696D20636F756E744D6561736C65732C2063656E747265582C2063656E747265592C206D6561736C6553697A6520617320696E74656765720D636F7079496D6167650D466F7265436F6C6F72203D20266346463030303020272070757265207265640D666F7220636F756E744D6561736C6573203D203120746F2034300D2020206D6561736C6553697A65203D2052616E646F6D28342C203132290D20202063656E74726558203D2072616E646F6D2028352C205769647468202D2035290D20202063656E74726559203D2052616E646F6D28352C20486569676874202D2035290D20202046696C6C436972636C652063656E747265582C2063656E747265592C206D6561736C6553697A650D6E657874</Hex></ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>kCascadeEffectsScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>kCascadeEffectsScript</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef><Hex bytes="132">436F7079496D6167650D436173636164654566666563747320272020757375616C6C7920707265636564652077697468206120436F7079496D616765206F72206F7468657220656666656374207468617420636F706965730D466C6970486F72697A6F6E74616C0D466C6970566572746963616C0D537572666163655761766520322E35</Hex></ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <ControlBehavior>
+  <Superclass>ImageWell</Superclass>
+  <HookInstance>
+   <ItemName>MouseDown</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Function MouseDown(X As Integer, Y As Integer) As Boolean</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>return true</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>' following allows us to drag image out</SourceLine>
+    <SourceLine>Dim d as DragItem</SourceLine>
+    <SourceLine>d=NewDragItem(Me.left,Me.top,Me.width,Me.height)</SourceLine>
+    <SourceLine>d.picture=Me.Image</SourceLine>
+    <SourceLine>d.Drag //Allow the drag</SourceLine>
+    <SourceLine>End Function</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>DropObject</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub DropObject(obj As DragItem, action As Integer)</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>If Obj.PictureAvailable then</SourceLine>
+    <SourceLine>Me.Image=Obj.Picture</SourceLine>
+    <SourceLine>elseif Obj.FolderItemAvailable then</SourceLine>
+    <SourceLine>Me.Image=Obj.FolderItem.OpenAsPicture</SourceLine>
+    <SourceLine>End if</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>Open</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub Open()</SourceLine>
+    <SourceLine>Me.AcceptPictureDrop</SourceLine>
+    <SourceLine>Me.AcceptFileDrop(kImageFilters)</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>Canvas</Superclass>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>EditField</Superclass>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>PushButton</Superclass>
+  <HookInstance>
+   <ItemName>Action</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub Action()</SourceLine>
+    <SourceLine>ApplyScript</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>RbScript</Superclass>
+  <HookInstance>
+   <ItemName>Print</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub Print(msg As String)</SourceLine>
+    <SourceLine>MsgBox msg</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>RuntimeError</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub RuntimeError(line As Integer, error As RuntimeException)</SourceLine>
+    <SourceLine>msgBox "Runtime error in line "+nthField(me.source,chr(13),line)+"."</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>CompilerError</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub CompilerError(line As Integer, errorNumber As Integer, errorMsg As String)</SourceLine>
+    <SourceLine>msgBox "Compiler error in line "+str(line)+" """+nthField(me.source,chr(13),line)+""": "+chr(13)+errormsg</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>PopupMenu</Superclass>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>PushButton</Superclass>
+  <HookInstance>
+   <ItemName>Action</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub Action()</SourceLine>
+    <SourceLine>InsertScript</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>CheckBox</Superclass>
+  <HookInstance>
+   <ItemName>Action</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub Action()</SourceLine>
+    <SourceLine>ImagesKeepProportioncheck.Enabled = me.Value</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>CheckBox</Superclass>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>StaticText</Superclass>
+ </ControlBehavior>
+ <Control>
+  <ControlClass>ImageWell</ControlClass>
+  <ItemName>ImageWell</ItemName>
+  <PropertyVal Name="Width">400</PropertyVal>
+  <PropertyVal Name="Top">14</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">0</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">20</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="Image">0</PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">400</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">ImageWell</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">SourceWell</PropertyVal>
+  <ControlIndex>0</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>Canvas</ControlClass>
+  <ItemName>Canvas</ItemName>
+  <PropertyVal Name="Width">400</PropertyVal>
+  <PropertyVal Name="UseFocusRing">True</PropertyVal>
+  <PropertyVal Name="Top">14</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">1</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockRight">True</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">432</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">300</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="Backdrop">0</PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="AcceptTabs">False</PropertyVal>
+  <PropertyVal Name="AcceptFocus">False</PropertyVal>
+  <PropertyVal Name="Super">Canvas</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">DestCanvas</PropertyVal>
+  <ControlIndex>1</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>EditField</ControlClass>
+  <ItemName>EditField</ItemName>
+  <PropertyVal Name="Width">600</PropertyVal>
+  <PropertyVal Name="UseFocusRing">True</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">455</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TextColor">0</PropertyVal>
+  <PropertyVal Name="Text"><Hex bytes="202">63686F6F736520736372697074732066726F6D20746865206C656674206F722074797065207468656D20696E0D0D546F20757365207468696E6773206C696B6520426C757220616E64204272696768746E65737320796F75206D7573742068617665206120736F7572636520696D6167652E20546869732064656D6F2070726F6772616D206D617920637261736820696620796F752074727920736F6D65207468696E677320776974686F757420686176696E67206669727374206F70656E656420616E20696D616765</Hex></PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">2</PropertyVal>
+  <PropertyVal Name="Styled">False</PropertyVal>
+  <PropertyVal Name="ScrollBarVertical">True</PropertyVal>
+  <PropertyVal Name="ScrollBarHorizontal">False</PropertyVal>
+  <PropertyVal Name="ScrollBar">True</PropertyVal>
+  <PropertyVal Name="ReadOnly">False</PropertyVal>
+  <PropertyVal Name="Password">False</PropertyVal>
+  <PropertyVal Name="MultiLine">True</PropertyVal>
+  <PropertyVal Name="Mask"></PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockRight">True</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="LockBottom">True</PropertyVal>
+  <PropertyVal Name="LimitText">0</PropertyVal>
+  <PropertyVal Name="Left">123</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">281</PropertyVal>
+  <PropertyVal Name="Format"></PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="DataSource"></PropertyVal>
+  <PropertyVal Name="DataField"></PropertyVal>
+  <PropertyVal Name="Border">True</PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="BackColor">16777215</PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Alignment">0</PropertyVal>
+  <PropertyVal Name="AcceptTabs">False</PropertyVal>
+  <PropertyVal Name="Super">EditField</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">ScriptEntry</PropertyVal>
+  <ControlIndex>2</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>PushButton</ControlClass>
+  <ItemName>PushButton</ItemName>
+  <PropertyVal Name="Width">97</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">427</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">3</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">372</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">20</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="Default">False</PropertyVal>
+  <PropertyVal Name="Caption">Apply Script</PropertyVal>
+  <PropertyVal Name="Cancel">False</PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">PushButton</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">ApplyButton</PropertyVal>
+  <ControlIndex>3</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>RbScript</ControlClass>
+  <ItemName>RbScript</ItemName>
+  <PropertyVal Name="Top">417</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">4</PropertyVal>
+  <PropertyVal Name="Source"></PropertyVal>
+  <PropertyVal Name="Left">27</PropertyVal>
+  <PropertyVal Name="EncodingFont"></PropertyVal>
+  <PropertyVal Name="Super">RbScript</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">Script</PropertyVal>
+  <ControlIndex>4</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>PopupMenu</ControlClass>
+  <ItemName>PopupMenu</ItemName>
+  <PropertyVal Name="Width">91</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">469</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">5</PropertyVal>
+  <PropertyVal Name="LockTop">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="ListIndex">0</PropertyVal>
+  <PropertyVal Name="Left">20</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialValue"><Hex bytes="88">4F72616E6765205371756172650D4461726B656E204269740D426C75720D427269676874656E0D447261772053747566660D52616E646F6D20526574696E740D4D6561736C65730D436173636164696E6745666665637473</Hex></PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">20</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="DataSource"></PropertyVal>
+  <PropertyVal Name="DataField"></PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">PopupMenu</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">ScriptsPopup</PropertyVal>
+  <ControlIndex>5</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>PushButton</ControlClass>
+  <ItemName>PushButton</ItemName>
+  <PropertyVal Name="Width">91</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">509</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">6</PropertyVal>
+  <PropertyVal Name="LockTop">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">20</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">20</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="Default">False</PropertyVal>
+  <PropertyVal Name="Caption">Insert Script</PropertyVal>
+  <PropertyVal Name="Cancel">False</PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">PushButton</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">InsertButton</PropertyVal>
+  <ControlIndex>6</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>CheckBox</ControlClass>
+  <ItemName>CheckBox</ItemName>
+  <PropertyVal Name="Width">99</PropertyVal>
+  <PropertyVal Name="Value">True</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">427</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">7</PropertyVal>
+  <PropertyVal Name="State">1</PropertyVal>
+  <PropertyVal Name="LockTop">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">123</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">20</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="DataSource"></PropertyVal>
+  <PropertyVal Name="DataField"></PropertyVal>
+  <PropertyVal Name="Caption">Scale images</PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">CheckBox</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">ScaleCheck</PropertyVal>
+  <ControlIndex>7</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>CheckBox</ControlClass>
+  <ItemName>CheckBox</ItemName>
+  <PropertyVal Name="Width">120</PropertyVal>
+  <PropertyVal Name="Value">True</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">427</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">8</PropertyVal>
+  <PropertyVal Name="State">1</PropertyVal>
+  <PropertyVal Name="LockTop">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">234</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">20</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="DataSource"></PropertyVal>
+  <PropertyVal Name="DataField"></PropertyVal>
+  <PropertyVal Name="Caption">Proportionally</PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">CheckBox</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">ImagesKeepProportioncheck</PropertyVal>
+  <ControlIndex>8</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+ <Control>
+  <ControlClass>StaticText</ControlClass>
+  <ItemName>StaticText</ItemName>
+  <PropertyVal Name="Width">429</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="Top">326</PropertyVal>
+  <PropertyVal Name="TextSize">12</PropertyVal>
+  <PropertyVal Name="TextFont">System</PropertyVal>
+  <PropertyVal Name="TextColor">0</PropertyVal>
+  <PropertyVal Name="TextAlign">0</PropertyVal>
+  <PropertyVal Name="Text">use non-square dest to pickup bugs </PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">9</PropertyVal>
+  <PropertyVal Name="MultiLine">False</PropertyVal>
+  <PropertyVal Name="LockTop">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockLeft">False</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="Left">432</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="HelpTag"></PropertyVal>
+  <PropertyVal Name="Height">20</PropertyVal>
+  <PropertyVal Name="DisabledBalloonHelp"></PropertyVal>
+  <PropertyVal Name="DataSource"></PropertyVal>
+  <PropertyVal Name="DataField"></PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="BalloonHelp"></PropertyVal>
+  <PropertyVal Name="AutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="Super">StaticText</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">StaticText1</PropertyVal>
+  <ControlIndex>9</ControlIndex>
+  <Locked>0</Locked>
+ </Control>
+</block>
+</RBProject>

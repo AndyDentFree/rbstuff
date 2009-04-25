@@ -22,9 +22,10 @@ Inherits Application
 		
 		Andy Dent
 		dent@oofile.com.au
-		
 	#tag EndNote
 
 
+	#tag ViewBehavior
+	#tag EndViewBehavior
 End Class
 #tag EndClass

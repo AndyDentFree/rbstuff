@@ -5,18 +5,6 @@ Begin Menu MenuBar1
       Text = ""
       Index = -2147483648
       AutoEnable = True
-      Begin AppleMenuItem About
-         SpecialMenu = 0
-         Text = "About ScriptPictureEffects..."
-         Index = -2147483648
-         AutoEnable = True
-      End
-      Begin MenuItem 
-         SpecialMenu = 2
-         Text = ""
-         Index = -2147483648
-         AutoEnable = True
-      End
    End
    Begin MenuItem FileMenu
       SpecialMenu = 0
@@ -147,6 +135,18 @@ Begin Menu MenuBar1
          AutoEnable = True
       End
       Begin MenuItem 
+         SpecialMenu = 2
+         Text = ""
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin AppleMenuItem About
+         SpecialMenu = 0
+         Text = "About ScriptPictureEffects..."
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin AppleMenuItem 
          SpecialMenu = 2
          Text = ""
          Index = -2147483648
