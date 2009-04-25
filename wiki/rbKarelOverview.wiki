@@ -3,11 +3,11 @@
 
 == Introduction ==
 
-Conceptual port of "Karel the Robot" [http://karel.sourceforge.net/ Java version] to REALbasic
+Conceptual port of "Karel the Robot" to REALbasic
 but using the built-in RBScript language rather than writing our own parser, which 
 means examples written here will also work as source within REALbasic programs.
 
-See also the [http://www.cs.mtsu.edu/~untch/karel/ Karel home page]
+Note that this version is not based on any source code from any previous Karel implementations, just on  [http://www.cs.mtsu.edu/~untch/karel/ public documentation] of how Karel works.
 
 == Goals ==
   * Implement a first version very quickly but without disappearing down too many confining rat holes.
@@ -16,3 +16,7 @@ See also the [http://www.cs.mtsu.edu/~untch/karel/ Karel home page]
 == Nice to have ==
   * able to paste in examples from classical Karel
   * simpler graphical way to handle some things?
+
+== Karel Links ==
+  * [http://karel.sourceforge.net/ Java version]
+  * [http://www.cs.mtsu.edu/~untch/karel/ Karel home page]
