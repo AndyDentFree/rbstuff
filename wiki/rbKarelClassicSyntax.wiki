@@ -30,17 +30,17 @@ We can process that text before running it in RBScript to sanitise a few obvious
   * if a THEN statement is on a new line put it on the previous line
   * strip  BEGINNING-OF-PROGRAM and END-OF-PROGRAM and any text before or after what they bracket
   * translate routine definitions into subroutines
+
 {{{
- DEFINE turnright AS
+DEFINE turnright AS
  BEGIN
 ...
  END
 }}}
+
 becomes
 {{{
- Sub turnright
+Sub turnright
 ...
 End Sub
 }}}
-
-
