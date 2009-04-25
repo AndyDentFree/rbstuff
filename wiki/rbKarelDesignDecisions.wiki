@@ -1,0 +1,7 @@
+#summary Design Decisions taken in rbKarel
+#labels Featured
+
+It helps to have read the RBScriptPrimer
+
+= World Objects Representation =
+I am using RBScript to provide the interpretation for rbKarel but that doesn't mean the entire world has to live in a single RBScript.
