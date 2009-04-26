@@ -20,6 +20,7 @@ Note that this version is not based on any source code from any previous Karel i
   * drawing pictures that are selected through File Open dialogs and remembered as named graphics (or file paths)
   * Karel-centric drawing so the drawing primitives exposed through GraphicsScripter can be used without explicit coords - does this imply things like squares and circles are logically centred on Karel's location?  
   * debugger with ability to break based on Karel's state as he moves, so you could stop as he got close to a wall (without explicitly writing this into the Karel program)
+  * Observable properties with the ability to build GUI elements to configure them, like Netlogo. For example, if MovePause was exposed as a Karel property, a Karel program updating it (so the user controls variable speed) should trigger a GUI slider being updated if one is visible.
 
 == Karel Links ==
   * [http://karel.sourceforge.net/ Java version]
