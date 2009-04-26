@@ -2,7 +2,7 @@
 <RBProject version="2009r2.1">
 <block type="Module" ID="1207022430">
  <ObjName>KarelWorld</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1873437378</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>KarelDrawable</Interfaces>
  <ItemFlags>1</ItemFlags>
@@ -15,11 +15,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawInContext(viaScripter as KarelScripter)</SourceLine>
-   <SourceLine>dim frameWidth as integer = viaScripter.Width</SourceLine>
-   <SourceLine>dim frameHeight as integer = viaScripter.Height</SourceLine>
-   <SourceLine>const insetFrame = 2</SourceLine>
-   <SourceLine>viaScripter.PenSize = 4</SourceLine>
-   <SourceLine>viaScripter.DrawRect insetFrame, insetFrame, frameWidth-insetFrame, frameHeight-insetFrame</SourceLine>
+   <SourceLine>DrawWorldBackground viaScripter</SourceLine>
+   <SourceLine>for each bp as KarelBeeper in mBeepers</SourceLine>
+   <SourceLine>bp.DrawInContext viaScripter</SourceLine>
+   <SourceLine>next </SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -36,8 +35,9 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Constructor(inAvenues as integer, inStreets as integer)</SourceLine>
-   <SourceLine>NumAvenues = inAvenues</SourceLine>
-   <SourceLine>NumStreets = inStreets</SourceLine>
+   <SourceLine>mNumAvenues = inAvenues</SourceLine>
+   <SourceLine>mNumStreets = inStreets</SourceLine>
+   <SourceLine>MaxRobotsAllowed = 1</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -54,7 +54,11 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IsWallBetween(ave1 as integer, street1 as integer, ave2 as integer, street2 as integer) As Boolean</SourceLine>
-   <SourceLine>//@TODO</SourceLine>
+   <SourceLine>for each w as KarelWall in mWalls</SourceLine>
+   <SourceLine>if w.IsBetween( ave1, street1, ave2, street2 ) then</SourceLine>
+   <SourceLine>return true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
    <SourceLine>return false</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -137,7 +141,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UpdateObservers()</SourceLine>
-   <SourceLine>for each obs as KarelWorldObserver in Observers</SourceLine>
+   <SourceLine>for each obs as KarelWorldObserver in mObservers</SourceLine>
    <SourceLine>obs.WorldUpdated self</SourceLine>
    <SourceLine>next</SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -149,6 +153,172 @@
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
+ <Method>
+  <ItemName>DrawWorldBackground</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawWorldBackground(viaScripter as KarelScripter)</SourceLine>
+   <SourceLine>dim frameWidth as integer = viaScripter.Width</SourceLine>
+   <SourceLine>dim frameHeight as integer = viaScripter.Height</SourceLine>
+   <SourceLine>const insetFrame = 2</SourceLine>
+   <SourceLine>viaScripter.PenSize = 4</SourceLine>
+   <SourceLine>viaScripter.DrawRect insetFrame, insetFrame, frameWidth-insetFrame, frameHeight-insetFrame</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>viaScripter as KarelScripter</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AddObserver</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub AddObserver(obs as KarelWorldObserver)</SourceLine>
+   <SourceLine>mObservers.Append obs</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>obs as KarelWorldObserver</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveObserver</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveObserver(obs as KarelWorldObserver)</SourceLine>
+   <SourceLine>dim ix as integer = mObservers.IndexOf( obs )</SourceLine>
+   <SourceLine>if ix = -1 then return</SourceLine>
+   <SourceLine>mObservers.Remove ix</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>obs as KarelWorldObserver</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Robot</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Robot(street as integer, avenue as integer, facing as integer, initialBeepers as integer = 0)</SourceLine>
+   <SourceLine>mRobots.Append new KarelRobot(avenue, street, facing, initialBeepers)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>street as integer, avenue as integer, facing as integer, initialBeepers as integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NumAvenues</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NumAvenues() As integer</SourceLine>
+   <SourceLine>return mNumAvenues</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NumStreets</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NumStreets() As integer</SourceLine>
+   <SourceLine>return mNumStreets</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Beepers</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Beepers(street as integer, avenue as integer, numBeepers as integer = 1)</SourceLine>
+   <SourceLine>// creates a beeper</SourceLine>
+   <SourceLine>// this method is here for consistency when scripting map creation</SourceLine>
+   <SourceLine>for i as integer = 1 to numBeepers</SourceLine>
+   <SourceLine>PutBeeperAt avenue, street</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>street as integer, avenue as integer, numBeepers as integer = 1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Wall</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Wall(street as integer, avenue as integer, edgeFacing as integer, cellsLong as integer=1)</SourceLine>
+   <SourceLine>// note that whilst the java docs say Walls can either be north or west of an intersection (1 or 4 respectively</SourceLine>
+   <SourceLine>// we allow on all four sides</SourceLine>
+   <SourceLine>mWalls.Append new KarelWall(avenue, street, edgeFacing, cellsLong)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>street as integer, avenue as integer, edgeFacing as integer, cellsLong as integer=1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>World</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub World(inStreets as integer, inAvenues as integer)</SourceLine>
+   <SourceLine>mNumStreets = inStreets</SourceLine>
+   <SourceLine>mNumAvenues = inAvenues</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inStreets as integer, inAvenues as integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Note>
   <ItemName>About</ItemName>
   <Compatibility></Compatibility>
@@ -158,6 +328,42 @@
    <NoteLine>About</NoteLine>
    <NoteLine>Manages the state of the world including being able to draw the map</NoteLine>
    <NoteLine>(very likely to provide user overrides for this later)</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Map Creation </ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Map Creation </NoteLine>
+   <NoteLine>commands from http://karel.sourceforge.net/doc/html_mono/karel.html</NoteLine>
+   <NoteLine>Yes I know the coordinates they use seem to be backward, with </NoteLine>
+   <NoteLine>Beepers</NoteLine>
+   <NoteLine>Wall</NoteLine>
+   <NoteLine>World</NoteLine>
+   <NoteLine>Robot</NoteLine>
+   <NoteLine>all having street first</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Here is a sample world file:</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>World 5 5</NoteLine>
+   <NoteLine>Beepers 3 3 1</NoteLine>
+   <NoteLine>Robot 4 3 1 0</NoteLine>
+   <NoteLine>Wall 2 2 1</NoteLine>
+   <NoteLine>Wall 3 2 1</NoteLine>
+   <NoteLine>Wall 1 1 4</NoteLine>
+   <NoteLine>Wall 2 1 4</NoteLine>
+   <NoteLine>Wall 2 2 4</NoteLine>
+   <NoteLine>Wall 3 1 4</NoteLine>
+   <NoteLine>Wall 3 2 4</NoteLine>
+   <NoteLine>Wall 3 3 4</NoteLine>
+   <NoteLine>Wall 4 1 4</NoteLine>
+   <NoteLine>Wall 4 2 4</NoteLine>
+   <NoteLine>Wall 4 3 4</NoteLine>
+   <NoteLine>Wall 4 4 4</NoteLine>
    <NoteLine></NoteLine>
   </ItemSource>
   <ItemFlags>0</ItemFlags>
@@ -177,31 +383,31 @@
   <Shared>0</Shared>
  </Property>
  <Property>
-  <ItemName>NumStreets</ItemName>
+  <ItemName>mNumStreets</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>NumStreets As Integer</SourceLine>
+   <SourceLine>mNumStreets As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>NumStreets As Integer</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
+  <ItemDeclaration>mNumStreets As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <Property>
-  <ItemName>NumAvenues</ItemName>
+  <ItemName>mNumAvenues</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>NumAvenues As Integer</SourceLine>
+   <SourceLine>mNumAvenues As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>NumAvenues As Integer</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
+  <ItemDeclaration>mNumAvenues As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <Property>
@@ -219,17 +425,59 @@
   <Shared>0</Shared>
  </Property>
  <Property>
-  <ItemName>Observers()</ItemName>
+  <ItemName>mObservers()</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Observers() As KarelWorldObserver</SourceLine>
+   <SourceLine>mObservers() As KarelWorldObserver</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Observers() As KarelWorldObserver</ItemDeclaration>
+  <ItemDeclaration>mObservers() As KarelWorldObserver</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mRobots()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mRobots() As KarelRobot</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mRobots() As KarelRobot</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>MaxRobotsAllowed</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>MaxRobotsAllowed As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>MaxRobotsAllowed As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mWalls()</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mWalls() As KarelWall</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mWalls() As KarelWall</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <ViewBehavior>
@@ -265,6 +513,18 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Margin</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MaxRobotsAllowed</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<RBProject version="2009r2.1">
+<block type="Module" ID="1512794118">
+ <ObjName>KarelWall</ObjName>
+ <ObjContainerID>1873437378</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>KarelWorldLocatable</Superclass>
+ <Interfaces>KarelDrawable</Interfaces>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>DrawInContext</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawInContext(viaScripter as KarelScripter)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>viaScripter as KarelScripter</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(inAvenue as integer, inStreet as integer, edgeFacing as integer, cellsLong as integer=1)</SourceLine>
+   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
+   <SourceLine>Super.Constructor inAvenue, inStreet</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>mOnEdge = edgeFacing</SourceLine>
+   <SourceLine>mCellsLong = cellsLong</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inAvenue as integer, inStreet as integer, edgeFacing as integer, cellsLong as integer=1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsBetween</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsBetween(ave1 as integer, street1 as integer, ave2 as integer, street2 as integer) As Boolean</SourceLine>
+   <SourceLine>// this is not strictly a spatial IsBetween so much as IsAdjacentAndBetween because it only is used for walls right in front of Karel</SourceLine>
+   <SourceLine>if mAvenue&lt;&gt;ave1 or mStreet&lt;&gt;street1 then return false   // first location is not at wall start</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// makes simplifying assumption that if you take off at an angle we are probably in the way</SourceLine>
+   <SourceLine>if mOnEdge = KarelScripter.North then</SourceLine>
+   <SourceLine>if street2 &gt; street1 then return true  // we're on Upper side and street numbers go up</SourceLine>
+   <SourceLine>elseif mOnEdge = KarelScripter.South then</SourceLine>
+   <SourceLine>if street2 &lt; street1 then return true</SourceLine>
+   <SourceLine>elseif mOnEdge = KarelScripter.East then</SourceLine>
+   <SourceLine>if ave2 &gt; ave1 then return true</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if ave2 &lt; ave1 then return true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return false</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>ave1 as integer, street1 as integer, ave2 as integer, street2 as integer</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Note>
+  <ItemName>About</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>About</NoteLine>
+   <NoteLine>Defines a wall on the map.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Walls are based around a given cell and appear on one side of it, the same as direction you would be facing if you ran into the wall.</NoteLine>
+   <NoteLine>They are also optionally more than one cell long.</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Property>
+  <ItemName>mCellsLong</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mCellsLong As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mCellsLong As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mOnEdge</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mOnEdge As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mOnEdge As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Street</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>KarelWorldLocatable</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Avenue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>KarelWorldLocatable</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
