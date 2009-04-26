@@ -14,8 +14,11 @@ Note that this version is not based on any source code from any previous Karel i
   * Compromise the parser by using RBScript so don't try to copy everything in the classical language.
 
 == Nice to have ==
+  * user override of drawing Karel, beepers, walls, background
   * able to paste in examples from classical Karel
-  * simpler graphical way to handle some things?
+  * simpler graphical way to handle some things like drawing walls
+  * drawing pictures that are selected through File Open dialogs and remembered as named graphics (or file paths)
+  * Karel-centric drawing so the drawing primitives exposed through GraphicsScripter can be used without explicit coords - does this imply things like squares and circles are logically centred on Karel's location?  
 
 == Karel Links ==
   * [http://karel.sourceforge.net/ Java version]
