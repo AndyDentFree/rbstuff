@@ -1,0 +1,6 @@
+#summary Extensions in rbKarel of the traditional Karel language
+
+  * All the colors and graphics drawing primitives in GraphicsScripter 
+  * `Avenue2Y` - convert an avenue number to a coordinate for use with graphics
+  * `Street2X` - convert a street number to a coordinate for use with graphics
+  * `Speak` - invokes the REALbasic Speak command
