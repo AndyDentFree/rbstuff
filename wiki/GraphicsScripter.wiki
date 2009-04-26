@@ -27,6 +27,7 @@ Exposes the methods of the REALbasic Graphics class as a usable context object:
   * `Italic`
   * `PenHeight`
   * `PenWidth`
+  * `PenSize`
   * `R`
   * `SetPixel`
   * `TanD`
