@@ -6,7 +6,10 @@ Drawing:
   * `Street2X` - convert a street number to a coordinate for use with graphics
 
 Karel control:
+  * `ErrorShutdown` - the handler called when do something illegal 
+  * `IsRunning` - true if Karel is running, ie: after a TurnOn and no error or TurnOff
   * `MovePause` - number of seconds to pause at each move
+  * `Wait` - the delay method, takes a number of seconds. Used internally to implement the MovePause and I thought I may as well make it available to the Karel user
 
 Other Features:
-  * `Speak` - invokes the REALbasic Speak command
+  * `Say` - invokes the REALbasic Speak command
