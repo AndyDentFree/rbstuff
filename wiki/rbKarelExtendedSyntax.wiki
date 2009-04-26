@@ -1,6 +1,12 @@
 #summary Extensions in rbKarel of the traditional Karel language
 
+Drawing:
   * All the colors and graphics drawing primitives in GraphicsScripter 
   * `Avenue2Y` - convert an avenue number to a coordinate for use with graphics
   * `Street2X` - convert a street number to a coordinate for use with graphics
+
+Karel control:
+  * `MovePause` - number of seconds to pause at each move
+
+Other Features:
   * `Speak` - invokes the REALbasic Speak command
