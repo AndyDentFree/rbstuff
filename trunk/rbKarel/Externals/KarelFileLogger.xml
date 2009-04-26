@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<RBProject version="2009r2.1">
+<block type="Module" ID="49678011">
+ <ObjName>KarelFileLogger</ObjName>
+ <ObjContainerID>1873437378</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>KarelWriteLogger</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(filename as string, optionalPrefix as string = "")</SourceLine>
+   <SourceLine>dim f as FolderItem = GetOpenFolderItem( filename )</SourceLine>
+   <SourceLine>mStream = f.AppendToTextFile</SourceLine>
+   <SourceLine>super.Constructor mStream, optionalPrefix</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>filename as string, optionalPrefix as string = ""</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Destructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Destructor()</SourceLine>
+   <SourceLine>if not(mStream is nil) then</SourceLine>
+   <SourceLine>mStream.Close</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(f as FolderItem, optionalPrefix as string = "")</SourceLine>
+   <SourceLine>mStream = f.AppendToTextFile</SourceLine>
+   <SourceLine>super.Constructor mStream, optionalPrefix</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>f as FolderItem, optionalPrefix as string = ""</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Note>
+  <ItemName>About</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>About</NoteLine>
+   <NoteLine>logs messags to a file specified by name or passing in already created FolderItem,</NoteLine>
+   <NoteLine>constructor you use</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Property>
+  <ItemName>mStream</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mStream As TextOutputStream</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mStream As TextOutputStream</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
