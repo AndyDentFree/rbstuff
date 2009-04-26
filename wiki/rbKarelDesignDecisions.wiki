@@ -23,3 +23,7 @@ Either from user input or a Karel program triggering _error shuttof_ (eg: run in
 
 As discussed above, if we have a call to store state in the context object by Move or Turn commands, that gives us a potential interruption point. Hopefully the RBScript Reset method will do the job.
 
+==Line Numbers and Debugging ==
+It just occurred to me that if we post-process the user logic, a line number parameter could be added to each of the Karel verbs. That means a debugger *can* link the verb from which it has been invoked to the source line.
+
+I don't think there's any easy way to make it possible to see variables that are defined in RBScript in a debugger but that is not a level of sophistication that we need.
