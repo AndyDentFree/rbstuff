@@ -1,5 +1,5 @@
 #tag Window
-Begin Window SimpleKarelRunner
+Begin Window SimpleKarelRunner Implements KarelWorldObserver
    BackColor       =   &hFFFFFF
    Backdrop        =   0
    CloseButton     =   True
@@ -147,18 +147,6 @@ End
 		End Sub
 	#tag EndEvent
 
-	#tag Event
-		Sub Resizing()
-		  ResizeDestCanvas
-		End Sub
-	#tag EndEvent
-
-	#tag Event
-		Sub Resized()
-		  ResizeDestCanvas
-		End Sub
-	#tag EndEvent
-
 
 	#tag MenuHandler
 		Function TestApplyScript() As Boolean Handles TestApplyScript.Action
@@ -181,7 +169,7 @@ End
 		    MsgBox "You must enter some RBScript to apply"
 		    return
 		  end if
-		  mScripter.UseImages nil, DestCanvas.Backdrop  // at whatever size it currently exists
+		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
 		  Script.Source = ScriptEntry.text
 		  script.Run
@@ -196,19 +184,21 @@ End
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub ResizeDestCanvas()
-		  dim newBack as New Picture( DestCanvas.Width,DestCanvas.Height, 32)
-		  if not( DestCanvas.Backdrop is nil) then
-		    newBack.Graphics.DrawPicture DestCanvas.Backdrop, 0, 0
-		  end if
-		  DestCanvas.Backdrop = newBack
+	#tag Method, Flags = &h0
+		Sub WorldUpdated(whichWorld as KarelWorld)
+		  // Part of the KarelWorldObserver interface.
+		  
+		  
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		mScripter As GraphicsScripter
+		mScripter As KarelScripter
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mWorld As KarelWorld
 	#tag EndProperty
 
 

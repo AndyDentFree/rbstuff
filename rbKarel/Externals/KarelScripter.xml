@@ -2,7 +2,7 @@
 <RBProject version="2009r2.1">
 <block type="Module" ID="997993641">
  <ObjName>KarelScripter</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1873437378</ObjContainerID>
  <IsClass>1</IsClass>
  <Superclass>GraphicsScripter</Superclass>
  <ItemFlags>1</ItemFlags>
@@ -62,7 +62,10 @@
    <SourceLine>end if</SourceLine>
    <SourceLine>mWorld = inWorld</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// steps to move by in a given direction</SourceLine>
+   <SourceLine>// steps to move by in a given direction - Avenues run horizontally, coords increase up and right</SourceLine>
+   <SourceLine>// see "http://www.cs.mtsu.edu/~untch/karel/fundamentals.html "diagram at bottom of page</SourceLine>
+   <SourceLine>// note that the directions are 1-4 for compatibility with the Java version so the deltas have a blank first delta</SourceLine>
+   <SourceLine>// which you could also consider as going nowhere ;-)</SourceLine>
    <SourceLine>mAvenueDeltas(North) = 0</SourceLine>
    <SourceLine>mAvenueDeltas(East) = 1</SourceLine>
    <SourceLine>mAvenueDeltas(South) = 0</SourceLine>
@@ -86,37 +89,48 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>Street2X</ItemName>
+  <ItemName>Street2Y</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function Street2X(street as integer) As integer</SourceLine>
-   <SourceLine>return 0 //@TODO</SourceLine>
+   <SourceLine>Function Street2Y(atStreet as integer) As integer</SourceLine>
+   <SourceLine>if atStreet &gt; mNumStreets then return Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Y coords are flipped</SourceLine>
+   <SourceLine>dim marg as integer = mWorld.Margin</SourceLine>
+   <SourceLine>dim heightToDiv as double = height - 2*marg</SourceLine>
+   <SourceLine>dim retY as integer = marg + (mNumStreets - atStreet) * heightToDiv/(1.0*mNumStreets)</SourceLine>
+   <SourceLine>return retY</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>street as integer</ItemParams>
+  <ItemParams>atStreet as integer</ItemParams>
   <ItemResult>integer</ItemResult>
  </Method>
  <Method>
-  <ItemName>Avenue2Y</ItemName>
+  <ItemName>Avenue2X</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function Avenue2Y(Avenue as integer) As integer</SourceLine>
-   <SourceLine>return 0 //@TODO</SourceLine>
+   <SourceLine>Function Avenue2X(atAvenue as integer) As integer</SourceLine>
+   <SourceLine>if atAvenue &gt; mNumAvenues then return Width</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim marg as integer = mWorld.Margin</SourceLine>
+   <SourceLine>dim widthToDiv as double = width - 2*marg</SourceLine>
+   <SourceLine>dim retX as integer = marg + atAvenue * widthToDiv/(1.0*mNumAvenues)</SourceLine>
+   <SourceLine>return retX</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>Avenue as integer</ItemParams>
+  <ItemParams>atAvenue as integer</ItemParams>
   <ItemResult>integer</ItemResult>
  </Method>
  <Method>
@@ -682,6 +696,23 @@
   <ItemParams>msg as String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
+ <Method>
+  <ItemName>SetLogger</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub SetLogger(logTo as KarelLogger)</SourceLine>
+   <SourceLine>mLogger = logTo</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>logTo as KarelLogger</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Note>
   <ItemName>About</ItemName>
   <Compatibility></Compatibility>
@@ -705,7 +736,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>Mapping between Street/Avenue and Graphics coordinates</NoteLine>
-   <NoteLine>For the graphics primitives to be used by Karel world objects, we must map their coordinates of Street, Avenue</NoteLine>
+   <NoteLine>For the graphics primitives to be used by Karel world objects, we must map their coordinates of Avenue, Street</NoteLine>
    <NoteLine>to the X, Y coordinates of a graphics world.</NoteLine>
    <NoteLine></NoteLine>
    <NoteLine>There is also the question of an inset margin because the KarelWorld draws a boundary.</NoteLine>
@@ -719,7 +750,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>StreetSpacing As Integer = 10</SourceLine>
+   <SourceLine>StreetSpacing As Integer</SourceLine>
    <SourceLine>@TODO delete?</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -868,30 +899,30 @@
   <Shared>0</Shared>
  </Property>
  <Property>
-  <ItemName>mAvenueDeltas(3)</ItemName>
+  <ItemName>mAvenueDeltas(4)</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mAvenueDeltas(3) As Integer</SourceLine>
+   <SourceLine>mAvenueDeltas(4) As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mAvenueDeltas(3) As Integer</ItemDeclaration>
+  <ItemDeclaration>mAvenueDeltas(4) As Integer</ItemDeclaration>
   <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <Property>
-  <ItemName>mStreetDeltas(3)</ItemName>
+  <ItemName>mStreetDeltas(4)</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mStreetDeltas(3) As Integer</SourceLine>
+   <SourceLine>mStreetDeltas(4) As Integer</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mStreetDeltas(3) As Integer</ItemDeclaration>
+  <ItemDeclaration>mStreetDeltas(4) As Integer</ItemDeclaration>
   <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
@@ -1916,6 +1947,18 @@
    <ItemType>Color</ItemType>
    <InheritsFrom>GraphicsScripter</InheritsFrom>
   </ViewProperty>
+  <ViewProperty>
+   <ObjName>StreetSpacing</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>10</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MovePause</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>double</ItemType>
+  </ViewProperty>
  </ViewBehavior>
  <Constant>
   <ItemName>North</ItemName>
@@ -1924,28 +1967,28 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemName>North</ItemName>
   <ItemType>2</ItemType>
-  <ItemDef>0</ItemDef>
-  <ItemFlags>1</ItemFlags>
- </Constant>
- <Constant>
-  <ItemName>East</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <TextEncoding>134217984</TextEncoding>
-  <ItemName>East</ItemName>
-  <ItemType>2</ItemType>
   <ItemDef>1</ItemDef>
-  <ItemFlags>1</ItemFlags>
+  <ItemFlags>0</ItemFlags>
  </Constant>
  <Constant>
-  <ItemName>South</ItemName>
+  <ItemName>East</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>South</ItemName>
+  <ItemName>East</ItemName>
   <ItemType>2</ItemType>
   <ItemDef>2</ItemDef>
-  <ItemFlags>1</ItemFlags>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>South</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>South</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>3</ItemDef>
+  <ItemFlags>0</ItemFlags>
  </Constant>
  <Constant>
   <ItemName>West</ItemName>
@@ -1954,8 +1997,8 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemName>West</ItemName>
   <ItemType>2</ItemType>
-  <ItemDef>3</ItemDef>
-  <ItemFlags>1</ItemFlags>
+  <ItemDef>4</ItemDef>
+  <ItemFlags>0</ItemFlags>
  </Constant>
 </block>
 </RBProject>
