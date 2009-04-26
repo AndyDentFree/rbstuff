@@ -1,0 +1,1961 @@
+<?xml version="1.0"?>
+<RBProject version="2009r2.1">
+<block type="Module" ID="997993641">
+ <ObjName>KarelScripter</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>GraphicsScripter</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>TurnOn</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TurnOn()</SourceLine>
+   <SourceLine>mKarelOn = true</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TurnOff</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TurnOff()</SourceLine>
+   <SourceLine>mKarelOn = false</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(optionalGraphics as Graphics=nil, inWorld as KarelWorld = nil)</SourceLine>
+   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
+   <SourceLine>Super.Constructor optionalGraphics</SourceLine>
+   <SourceLine>if inWorld is nil then</SourceLine>
+   <SourceLine>// default size for now</SourceLine>
+   <SourceLine>mNumAvenues = 20</SourceLine>
+   <SourceLine>mNumStreets = 20</SourceLine>
+   <SourceLine>inWorld = new KarelWorld( mNumAvenues, mNumStreets )</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>mNumAvenues = inWorld.NumAvenues</SourceLine>
+   <SourceLine>mNumStreets = inWorld.NumStreets</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>mWorld = inWorld</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// steps to move by in a given direction</SourceLine>
+   <SourceLine>mAvenueDeltas(North) = 0</SourceLine>
+   <SourceLine>mAvenueDeltas(East) = 1</SourceLine>
+   <SourceLine>mAvenueDeltas(South) = 0</SourceLine>
+   <SourceLine>mAvenueDeltas(West) = -1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>mStreetDeltas(North) = 1</SourceLine>
+   <SourceLine>mStreetDeltas(East) = 0</SourceLine>
+   <SourceLine>mStreetDeltas(West) = 0</SourceLine>
+   <SourceLine>mStreetDeltas(South) = -1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Karel initial state  but probably override with a map</SourceLine>
+   <SourceLine>mDirection = North  // ensure a legal value! </SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>optionalGraphics as Graphics=nil, inWorld as KarelWorld = nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Street2X</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Street2X(street as integer) As integer</SourceLine>
+   <SourceLine>return 0 //@TODO</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>street as integer</ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Avenue2Y</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Avenue2Y(Avenue as integer) As integer</SourceLine>
+   <SourceLine>return 0 //@TODO</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Avenue as integer</ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsRunning</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsRunning() As Boolean</SourceLine>
+   <SourceLine>return mKarelOn</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Wait</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Wait(numSeconds as double)</SourceLine>
+   <SourceLine>dim startMicroS as double = Microseconds</SourceLine>
+   <SourceLine>dim targetMicroS as double = startMicroS + numSeconds * 1000000.0</SourceLine>
+   <SourceLine>dim sleepMilliS as integer = numSeconds * 1000</SourceLine>
+   <SourceLine>do</SourceLine>
+   <SourceLine>// loop trying to sleep in one chunk but coping if it doesn't sleep as long</SourceLine>
+   <SourceLine>app.SleepCurrentThread sleepMilliS</SourceLine>
+   <SourceLine>dim nowMicroS as double = Microseconds</SourceLine>
+   <SourceLine>sleepMilliS = (targetMicroS - nowMicroS) / 1000</SourceLine>
+   <SourceLine>if sleepMilliS &lt;= 0 then exit   // delay at millisecond resolution</SourceLine>
+   <SourceLine>loop </SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>numSeconds as double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TurnLeft</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TurnLeft()</SourceLine>
+   <SourceLine>mDirection = LeftDirection</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>anyBeepersInBeeperBag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function anyBeepersInBeeperBag() As Boolean</SourceLine>
+   <SourceLine>return mBeeperBag &gt; 0</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>noBeepersInBeeperBag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function noBeepersInBeeperBag() As Boolean</SourceLine>
+   <SourceLine>return mBeeperBag = 0</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>facingNorth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function facingNorth() As Boolean</SourceLine>
+   <SourceLine>return mDirection = North</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>notFacingNorth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function notFacingNorth() As Boolean</SourceLine>
+   <SourceLine>return mDirection &lt;&gt; North</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>facingWest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function facingWest() As Boolean</SourceLine>
+   <SourceLine>return mDirection = West</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>facingEast</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function facingEast() As Boolean</SourceLine>
+   <SourceLine>return mDirection = East</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>facingSouth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function facingSouth() As Boolean</SourceLine>
+   <SourceLine>return mDirection = South</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>notFacingEast</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function notFacingEast() As Boolean</SourceLine>
+   <SourceLine>return mDirection &lt;&gt; East</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>notFacingWest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function notFacingWest() As Boolean</SourceLine>
+   <SourceLine>return mDirection &lt;&gt; West</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>notFacingSouth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function notFacingSouth() As Boolean</SourceLine>
+   <SourceLine>return mDirection &lt;&gt; South</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Move</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Move()</SourceLine>
+   <SourceLine>if frontIsBlocked then</SourceLine>
+   <SourceLine>ErrorShutdown "Move is blocked"</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>mStreet = NextStreet</SourceLine>
+   <SourceLine>mAvenue = NextAvenue</SourceLine>
+   <SourceLine>Wait MovePause</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ErrorShutdown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ErrorShutdown(msg as string)</SourceLine>
+   <SourceLine>Log msg</SourceLine>
+   <SourceLine>mKarelOn = false</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>msg as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Log</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Log(msg as String)</SourceLine>
+   <SourceLine>if mLogger is nil then return</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent msg, self</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>msg as String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>frontIsBlocked</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function frontIsBlocked() As Boolean</SourceLine>
+   <SourceLine>return mWorld.IsWallBetween( mAvenue, mStreet, NextAvenue, NextStreet )</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NextStreet</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NextStreet() As integer</SourceLine>
+   <SourceLine>return mStreet + mStreetDeltas( mDirection )</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NextAvenue</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NextAvenue() As integer</SourceLine>
+   <SourceLine>return mAvenue + mAvenueDeltas( mDirection )</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>frontIsClear</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function frontIsClear() As Boolean</SourceLine>
+   <SourceLine>return not frontIsBlocked</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>nextToABeeper</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function nextToABeeper() As Boolean</SourceLine>
+   <SourceLine>return mWorld.IsBeeperAt( mAvenue, mStreet)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>notNextToABeeper</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function notNextToABeeper() As Boolean</SourceLine>
+   <SourceLine>return not mWorld.IsBeeperAt( mAvenue, mStreet)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LeftDirection</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LeftDirection() As integer</SourceLine>
+   <SourceLine>if mDirection = North then</SourceLine>
+   <SourceLine>return West</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>return mDirection - 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RightDirection</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function RightDirection() As integer</SourceLine>
+   <SourceLine>if mDirection = West then</SourceLine>
+   <SourceLine>return North</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>return mDirection + 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>leftIsBlocked</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function leftIsBlocked() As Boolean</SourceLine>
+   <SourceLine>return mWorld.IsWallBetween( mAvenue, mStreet, _</SourceLine>
+   <SourceLine>mAvenue + mAvenueDeltas( LeftDirection ), _</SourceLine>
+   <SourceLine> mStreet +  mStreetDeltas( LeftDirection ) )</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>leftIsClear</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function leftIsClear() As Boolean</SourceLine>
+   <SourceLine>return not leftIsBlocked</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>rightIsBlocked</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function rightIsBlocked() As Boolean</SourceLine>
+   <SourceLine>return mWorld.IsWallBetween( mAvenue, mStreet, _</SourceLine>
+   <SourceLine>mAvenue + mAvenueDeltas( RightDirection ), _</SourceLine>
+   <SourceLine> mStreet +  mStreetDeltas( RightDirection ) )</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>rightIsClear</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function rightIsClear() As Boolean</SourceLine>
+   <SourceLine>return not rightIsBlocked</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PickBeeper</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PickBeeper()</SourceLine>
+   <SourceLine>if mWorld.PickBeeperFrom(mAvenue, mStreet) then</SourceLine>
+   <SourceLine>mBeeperBag = mBeeperBag + 1</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>ErrorShutdown "Beeper not at location when tried to PickBeeper"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PutBeeper</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PutBeeper()</SourceLine>
+   <SourceLine>mWorld.PutBeeperAt mAvenue, mStreet</SourceLine>
+   <SourceLine>mBeeperBag = mBeeperBag - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Say</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Say(msg as String)</SourceLine>
+   <SourceLine>Speak msg</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>msg as String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Note>
+  <ItemName>About</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>About</NoteLine>
+   <NoteLine>This is the class used to provide the context object for an RBScript running Karel.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>It inherits many graphics operations from GraphicsScripter which are in turn visible as methods and properties</NoteLine>
+   <NoteLine>in the script. One reason for using inheritance is to keep the list of methods and properties here a lot </NoteLine>
+   <NoteLine>smaller so it's easier for people to understand pure Karel stuff.</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Mapping between Street/Avenue and Graphics coordinates</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Mapping between Street/Avenue and Graphics coordinates</NoteLine>
+   <NoteLine>For the graphics primitives to be used by Karel world objects, we must map their coordinates of Street, Avenue</NoteLine>
+   <NoteLine>to the X, Y coordinates of a graphics world.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>There is also the question of an inset margin because the KarelWorld draws a boundary.</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Property>
+  <ItemName>StreetSpacing</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>StreetSpacing As Integer = 10</SourceLine>
+   <SourceLine>@TODO delete?</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>StreetSpacing As Integer = 10</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mNumAvenues</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mNumAvenues As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mNumAvenues As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mNumStreets</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mNumStreets As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mNumStreets As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mBeeperBag</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mBeeperBag As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mBeeperBag As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mKarelOn</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mKarelOn As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mKarelOn As Boolean</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mWorld</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mWorld As KarelWorld</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mWorld As KarelWorld</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mDirection</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mDirection As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mDirection As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mAvenue</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mAvenue As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mAvenue As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mStreet</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mStreet As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mStreet As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>MovePause</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>MovePause As double</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>MovePause As double</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mLogger</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mLogger As KarelLogger</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mLogger As KarelLogger</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mAvenueDeltas(3)</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mAvenueDeltas(3) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mAvenueDeltas(3) As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mStreetDeltas(3)</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mStreetDeltas(3) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mStreetDeltas(3) As Integer</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>PI</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>double</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>aliceblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>antiquewhite</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>aqua</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>aquamarine</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>azure</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>beige</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>bisque</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>black</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>blanchedalmond</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>blue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>blueviolet</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>brown</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>burlywood</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>cadetblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>chartreuse</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>chocolate</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>coral</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>cornflowerblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>cornsilk</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>crimson</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>cyan</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkcyan</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkgoldenrod</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkgray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkgreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkkhaki</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkmagenta</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkolivegreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkorange</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkorchid</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkred</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darksalmon</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkseagreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkslateblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkslategray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkturquoise</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>darkviolet</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>deeppink</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>deepskyblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>dimgray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>dodgerblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>firebrick</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>floralwhite</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>forestgreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>fuchsia</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>gainsboro</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ghostwhite</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>gold</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>goldenrod</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>gray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>green</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>greenyellow</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>honeydew</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>hotpink</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>indianred</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>indigo</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ivory</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>khaki</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lavender</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lavenderblush</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lawngreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lemonchiffon</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightcoral</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightcyan</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightgoldenrodyellow</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightgreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightgrey</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightpink</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightsalmon</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightseagreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightskyblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightslategray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightsteelblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lightyellow</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>lime</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>limegreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>linen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>magenta</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>maroon</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumaquamarine</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumorchid</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumpurple</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumseagreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumslateblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumspringgreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumturquoise</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mediumvioletred</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>midnightblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mintcream</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>mistyrose</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>moccasin</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>navajowhite</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>navy</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>oldlace</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>olive</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>olivedrab</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>orange</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>orangered</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>orchid</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>palegoldenrod</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>palegreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>paleturquoise</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>palevioletred</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>papayawhip</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>peachpuffle</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>peru</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>pink</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>plum</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>powderblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>purple</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>red</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>rosybrown</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>royalblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>saddlebrown</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>salmon</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>sandybrown</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>seagreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>seashell</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>sienna</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>silver</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>skyblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>slateblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>slategray</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>snow</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>springgreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>steelblue</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>tan</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>teal</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>thistle</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>tomato</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>turquoise</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>violet</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>wheat</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>white</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>whitesmoke</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>yellow</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>yellowgreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>&amp;h000000</PropertyValue>
+   <ItemType>Color</ItemType>
+   <InheritsFrom>GraphicsScripter</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>North</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>North</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>1</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>East</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>East</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>1</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>South</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>South</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>1</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>West</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>West</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>3</ItemDef>
+  <ItemFlags>1</ItemFlags>
+ </Constant>
+</block>
+</RBProject>

@@ -473,7 +473,9 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>Sub Constructor(optionalGraphics as Graphics=nil, optionalSurface as RGBSurface=nil)</SourceLine>
+   <SourceLine>UseGraphics optionalGraphics, optionalSurface  // if not now, must call before any drawing</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>mRandom = new Random</SourceLine>
    <SourceLine>PI = kPI</SourceLine>
    <SourceLine>' use property because constants not exposed to RBScript</SourceLine>
@@ -629,7 +631,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams></ItemParams>
+  <ItemParams>optionalGraphics as Graphics=nil, optionalSurface as RGBSurface=nil</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -638,7 +640,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub PenHeight(n as integer)</SourceLine>
+   <SourceLine>Sub PenHeight(assigns n as integer)</SourceLine>
    <SourceLine>mDest.PenHeight = n</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -646,7 +648,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>n as integer</ItemParams>
+  <ItemParams>assigns n as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -655,7 +657,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub PenWidth(n as integer)</SourceLine>
+   <SourceLine>Sub PenWidth(assigns n as integer)</SourceLine>
    <SourceLine>mDest.PenWidth = n</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -663,7 +665,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>n as integer</ItemParams>
+  <ItemParams>assigns n as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -1415,6 +1417,24 @@
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
   <ItemParams>dest as Graphics, optionalSurface as RGBSurface=nil</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PenSize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PenSize(assigns n as integer)</SourceLine>
+   <SourceLine>mDest.PenHeight = n</SourceLine>
+   <SourceLine>mDest.PenWidth = n</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>assigns n as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>
@@ -3552,18 +3572,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <InheritsFrom>Object</InheritsFrom>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>mMask</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Picture</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>mDestPicture</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Picture</ItemType>
   </ViewProperty>
   <ViewProperty>
    <ObjName>PI</ObjName>
