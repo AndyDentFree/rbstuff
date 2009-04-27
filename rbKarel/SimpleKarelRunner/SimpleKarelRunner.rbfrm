@@ -520,7 +520,7 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub ApplyScript()
+		Sub RunKarel()
 		  if ScriptEntry.text.len=0 then
 		    MsgBox "You must enter a Karel Program to Run"
 		    return
@@ -542,6 +542,7 @@ End
 		  Script.Source = KarelScripter.PrepareKarelScript(ScriptEntry.text)
 		  
 		  StatusDisplay.Text = ""
+		  SetMovePauseFromSlider
 		  try
 		    KarelThread.Run
 		  catch e as KarelException
@@ -567,6 +568,7 @@ End
 		  Script.Source = mWorld.CleanupWorld(mapScript)
 		  mWorld.Reset
 		  script.Run  // to redefine the world
+		  mScripter.UseWorld mWorld  // needs to get sizes from here
 		  RedrawWorld
 		  
 		End Sub
@@ -592,6 +594,15 @@ End
 		Sub ErrorShutdown(whichWorld as KarelWorld, errorMsg as string)
 		  StatusDisplay.Text = errorMsg
 		  beep
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SetMovePauseFromSlider()
+		  // slider ascends from left to right but we want delay to decrease from left to right, to give an ascending SPEED control
+		  // range of 0..5000 is 0..5 seconds with default of 4500 = 0.5second initial pause
+		  dim flippedMilliSeconds as integer = SpeedSlider.Maximum - SpeedSlider.Value
+		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
 		End Sub
 	#tag EndMethod
 
@@ -629,7 +640,7 @@ End
 #tag Events RunButton
 	#tag Event
 		Sub Action()
-		  ApplyScript
+		  RunKarel
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -655,10 +666,7 @@ End
 #tag Events SpeedSlider
 	#tag Event
 		Sub ValueChanged()
-		  // slider ascends from left to right but we want delay to decrease from left to right, to give an ascending SPEED control
-		  // range of 0..5000 is 0..5 seconds with default of 4500 = 0.5second initial pause
-		  dim flippedMilliSeconds as integer = me.Maximum - me.Value
-		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
+		  SetMovePauseFromSlider
 		End Sub
 	#tag EndEvent
 #tag EndEvents
