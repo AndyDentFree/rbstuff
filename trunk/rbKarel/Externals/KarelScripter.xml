@@ -697,6 +697,10 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PutBeeper()</SourceLine>
+   <SourceLine>if mBeeperBag = 0 then</SourceLine>
+   <SourceLine>ErrorShutdown "No beepers left in bag - unable to PutBeeper"</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>mWorld.PutBeeperAt mAvenue, mStreet</SourceLine>
    <SourceLine>mBeeperBag = mBeeperBag - 1</SourceLine>
    <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
