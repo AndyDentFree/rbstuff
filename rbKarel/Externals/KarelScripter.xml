@@ -55,7 +55,11 @@
    <SourceLine>// default size for now</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>inWorld = new KarelWorld( 10, 10 )</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if inWorld.CurrentRobot&lt;&gt; nil then</SourceLine>
+   <SourceLine>mAvenue = inWorld.CurrentRobot.Avenue</SourceLine>
+   <SourceLine>mStreet = inWorld.CurrentRobot.Street</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>mWorld = inWorld</SourceLine>
    <SourceLine></SourceLine>
@@ -183,6 +187,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub TurnLeft()</SourceLine>
    <SourceLine>mDirection = LeftDirection</SourceLine>
+   <SourceLine>mWorld.TurnRobotTo mDirection</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -376,7 +381,7 @@
    <SourceLine>mStreet = NextStreet</SourceLine>
    <SourceLine>mAvenue = NextAvenue</SourceLine>
    <SourceLine>Wait MovePause</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>mWorld.MoveRobotTo mStreet, mAvenue</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -787,6 +792,31 @@
   <Shared>0</Shared>
   <ItemParams>inDirection as integer</ItemParams>
   <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>UseWorld</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub UseWorld(inWorld as KarelWorld)</SourceLine>
+   <SourceLine>dim k as KarelRobot = inWorld.CurrentRobot</SourceLine>
+   <SourceLine>if k&lt;&gt; nil then</SourceLine>
+   <SourceLine>mAvenue = k.Avenue</SourceLine>
+   <SourceLine>mStreet = k.Street</SourceLine>
+   <SourceLine>mDirection = k.Facing</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>mWorld = inWorld</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inWorld as KarelWorld</ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>

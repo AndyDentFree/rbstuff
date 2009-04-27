@@ -172,6 +172,7 @@ End
 	#tag Event
 		Sub Open()
 		  mWorld = new KarelWorld(10, 10)
+		  mWorld.AddObserver self
 		  mScripter = new KarelScripter( DestCanvas.Graphics, mWorld )
 		  
 		End Sub
@@ -222,6 +223,22 @@ End
 		End Function
 	#tag EndMenuHandler
 
+	#tag MenuHandler
+		Function SamplesKarel1() As Boolean Handles SamplesKarel1.Action
+			ScriptEntry.Text = kSampleKarel1
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesKarel2() As Boolean Handles SamplesKarel2.Action
+			ScriptEntry.Text = kSampleKarel2
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
 
 	#tag Method, Flags = &h0
 		Sub ApplyScript()
@@ -229,6 +246,11 @@ End
 		    MsgBox "You must enter some RBScript to apply"
 		    return
 		  end if
+		  
+		  RedrawWorld
+		  
+		  mScripter.UseWorld mWorld  // force it to reload robot etc.
+		  
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
 		  Script.Source = ScriptEntry.text
@@ -239,7 +261,6 @@ End
 	#tag Method, Flags = &h0
 		Sub WorldUpdated(whichWorld as KarelWorld)
 		  // Part of the KarelWorldObserver interface.
-		  
 		  RedrawWorld
 		  
 		End Sub
@@ -251,8 +272,9 @@ End
 		  script.Context = mWorld
 		  Script.Source = mWorld.CleanupWorld(mapScript)
 		  mWorld.Reset
-		  script.Run
+		  script.Run  // to redefine the world
 		  RedrawWorld
+		  
 		End Sub
 	#tag EndMethod
 
@@ -277,6 +299,12 @@ End
 	#tag EndConstant
 
 	#tag Constant, Name = kSampleMap1, Type = String, Dynamic = False, Default = \"World 5 5\rBeepers 3 3 1\rRobot 4 3 1 0\rWall 2 2 1\rWall 3 2 1\rWall 1 1 4\rWall 2 1 4\rWall 2 2 4\rWall 3 1 4\rWall 3 2 4\rWall 3 3 4\rWall 4 1 4\rWall 4 2 4\rWall 4 3 4\rWall 4 4 4", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kSampleKarel1, Type = String, Dynamic = False, Default = \"TurnOn\rMove\rMove", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kSampleKarel2, Type = String, Dynamic = False, Default = \"TurnOn\rdim i as integer\rfor i \x3D 1 to 3\r  TurnLeft\r  Move\rNext", Scope = Public
 	#tag EndConstant
 
 
