@@ -24,8 +24,20 @@
    <SourceLine>viaScripter.FillSquare x-halfWidth, y-halfWidth, 2*halfWidth</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// now work out side to put blob on</SourceLine>
-   <SourceLine>dim sideOffsetX as integer = viaScripter.AvenueMultiplier( Facing ) * halfWidth</SourceLine>
-   <SourceLine>dim sideOffsetY as integer = viaScripter.StreetMultiplier( Facing ) * halfWidth</SourceLine>
+   <SourceLine>dim sideOffsetX, sideOffsetY as integer</SourceLine>
+   <SourceLine>if Facing = KarelScripter.North then</SourceLine>
+   <SourceLine>sideOffsetX = 0</SourceLine>
+   <SourceLine>sideOffsetY = -halfWidth</SourceLine>
+   <SourceLine>elseif Facing = KarelScripter.South then</SourceLine>
+   <SourceLine>sideOffsetX = 0</SourceLine>
+   <SourceLine>sideOffsetY = halfWidth</SourceLine>
+   <SourceLine>elseif Facing = KarelScripter.East then</SourceLine>
+   <SourceLine>sideOffsetX = halfWidth</SourceLine>
+   <SourceLine>sideOffsetY = 0</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>sideOffsetX = -halfWidth</SourceLine>
+   <SourceLine>sideOffsetY = 0</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>const blobRadius = 4</SourceLine>
    <SourceLine>viaScripter.PenColor = viaScripter.blue</SourceLine>
    <SourceLine>viaScripter.fillCircle x + sideOffsetX - blobRadius, y + sideOffsetY - blobRadius, 2*blobRadius</SourceLine>
