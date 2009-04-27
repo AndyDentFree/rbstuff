@@ -172,6 +172,8 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawWorldBackground(viaScripter as KarelScripter)</SourceLine>
+   <SourceLine>viaScripter.UseWorld self  // needs to get sizes from here</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>dim width as integer = viaScripter.Width</SourceLine>
    <SourceLine>dim height as integer = viaScripter.Height</SourceLine>
    <SourceLine>const marginPenSize = 4</SourceLine>

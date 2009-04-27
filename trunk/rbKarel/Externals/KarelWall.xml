@@ -22,20 +22,20 @@
    <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
    <SourceLine>viaScripter.PenSize = 4</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>dim halfAveSep as integer = viaScripter.AvenueGapX / 2</SourceLine>
-   <SourceLine>dim halfStreetSep as integer = viaScripter.StreetGapY / 2</SourceLine>
+   <SourceLine>dim halfAveSep as integer = Round(viaScripter.AvenueGapX / 2.0)</SourceLine>
+   <SourceLine>dim halfStreetSep as integer = Round(viaScripter.StreetGapY / 2.0)</SourceLine>
    <SourceLine>dim x1, x2, y1, y2 as integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>if mOnEdge = KarelScripter.North then</SourceLine>
    <SourceLine>x1 = x - halfAveSep</SourceLine>
    <SourceLine>x2 = x + halfAveSep</SourceLine>
    <SourceLine>y1 = y - halfStreetSep</SourceLine>
-   <SourceLine>y1 = y2</SourceLine>
+   <SourceLine>y2 = y1</SourceLine>
    <SourceLine>elseif mOnEdge = KarelScripter.South then</SourceLine>
    <SourceLine>x1 = x - halfAveSep</SourceLine>
    <SourceLine>x2 = x + halfAveSep</SourceLine>
    <SourceLine>y1 = y + halfStreetSep</SourceLine>
-   <SourceLine>y1 = y2</SourceLine>
+   <SourceLine>y2 = y1</SourceLine>
    <SourceLine>elseif mOnEdge = KarelScripter.East then</SourceLine>
    <SourceLine>x1 = x + halfAveSep</SourceLine>
    <SourceLine>x2 = x1</SourceLine>
