@@ -541,7 +541,7 @@ End
 		  script.Context = mScripter
 		  Script.Source = KarelScripter.PrepareKarelScript(ScriptEntry.text)
 		  
-		  StatusDisplay.Text = ""
+		  ClearErrorDisplay
 		  SetMovePauseFromSlider
 		  try
 		    KarelThread.Run
@@ -563,6 +563,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub LoadMap(mapScript as string)
+		  ClearErrorDisplay
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mWorld
 		  Script.Source = mWorld.CleanupWorld(mapScript)
@@ -603,6 +604,12 @@ End
 		  // range of 0..5000 is 0..5 seconds with default of 4500 = 0.5second initial pause
 		  dim flippedMilliSeconds as integer = SpeedSlider.Maximum - SpeedSlider.Value
 		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub ClearErrorDisplay()
+		  StatusDisplay.Text = ""
 		End Sub
 	#tag EndMethod
 
