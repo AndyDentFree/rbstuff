@@ -17,8 +17,8 @@ BEGINNING-OF-PROGRAM
  BEGINNING-OF-EXECUTION
    ITERATE 3 TIMES
      turnright;
-     move;
-     turnoff
+   move;
+   turnoff
  END-OF-EXECUTION
  
 END-OF-PROGRAM
