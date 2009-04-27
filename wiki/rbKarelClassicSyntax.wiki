@@ -44,3 +44,15 @@ Sub turnright
 ...
 End Sub
 }}}
+
+== Translating Iterate ==
+The iterate command is pretty fundamental to Karel, allowing a single statement to be iterated according to the [http://karel.sourceforge.net/doc/html_mono/karel.html#SEC23 doumentation].
+
+Consider the canonical syntax:
+{{{
+  ITERATE <positive-integer> TIMES
+    <stmt>
+}}}
+There are a number of possible ways it could be handled, all of which involve a certain degree of parsing the input code and converting it before running the script:
+  * change it into a for..next loop. This requires a unique index variable be generated each time because the for..next in RBScript doesn't support `for i as integer...` syntax.
+  * factor out each primitive statement or defined function to be run in a separate RBScript object so it becomes `Iterate( 3, "TurnLeft")` for example, with the iteration count becoming a parameter and the statement being wrapped in a string argument to be sent to another RBScript object N times.
