@@ -192,27 +192,29 @@
    <SourceLine></SourceLine>
    <SourceLine>// vertical gridlines and numbers</SourceLine>
    <SourceLine>//dim aveSep as integer = frameWidth / (mNumAvenues+1)  // gap either side of lines</SourceLine>
-   <SourceLine>dim aveSep as integer = viaScripter.AvenueGapX</SourceLine>
+   <SourceLine>dim aveSep as double = viaScripter.AvenueGapX</SourceLine>
    <SourceLine>dim aveY1 as integer = Margin</SourceLine>
    <SourceLine>dim aveY2 as integer = height - Margin</SourceLine>
-   <SourceLine>dim x as integer = Margin</SourceLine>
+   <SourceLine>dim x as double = Margin</SourceLine>
    <SourceLine>for i as integer = 1 to mNumAvenues</SourceLine>
    <SourceLine>x = x + aveSep</SourceLine>
-   <SourceLine>viaScripter.DrawLine x, aveY1, x, aveY2</SourceLine>
-   <SourceLine>viaScripter.DrawString str(i), x-4, height-2  // tweaked position</SourceLine>
+   <SourceLine>dim aveX as integer = Round(x)</SourceLine>
+   <SourceLine>viaScripter.DrawLine aveX, aveY1, aveX, aveY2</SourceLine>
+   <SourceLine>viaScripter.DrawString str(i), aveX-4, height-2  // tweaked position</SourceLine>
    <SourceLine>next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// horizontal gridlines and numbers</SourceLine>
    <SourceLine>//dim streetSep as integer = frameHeight/ (mNumStreets + 1)</SourceLine>
-   <SourceLine>dim streetSep as integer = viaScripter.StreetGapY</SourceLine>
+   <SourceLine>dim streetSep as double = viaScripter.StreetGapY</SourceLine>
    <SourceLine>dim streetX1 as integer = Margin</SourceLine>
    <SourceLine>dim streetX2 as integer = width - Margin</SourceLine>
-   <SourceLine>dim y as integer = Margin</SourceLine>
+   <SourceLine>dim y as double = Margin</SourceLine>
    <SourceLine>for i as integer = 1 to mNumStreets</SourceLine>
    <SourceLine>y = y + streetSep</SourceLine>
-   <SourceLine>viaScripter.DrawLine streetX1, y, streetX2, y</SourceLine>
+   <SourceLine>dim streetY as integer = round(y)</SourceLine>
+   <SourceLine>viaScripter.DrawLine streetX1, streetY, streetX2, streetY</SourceLine>
    <SourceLine>dim flippedStreetNum as integer = mNumStreets - i + 1</SourceLine>
-   <SourceLine>viaScripter.DrawString str(flippedStreetNum), 1, y+2</SourceLine>
+   <SourceLine>viaScripter.DrawString str(flippedStreetNum), 1, streetY+2</SourceLine>
    <SourceLine>next</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
