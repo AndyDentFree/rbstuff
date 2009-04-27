@@ -314,6 +314,18 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
       Visible         =   True
       Width           =   46
    End
+   Begin Thread KarelThread
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   26
+      LockedInPosition=   False
+      Priority        =   5
+      Scope           =   0
+      StackSize       =   0
+      TabPanelIndex   =   0
+      Top             =   617
+      Width           =   32
+   End
 End
 #tag EndWindow
 
@@ -392,7 +404,7 @@ End
 	#tag Method, Flags = &h0
 		Sub ApplyScript()
 		  if ScriptEntry.text.len=0 then
-		    MsgBox "You must enter some RBScript to apply"
+		    MsgBox "You must enter a Karel Program to Run"
 		    return
 		  end if
 		  
@@ -410,7 +422,8 @@ End
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
 		  Script.Source = ScriptEntry.text
-		  script.Run
+		  KarelThread.Run
+		  
 		End Sub
 	#tag EndMethod
 
@@ -447,6 +460,33 @@ End
 		  
 		  StepButton.Enabled=true
 		  //@TODO work out a way for the RBScript to be put on hold here but user able to use GUI - maybe run script in thread?
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ApplyScriptImmediately()
+		  // kept for posterity and comparisons but note that this runs the entire script and then displays results
+		  // REGARDLESS of what you set on SpeedSlider
+		  if ScriptEntry.text.len=0 then
+		    MsgBox "You must enter a Karel Program to Run"
+		    return
+		  end if
+		  
+		  RedrawWorld
+		  
+		  // reload some states
+		  mScripter.UseWorld mWorld  // force it to reload robot etc.
+		  if SayCheck.Value then
+		    mScripter.SetLogger new KarelLogSpeech
+		  else
+		    mScripter.SetLogger nil
+		  end if
+		  
+		  
+		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
+		  script.Context = mScripter
+		  Script.Source = ScriptEntry.text
+		  script.Run
 		End Sub
 	#tag EndMethod
 
@@ -508,6 +548,15 @@ End
 		  // range of 0..5000 is 0..5 seconds with default of 4500 = 0.5second initial pause
 		  dim flippedMilliSeconds as integer = me.Maximum - me.Value
 		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events KarelThread
+	#tag Event
+		Sub Run()
+		  RunButton.Enabled=false
+		  script.Run
+		  RunButton.Enabled=true
 		End Sub
 	#tag EndEvent
 #tag EndEvents
