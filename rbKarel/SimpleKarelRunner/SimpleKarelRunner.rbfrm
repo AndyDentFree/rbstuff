@@ -521,7 +521,7 @@ End
 		  
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
-		  Script.Source = PrepareKarelScript(ScriptEntry.text)
+		  Script.Source = KarelScripter.PrepareKarelScript(ScriptEntry.text)
 		  
 		  StatusDisplay.Text = ""
 		  try

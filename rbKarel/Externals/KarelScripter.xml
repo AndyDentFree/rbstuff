@@ -457,6 +457,9 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function frontIsBlocked() As Boolean</SourceLine>
+   <SourceLine>// check frame</SourceLine>
+   <SourceLine>if IsFrameBlockingDirection(mDirection) then return true</SourceLine>
+   <SourceLine>// now check walls</SourceLine>
    <SourceLine>return mWorld.IsWallBetween( mAvenue, mStreet, NextAvenue, NextStreet )</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -601,9 +604,13 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function leftIsBlocked() As Boolean</SourceLine>
+   <SourceLine>// check frame</SourceLine>
+   <SourceLine>dim ld as integer = LeftDirection</SourceLine>
+   <SourceLine>if IsFrameBlockingDirection(ld) then return true</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>return mWorld.IsWallBetween( mAvenue, mStreet, _</SourceLine>
-   <SourceLine>mAvenue + mAvenueDeltas( LeftDirection ), _</SourceLine>
-   <SourceLine> mStreet +  mStreetDeltas( LeftDirection ) )</SourceLine>
+   <SourceLine>mAvenue + mAvenueDeltas( ld ), _</SourceLine>
+   <SourceLine> mStreet +  mStreetDeltas( ld ) )</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -637,9 +644,14 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function rightIsBlocked() As Boolean</SourceLine>
+   <SourceLine>// check frame</SourceLine>
+   <SourceLine>dim rd as integer = RightDirection</SourceLine>
+   <SourceLine>if IsFrameBlockingDirection(rd) then return true</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>return mWorld.IsWallBetween( mAvenue, mStreet, _</SourceLine>
-   <SourceLine>mAvenue + mAvenueDeltas( RightDirection ), _</SourceLine>
-   <SourceLine> mStreet +  mStreetDeltas( RightDirection ) )</SourceLine>
+   <SourceLine>mAvenue + mAvenueDeltas( rd ), _</SourceLine>
+   <SourceLine>mStreet +  mStreetDeltas( rd ) )</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -850,6 +862,63 @@
   <Shared>0</Shared>
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PrepareKarelScript</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine> Shared Function PrepareKarelScript(inScript as String) As String</SourceLine>
+   <SourceLine>// do any extra preparation required</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// find if the code contains a </SourceLine>
+   <SourceLine>//dim i as </SourceLine>
+   <SourceLine>// or multiple variables dim i, k as </SourceLine>
+   <SourceLine>// but not smart enough to pickup dim k, i as </SourceLine>
+   <SourceLine>// because that is getting very paranoid</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// if not defined, we will insert one</SourceLine>
+   <SourceLine>dim rp as new RegEx</SourceLine>
+   <SourceLine>rp.SearchPattern = "dim[\s]+i[,\s]+"</SourceLine>
+   <SourceLine>if rp.Search( inScript ) is nil then</SourceLine>
+   <SourceLine>inScript = "dim i as integer" + EndOfLine + inScript </SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return inScript</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>1</Shared>
+  <ItemParams>inScript as String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsFrameBlockingDirection</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsFrameBlockingDirection(inDirection as integer) As Boolean</SourceLine>
+   <SourceLine>if inDirection = North then</SourceLine>
+   <SourceLine>if mStreet = mWorld.NumStreets then return true</SourceLine>
+   <SourceLine>elseif inDirection = South then</SourceLine>
+   <SourceLine>if mStreet = 1 then return true</SourceLine>
+   <SourceLine>elseif inDirection = East then</SourceLine>
+   <SourceLine>if mAvenue = mWorld.NumAvenues then return true</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if mAvenue = 1 then return true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return false</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inDirection as integer</ItemParams>
+  <ItemResult>Boolean</ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>
