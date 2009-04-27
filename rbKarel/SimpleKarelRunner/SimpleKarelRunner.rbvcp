@@ -20,6 +20,7 @@ Class=KarelWorldLocatable;../Externals/KarelWorldLocatable.xml;&h611349D4;&h6FAA
 Class=KarelRobot;../Externals/KarelRobot.xml;&h7F0FB4F0;&h6FAA62C2;false
 Class=KarelWall;../Externals/KarelWall.xml;&h2A24DBAE;&h6FAA62C2;false
 Interface=KarelStepApprover;../Externals/KarelStepApprover.xml;&h7EF9436F;&h6FAA62C2;false
+Class=KarelException;../Externals/KarelException.xml;&h2F9A9058;&h6FAA62C2;false
 DefaultWindow=SimpleKarelRunner
 AppMenuBar=KarelRunnerMenubar
 MajorVersion=1

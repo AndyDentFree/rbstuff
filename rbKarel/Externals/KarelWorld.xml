@@ -495,6 +495,25 @@
   <ItemParams></ItemParams>
   <ItemResult>KarelRobot</ItemResult>
  </Method>
+ <Method>
+  <ItemName>ErrorShutdown</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ErrorShutdown(msg as string)</SourceLine>
+   <SourceLine>for each obs as KarelWorldObserver in mObservers</SourceLine>
+   <SourceLine>obs.ErrorShutdown self, msg</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>msg as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Note>
   <ItemName>About</ItemName>
   <Compatibility></Compatibility>

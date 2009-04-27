@@ -51,50 +51,6 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
       Visible         =   True
       Width           =   480
    End
-   Begin EditField ScriptEntry
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      BackColor       =   16777215
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   649
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   512
-      LimitText       =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   False
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   0
-      TextFont        =   "System"
-      TextSize        =   12
-      Top             =   11
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   441
-   End
    Begin PushButton RunButton
       AutoDeactivate  =   True
       Bold            =   False
@@ -317,14 +273,163 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
    Begin Thread KarelThread
       Height          =   32
       Index           =   -2147483648
-      Left            =   26
+      Left            =   -18
       LockedInPosition=   False
       Priority        =   5
       Scope           =   0
       StackSize       =   0
       TabPanelIndex   =   0
-      Top             =   617
+      Top             =   114
       Width           =   32
+   End
+   Begin TabPanel ScriptsTab
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Enabled         =   True
+      Height          =   651
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   512
+      LockBottom      =   True
+      LockedInPosition=   True
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Panels          =   ""
+      Scope           =   0
+      SmallTabs       =   ""
+      TabDefinition   =   "World\rKarel"
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   14
+      Underline       =   ""
+      Value           =   0
+      Visible         =   True
+      Width           =   430
+      Begin EditField ScriptEntry
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         BackColor       =   16777215
+         Bold            =   False
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   606
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ScriptsTab"
+         Italic          =   False
+         Left            =   520
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         Password        =   False
+         ReadOnly        =   False
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollbarVertical=   True
+         Styled          =   False
+         TabIndex        =   0
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   0
+         TextFont        =   "System"
+         TextSize        =   12
+         Top             =   59
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   420
+      End
+      Begin EditField WorldEntry
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         BackColor       =   16777215
+         Bold            =   False
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   606
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ScriptsTab"
+         Italic          =   False
+         Left            =   519
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         Password        =   False
+         ReadOnly        =   False
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollbarVertical=   True
+         Styled          =   False
+         TabIndex        =   0
+         TabPanelIndex   =   1
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   0
+         TextFont        =   "System"
+         TextSize        =   12
+         Top             =   51
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   420
+      End
+   End
+   Begin StaticText StatusDisplay
+      AutoDeactivate  =   True
+      Bold            =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   20
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   ""
+      LockTop         =   ""
+      Multiline       =   ""
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      Text            =   ""
+      TextAlign       =   0
+      TextColor       =   &hFF0033
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   645
+      Underline       =   ""
+      Visible         =   True
+      Width           =   473
    End
 End
 #tag EndWindow
@@ -355,8 +460,13 @@ End
 	#tag MenuHandler
 		Function EditSelectAll() As Boolean Handles EditSelectAll.Action
 			' quick hack given just one edit field
+			if ScriptsTab.Value=0 then
+			WorldEntry.SelStart = 0
+			WorldEntry.SelLength = WorldEntry.Text.Len
+			else
 			ScriptEntry.SelStart = 0
 			ScriptEntry.SelLength = ScriptEntry.Text.Len
+			end if
 		End Function
 	#tag EndMenuHandler
 
@@ -378,7 +488,8 @@ End
 
 	#tag MenuHandler
 		Function SamplesMap1() As Boolean Handles SamplesMap1.Action
-			ScriptEntry.Text = kSampleMap1
+			WorldEntry.Text = kSampleMap1
+			ScriptsTab.Value = 0
 			Return True
 			
 		End Function
@@ -387,6 +498,7 @@ End
 	#tag MenuHandler
 		Function SamplesKarel1() As Boolean Handles SamplesKarel1.Action
 			ScriptEntry.Text = kSampleKarel1
+			ScriptsTab.Value = 1
 			Return True
 			
 		End Function
@@ -395,6 +507,7 @@ End
 	#tag MenuHandler
 		Function SamplesKarel2() As Boolean Handles SamplesKarel2.Action
 			ScriptEntry.Text = kSampleKarel2
+			ScriptsTab.Value = 1
 			Return True
 			
 		End Function
@@ -422,7 +535,14 @@ End
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
 		  Script.Source = ScriptEntry.text
-		  KarelThread.Run
+		  
+		  StatusDisplay.Text = ""
+		  try
+		    KarelThread.Run
+		  catch e as KarelException
+		    StatusDisplay.Text =  e.ErrorMessage
+		  end
+		  
 		  
 		End Sub
 	#tag EndMethod
@@ -490,6 +610,13 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub ErrorShutdown(whichWorld as KarelWorld, errorMsg as string)
+		  StatusDisplay.Text = errorMsg
+		  beep
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -537,7 +664,7 @@ End
 #tag Events LoadMapButton
 	#tag Event
 		Sub Action()
-		  LoadMap ScriptEntry.Text
+		  LoadMap WorldEntry.Text
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -555,8 +682,24 @@ End
 	#tag Event
 		Sub Run()
 		  RunButton.Enabled=false
-		  script.Run
+		  StatusDisplay.Text = ""
+		  try
+		    script.Run
+		  catch e as KarelException
+		    StatusDisplay.Text = e.ErrorMessage
+		  end
 		  RunButton.Enabled=true
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ScriptsTab
+	#tag Event
+		Sub Change()
+		  if me.value=0 then 
+		    WorldEntry.SetFocus
+		  else
+		    ScriptEntry.SetFocus
+		  end if
 		End Sub
 	#tag EndEvent
 #tag EndEvents
