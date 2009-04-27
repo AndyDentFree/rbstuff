@@ -40,12 +40,12 @@
    <SourceLine>x1 = x + halfAveSep</SourceLine>
    <SourceLine>x2 = x1</SourceLine>
    <SourceLine>y1 = y - halfStreetSep</SourceLine>
-   <SourceLine>y1 = y + halfStreetSep</SourceLine>
+   <SourceLine>y2 = y + halfStreetSep</SourceLine>
    <SourceLine>else</SourceLine>
    <SourceLine>x1 = x - halfAveSep</SourceLine>
    <SourceLine>x2 = x1</SourceLine>
    <SourceLine>y1 = y - halfStreetSep</SourceLine>
-   <SourceLine>y1 = y + halfStreetSep</SourceLine>
+   <SourceLine>y2 = y + halfStreetSep</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>viaScripter.DrawLine x1, y1, x2, y2</SourceLine>

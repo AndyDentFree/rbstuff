@@ -166,11 +166,37 @@ Begin Menu KarelRunnerMenubar
       AutoEnable = True
       Begin MenuItem SamplesMap1
          SpecialMenu = 0
-         Text = "Map1"
+         Text = "Map 1"
          Index = -2147483648
          ShortcutKey = "1"
          Shortcut = "Cmd+1"
          MenuModifier = True
+         AutoEnable = True
+      End
+      Begin MenuItem UntitledSeparator
+         SpecialMenu = 0
+         Text = "-"
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin MenuItem SamplesKarel1
+         SpecialMenu = 0
+         Text = "Karel 1"
+         Index = -2147483648
+         ShortcutKey = "1"
+         Shortcut = "Cmd+Shift+1"
+         MenuModifier = True
+         AltMenuModifier = True
+         AutoEnable = True
+      End
+      Begin MenuItem SamplesKarel2
+         SpecialMenu = 0
+         Text = "Karel 2"
+         Index = -2147483648
+         ShortcutKey = "2"
+         Shortcut = "Cmd+Shift+2"
+         MenuModifier = True
+         AltMenuModifier = True
          AutoEnable = True
       End
    End
