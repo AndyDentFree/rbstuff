@@ -111,17 +111,17 @@ Begin Menu KarelRunnerMenubar
          AutoEnable = True
       End
    End
-   Begin MenuItem TestMenu
+   Begin MenuItem KarelMenu
       SpecialMenu = 0
-      Text = "Test"
+      Text = "Karel"
       Index = -2147483648
       AutoEnable = True
-      Begin MenuItem TestApplyScript
+      Begin MenuItem KarelRun
          SpecialMenu = 0
-         Text = "Apply Script"
+         Text = "Run"
          Index = -2147483648
-         ShortcutKey = "1"
-         Shortcut = "Cmd+1"
+         ShortcutKey = "R"
+         Shortcut = "Cmd+R"
          MenuModifier = True
          AutoEnable = True
       End
@@ -131,9 +131,18 @@ Begin Menu KarelRunnerMenubar
          Index = -2147483648
          AutoEnable = True
       End
-      Begin AppleMenuItem About
+      Begin MenuItem KarelLoadMap
          SpecialMenu = 0
-         Text = "About ScriptPictureEffects..."
+         Text = "Load Map"
+         Index = -2147483648
+         ShortcutKey = "L"
+         Shortcut = "Cmd+L"
+         MenuModifier = True
+         AutoEnable = True
+      End
+      Begin AppleMenuItem KarelAboutrbKarel
+         SpecialMenu = 0
+         Text = "About rbKarel..."
          Index = -2147483648
          AutoEnable = True
       End
@@ -149,6 +158,21 @@ Begin Menu KarelRunnerMenubar
       Text = ""
       Index = -2147483648
       AutoEnable = True
+   End
+   Begin MenuItem SamplesMenu
+      SpecialMenu = 0
+      Text = "Samples"
+      Index = -2147483648
+      AutoEnable = True
+      Begin MenuItem SamplesMap1
+         SpecialMenu = 0
+         Text = "Map1"
+         Index = -2147483648
+         ShortcutKey = "1"
+         Shortcut = "Cmd+1"
+         MenuModifier = True
+         AutoEnable = True
+      End
    End
 End
 #tag EndMenu

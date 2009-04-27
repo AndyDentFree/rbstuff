@@ -19,6 +19,12 @@
    <SourceLine>for each bp as KarelBeeper in mBeepers</SourceLine>
    <SourceLine>bp.DrawInContext viaScripter</SourceLine>
    <SourceLine>next </SourceLine>
+   <SourceLine>for each w as KarelWall in mWalls</SourceLine>
+   <SourceLine>w.DrawInContext viaScripter</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>for each r as KarelRobot in mRobots</SourceLine>
+   <SourceLine>r.DrawInContext viaScripter</SourceLine>
+   <SourceLine>next</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -35,9 +41,15 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Constructor(inAvenues as integer, inStreets as integer)</SourceLine>
+   <SourceLine>mWallCleaner = new RegEx</SourceLine>
+   <SourceLine>mWallCleaner.Options.ReplaceAllMatches = true</SourceLine>
+   <SourceLine>mWallCleaner.SearchPattern = "([0-9])[ ]+([0-9])"</SourceLine>
+   <SourceLine>mWallCleaner.ReplacementPattern = "\1, \2"</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>mNumAvenues = inAvenues</SourceLine>
    <SourceLine>mNumStreets = inStreets</SourceLine>
    <SourceLine>MaxRobotsAllowed = 1</SourceLine>
+   <SourceLine>Margin = 20</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -160,11 +172,45 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawWorldBackground(viaScripter as KarelScripter)</SourceLine>
-   <SourceLine>dim frameWidth as integer = viaScripter.Width</SourceLine>
-   <SourceLine>dim frameHeight as integer = viaScripter.Height</SourceLine>
-   <SourceLine>const insetFrame = 2</SourceLine>
-   <SourceLine>viaScripter.PenSize = 4</SourceLine>
-   <SourceLine>viaScripter.DrawRect insetFrame, insetFrame, frameWidth-insetFrame, frameHeight-insetFrame</SourceLine>
+   <SourceLine>dim width as integer = viaScripter.Width</SourceLine>
+   <SourceLine>dim height as integer = viaScripter.Height</SourceLine>
+   <SourceLine>const marginPenSize = 4</SourceLine>
+   <SourceLine>dim insetFrame as integer = Margin - marginPenSize // the thick line is inside the margin</SourceLine>
+   <SourceLine>dim doubleInset as integer  = 2*insetFrame</SourceLine>
+   <SourceLine>dim frameWidth as integer = width - doubleInset</SourceLine>
+   <SourceLine>dim frameHeight as integer = height - doubleInset</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenSize = marginPenSize</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.white</SourceLine>
+   <SourceLine>viaScripter.FillRect 0, 0, width, height  // clear background</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
+   <SourceLine>viaScripter.DrawRect insetFrame, insetFrame, frameWidth, frameHeight</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenSize = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.blue</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// vertical gridlines</SourceLine>
+   <SourceLine>//dim aveSep as integer = frameWidth / (mNumAvenues+1)  // gap either side of lines</SourceLine>
+   <SourceLine>dim aveSep as integer = viaScripter.AvenueGapX</SourceLine>
+   <SourceLine>dim aveY1 as integer = Margin</SourceLine>
+   <SourceLine>dim aveY2 as integer = height - Margin</SourceLine>
+   <SourceLine>dim x as integer = Margin</SourceLine>
+   <SourceLine>for i as integer = 1 to mNumAvenues</SourceLine>
+   <SourceLine>x = x + aveSep</SourceLine>
+   <SourceLine>viaScripter.DrawLine x, aveY1, x, aveY2</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// horizontal gridlines</SourceLine>
+   <SourceLine>//dim streetSep as integer = frameHeight/ (mNumStreets + 1)</SourceLine>
+   <SourceLine>dim streetSep as integer = viaScripter.StreetGapY</SourceLine>
+   <SourceLine>dim streetX1 as integer = Margin</SourceLine>
+   <SourceLine>dim streetX2 as integer = width - Margin</SourceLine>
+   <SourceLine>dim y as integer = Margin</SourceLine>
+   <SourceLine>for i as integer = 1 to mNumStreets</SourceLine>
+   <SourceLine>y = y + streetSep</SourceLine>
+   <SourceLine>viaScripter.DrawLine streetX1, y, streetX2, y</SourceLine>
+   <SourceLine>next</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -216,7 +262,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Robot(street as integer, avenue as integer, facing as integer, initialBeepers as integer = 0)</SourceLine>
+   <SourceLine>Sub Robot(street as integer, avenue as integer, facing as integer, initialBeepers as integer)</SourceLine>
    <SourceLine>mRobots.Append new KarelRobot(avenue, street, facing, initialBeepers)</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -224,7 +270,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>street as integer, avenue as integer, facing as integer, initialBeepers as integer = 0</ItemParams>
+  <ItemParams>street as integer, avenue as integer, facing as integer, initialBeepers as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -267,7 +313,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Beepers(street as integer, avenue as integer, numBeepers as integer = 1)</SourceLine>
+   <SourceLine>Sub Beepers(street as integer, avenue as integer, numBeepers as integer)</SourceLine>
    <SourceLine>// creates a beeper</SourceLine>
    <SourceLine>// this method is here for consistency when scripting map creation</SourceLine>
    <SourceLine>for i as integer = 1 to numBeepers</SourceLine>
@@ -279,7 +325,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>street as integer, avenue as integer, numBeepers as integer = 1</ItemParams>
+  <ItemParams>street as integer, avenue as integer, numBeepers as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -288,9 +334,10 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Wall(street as integer, avenue as integer, edgeFacing as integer, cellsLong as integer=1)</SourceLine>
+   <SourceLine>Sub Wall(street as integer, avenue as integer, edgeFacing as integer)</SourceLine>
    <SourceLine>// note that whilst the java docs say Walls can either be north or west of an intersection (1 or 4 respectively</SourceLine>
    <SourceLine>// we allow on all four sides</SourceLine>
+   <SourceLine>const cellsLong = 1  // until fix bug with KarelWall.IsBetween, then need to duplicate method as optional params don't work in RBScript</SourceLine>
    <SourceLine>mWalls.Append new KarelWall(avenue, street, edgeFacing, cellsLong)</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -298,7 +345,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>street as integer, avenue as integer, edgeFacing as integer, cellsLong as integer=1</ItemParams>
+  <ItemParams>street as integer, avenue as integer, edgeFacing as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -317,6 +364,66 @@
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
   <ItemParams>inStreets as integer, inAvenues as integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>CleanupWorld</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function CleanupWorld(toClean as String) As string</SourceLine>
+   <SourceLine>if toClean.LenB = 0 then return toClean  // efficient and safe trivial empty handling</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// regex will only replace first match in a row so Beepers 3 3 1</SourceLine>
+   <SourceLine>// takes two passes to convert to Beepers 3, 3, 1</SourceLine>
+   <SourceLine>do</SourceLine>
+   <SourceLine>toClean = mWallCleaner.Replace(toClean)</SourceLine>
+   <SourceLine>loop until mWallCleaner.Search( toClean ) is nil</SourceLine>
+   <SourceLine>return toClean</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>toClean as String</ItemParams>
+  <ItemResult>string</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Robot</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Robot(street as integer, avenue as integer, facing as integer)</SourceLine>
+   <SourceLine>mRobots.Append new KarelRobot(avenue, street, facing, 0)  // no beepers</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>street as integer, avenue as integer, facing as integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Reset</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Reset()</SourceLine>
+   <SourceLine>redim mBeepers(-1)</SourceLine>
+   <SourceLine>redim mWalls(-1)</SourceLine>
+   <SourceLine>redim mRobots(-1)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>
@@ -365,6 +472,12 @@
    <NoteLine>Wall 4 3 4</NoteLine>
    <NoteLine>Wall 4 4 4</NoteLine>
    <NoteLine></NoteLine>
+   <NoteLine>to convert that into a comma-separated version we can use, need to use regexp</NoteLine>
+   <NoteLine>([0-9])[ ]+([0-9])</NoteLine>
+   <NoteLine>replaced with</NoteLine>
+   <NoteLine>\1, \2</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Which is the responsibility of the caller but we provide the method CleanupWorld for them to use</NoteLine>
   </ItemSource>
   <ItemFlags>0</ItemFlags>
  </Note>
@@ -478,6 +591,20 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>mWalls() As KarelWall</ItemDeclaration>
   <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mWallCleaner</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mWallCleaner As RegEx</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mWallCleaner As RegEx</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <ViewBehavior>

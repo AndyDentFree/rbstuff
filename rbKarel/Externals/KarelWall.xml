@@ -16,6 +16,39 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawInContext(viaScripter as KarelScripter)</SourceLine>
+   <SourceLine>dim x as integer = viaScripter.Avenue2X( mAvenue )</SourceLine>
+   <SourceLine>dim y as integer = viaScripter.Street2Y( mStreet )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
+   <SourceLine>viaScripter.PenSize = 4</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim halfAveSep as integer = viaScripter.AvenueGapX / 2</SourceLine>
+   <SourceLine>dim halfStreetSep as integer = viaScripter.StreetGapY / 2</SourceLine>
+   <SourceLine>dim x1, x2, y1, y2 as integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if mOnEdge = KarelScripter.North then</SourceLine>
+   <SourceLine>x1 = x - halfAveSep</SourceLine>
+   <SourceLine>x2 = x + halfAveSep</SourceLine>
+   <SourceLine>y1 = y - halfStreetSep</SourceLine>
+   <SourceLine>y1 = y2</SourceLine>
+   <SourceLine>elseif mOnEdge = KarelScripter.South then</SourceLine>
+   <SourceLine>x1 = x - halfAveSep</SourceLine>
+   <SourceLine>x2 = x + halfAveSep</SourceLine>
+   <SourceLine>y1 = y + halfStreetSep</SourceLine>
+   <SourceLine>y1 = y2</SourceLine>
+   <SourceLine>elseif mOnEdge = KarelScripter.East then</SourceLine>
+   <SourceLine>x1 = x + halfAveSep</SourceLine>
+   <SourceLine>x2 = x1</SourceLine>
+   <SourceLine>y1 = y - halfStreetSep</SourceLine>
+   <SourceLine>y1 = y + halfStreetSep</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>x1 = x - halfAveSep</SourceLine>
+   <SourceLine>x2 = x1</SourceLine>
+   <SourceLine>y1 = y - halfStreetSep</SourceLine>
+   <SourceLine>y1 = y + halfStreetSep</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.DrawLine x1, y1, x2, y2</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -55,6 +88,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IsBetween(ave1 as integer, street1 as integer, ave2 as integer, street2 as integer) As Boolean</SourceLine>
    <SourceLine>// this is not strictly a spatial IsBetween so much as IsAdjacentAndBetween because it only is used for walls right in front of Karel</SourceLine>
+   <SourceLine>//@bug - the test for between only works when wall is 1 cell long</SourceLine>
    <SourceLine>if mAvenue&lt;&gt;ave1 or mStreet&lt;&gt;street1 then return false   // first location is not at wall start</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// makes simplifying assumption that if you take off at an angle we are probably in the way</SourceLine>
@@ -120,20 +154,6 @@
   <Shared>0</Shared>
  </Property>
  <ViewBehavior>
-  <ViewProperty>
-   <ObjName>Street</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-   <InheritsFrom>KarelWorldLocatable</InheritsFrom>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Avenue</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-   <InheritsFrom>KarelWorldLocatable</InheritsFrom>
-  </ViewProperty>
   <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>

@@ -16,6 +16,19 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawInContext(viaScripter as KarelScripter)</SourceLine>
+   <SourceLine>dim x as integer = viaScripter.Avenue2X( mAvenue )</SourceLine>
+   <SourceLine>dim y as integer = viaScripter.Street2Y( mStreet )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.red</SourceLine>
+   <SourceLine>const halfWidth = 8</SourceLine>
+   <SourceLine>viaScripter.FillSquare x-halfWidth, y-halfWidth, 2*halfWidth</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now work out side to put blob on</SourceLine>
+   <SourceLine>dim sideOffsetX as integer = viaScripter.AvenueMultiplier( Facing ) * halfWidth</SourceLine>
+   <SourceLine>dim sideOffsetY as integer = viaScripter.StreetMultiplier( Facing ) * halfWidth</SourceLine>
+   <SourceLine>const blobRadius = 4</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.blue</SourceLine>
+   <SourceLine>viaScripter.fillCircle x + sideOffsetX - blobRadius, y + sideOffsetY - blobRadius, 2*blobRadius</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -90,20 +103,6 @@
  </Property>
  <ViewBehavior>
   <ViewProperty>
-   <ObjName>Street</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-   <InheritsFrom>KarelWorldLocatable</InheritsFrom>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Avenue</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-   <InheritsFrom>KarelWorldLocatable</InheritsFrom>
-  </ViewProperty>
-  <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
@@ -138,6 +137,12 @@
   </ViewProperty>
   <ViewProperty>
    <ObjName>Facing</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>BeeperCount</ObjName>
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>

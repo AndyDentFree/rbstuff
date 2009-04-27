@@ -2,7 +2,7 @@
 <RBProject version="2009r2.1">
 <block type="Module" ID="510044857">
  <ObjName>GraphicsScripter</ObjName>
- <ObjContainerID>0</ObjContainerID>
+ <ObjContainerID>1873437378</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -1435,6 +1435,76 @@
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
   <ItemParams>assigns n as integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PenHeight</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PenHeight() As integer</SourceLine>
+   <SourceLine>return mDest.PenHeight</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PenWidth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PenWidth() As integer</SourceLine>
+   <SourceLine>return mDest.PenWidth </SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PenColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PenColor() As Color</SourceLine>
+   <SourceLine>// synonym for ForeColor to be more intuitable</SourceLine>
+   <SourceLine>return mDest.ForeColor</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PenColor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PenColor(assigns c as Color)</SourceLine>
+   <SourceLine>// synonym for ForeColor to be more intuitable</SourceLine>
+   <SourceLine>mDest.ForeColor = c</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>assigns c as Color</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>
