@@ -264,7 +264,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   78
-      LineStep        =   100
+      LineStep        =   250
       LiveScroll      =   ""
       LockBottom      =   ""
       LockedInPosition=   False
@@ -273,13 +273,13 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
       LockTop         =   True
       Maximum         =   5000
       Minimum         =   0
-      PageStep        =   20
+      PageStep        =   250
       Scope           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   507
-      Value           =   500
+      Value           =   4500
       Visible         =   True
       Width           =   298
    End
@@ -466,7 +466,7 @@ End
 	#tag Constant, Name = kSampleMap1, Type = String, Dynamic = False, Default = \"World 5 5\rBeepers 3 3 1\rRobot 4 3 1 0\rWall 2 2 1\rWall 3 2 1\rWall 1 1 4\rWall 2 1 4\rWall 2 2 4\rWall 3 1 4\rWall 3 2 4\rWall 3 3 4\rWall 4 1 4\rWall 4 2 4\rWall 4 3 4\rWall 4 4 4", Scope = Public
 	#tag EndConstant
 
-	#tag Constant, Name = kSampleKarel1, Type = String, Dynamic = False, Default = \"TurnOn\rMove\rMove", Scope = Public
+	#tag Constant, Name = kSampleKarel1, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rTurnLeft\rMove\rPickBeeper\rMove\rTurnLeft\rMove\rPutBeeper\rMove", Scope = Public
 	#tag EndConstant
 
 	#tag Constant, Name = kSampleKarel2, Type = String, Dynamic = False, Default = \"TurnOn\rdim i as integer\rfor i \x3D 1 to 3\r  TurnLeft\r  Move\rNext", Scope = Public
@@ -504,7 +504,10 @@ End
 #tag Events SpeedSlider
 	#tag Event
 		Sub ValueChanged()
-		  mScripter.MovePause = me.Value / 1000.0  // milliseconds to seconds
+		  // slider ascends from left to right but we want delay to decrease from left to right, to give an ascending SPEED control
+		  // range of 0..5000 is 0..5 seconds with default of 4500 = 0.5second initial pause
+		  dim flippedMilliSeconds as integer = me.Maximum - me.Value
+		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
 		End Sub
 	#tag EndEvent
 #tag EndEvents
