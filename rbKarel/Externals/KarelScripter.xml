@@ -103,12 +103,13 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Street2Y(atStreet as integer) As integer</SourceLine>
    <SourceLine>dim numS as integer = mWorld.NumStreets</SourceLine>
-   <SourceLine>if atStreet &gt; numS then return Height</SourceLine>
+   <SourceLine>if atStreet &gt; numS then return Height  // boundary condition is at the edge of the known world</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Y coords are flipped</SourceLine>
+   <SourceLine>// Y coords are flipped - streets are higher closer to top of screen</SourceLine>
+   <SourceLine>dim flippedStreet as integer =  (numS - atStreet)  + 1</SourceLine>
    <SourceLine>dim marg as integer = mWorld.Margin</SourceLine>
    <SourceLine>dim heightToDiv as double = height - 2*marg</SourceLine>
-   <SourceLine>dim retY as integer = marg + (numS - atStreet) * heightToDiv/(1.0*numS)</SourceLine>
+   <SourceLine>dim retY as integer = marg +flippedStreet * heightToDiv/(1.0*numS)</SourceLine>
    <SourceLine>return retY</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -127,7 +128,7 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Avenue2X(atAvenue as integer) As integer</SourceLine>
    <SourceLine>dim numA as integer = mWorld.NumAvenues</SourceLine>
-   <SourceLine>if atAvenue &gt; numA then return Width</SourceLine>
+   <SourceLine>if atAvenue &gt; numA then return Width // boundary condition is at the edge of the known world</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>dim marg as integer = mWorld.Margin</SourceLine>
    <SourceLine>dim widthToDiv as double = width - 2*marg</SourceLine>
@@ -388,12 +389,14 @@
    <SourceLine>return</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>mStreet = NextStreet</SourceLine>
+   <SourceLineBreakpoint>5</SourceLineBreakpoint>
    <SourceLine>mAvenue = NextAvenue</SourceLine>
    <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
    <SourceLine>mLogger.LogKarelEvent "Move to street " + str(mStreet) + " avenue " + str(mAvenue), self</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>Wait MovePause</SourceLine>
    <SourceLine>mWorld.MoveRobotTo mStreet, mAvenue</SourceLine>
+   <SourceLineBreakpoint>11</SourceLineBreakpoint>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -777,40 +780,6 @@
   <ItemResult>integer</ItemResult>
  </Method>
  <Method>
-  <ItemName>StreetMultiplier</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function StreetMultiplier(inDirection as integer) As integer</SourceLine>
-   <SourceLine>return mStreetDeltas( inDirection )</SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
-  <ItemParams>inDirection as integer</ItemParams>
-  <ItemResult>integer</ItemResult>
- </Method>
- <Method>
-  <ItemName>AvenueMultiplier</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function AvenueMultiplier(inDirection as integer) As integer</SourceLine>
-   <SourceLine>return mAvenueDeltas( inDirection )</SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
-  <ItemParams>inDirection as integer</ItemParams>
-  <ItemResult>integer</ItemResult>
- </Method>
- <Method>
   <ItemName>UseWorld</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
@@ -863,6 +832,19 @@
    <NoteLine></NoteLine>
    <NoteLine>There is also the question of an inset margin because the KarelWorld draws a boundary.</NoteLine>
    <NoteLine></NoteLine>
+   <NoteLine>There are four functions presenting graphics coordinates to the user and clients such as KarelRobot, KarelWorld etc. for drawing:</NoteLine>
+   <NoteLine>Avenue2X</NoteLine>
+   <NoteLine>AvenueGapX</NoteLine>
+   <NoteLine>Street2Y</NoteLine>
+   <NoteLine>StreetGapY</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>We have width and height inherited from GraphicsScripter as the size of the canvas on which we're operating.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>These are inset by mWorld.Margin to allow it to draw a frame around the area.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Thus the maximum horizontal drawing area is width - 2*Margin, on which we have mWorld.NumAvenues</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>The maximum vertical drawing area is height - 2*Margin on which we have mWorld.NumStreets</NoteLine>
   </ItemSource>
   <ItemFlags>0</ItemFlags>
  </Note>
