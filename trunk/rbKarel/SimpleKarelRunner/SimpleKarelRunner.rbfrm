@@ -95,11 +95,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver
       Visible         =   True
       Width           =   441
    End
-   Begin PushButton ApplyButton
+   Begin PushButton RunButton
       AutoDeactivate  =   True
       Bold            =   False
       Cancel          =   False
-      Caption         =   "Apply Script"
+      Caption         =   "Run:"
       Default         =   False
       Enabled         =   True
       Height          =   20
@@ -128,13 +128,42 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver
       EncodingFont    =   ""
       Height          =   32
       Index           =   -2147483648
-      Left            =   -55
+      Left            =   -18
       LockedInPosition=   False
       Scope           =   0
       Source          =   ""
       TabPanelIndex   =   0
-      Top             =   66
+      Top             =   59
       Width           =   32
+   End
+   Begin PushButton LoadMapButton
+      AutoDeactivate  =   True
+      Bold            =   False
+      Cancel          =   False
+      Caption         =   "Load Map:"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   403
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   12
+      Top             =   535
+      Underline       =   False
+      Visible         =   True
+      Width           =   97
    End
 End
 #tag EndWindow
@@ -142,23 +171,54 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Open()
-		  DestCanvas.Backdrop = New Picture( DestCanvas.Width,DestCanvas.Height, 32)
-		  mScripter = new KarelScripter
+		  mWorld = new KarelWorld(10, 10)
+		  mScripter = new KarelScripter( DestCanvas.Graphics, mWorld )
+		  
 		End Sub
 	#tag EndEvent
 
+	#tag Event
+		Sub Resized()
+		  RedrawWorld
+		End Sub
+	#tag EndEvent
 
-	#tag MenuHandler
-		Function TestApplyScript() As Boolean Handles TestApplyScript.Action
-			ApplyScript
-		End Function
-	#tag EndMenuHandler
+	#tag Event
+		Sub Resizing()
+		  RedrawWorld
+		End Sub
+	#tag EndEvent
+
 
 	#tag MenuHandler
 		Function EditSelectAll() As Boolean Handles EditSelectAll.Action
 			' quick hack given just one edit field
 			ScriptEntry.SelStart = 0
 			ScriptEntry.SelLength = ScriptEntry.Text.Len
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function KarelLoadMap() As Boolean Handles KarelLoadMap.Action
+			LoadMapButton.Push
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function KarelRun() As Boolean Handles KarelRun.Action
+			RunButton.Push
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesMap1() As Boolean Handles SamplesMap1.Action
+			ScriptEntry.Text = kSampleMap1
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
@@ -177,18 +237,29 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function Action() As Boolean
-		  ' quick hack of select all in the only text field
-		  ScriptEntry.selStart = 0
-		  ScriptEntry.SelLength = ScriptEntry.text.Len
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub WorldUpdated(whichWorld as KarelWorld)
 		  // Part of the KarelWorldObserver interface.
 		  
+		  RedrawWorld
 		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub LoadMap(mapScript as string)
+		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
+		  script.Context = mWorld
+		  Script.Source = mWorld.CleanupWorld(mapScript)
+		  mWorld.Reset
+		  script.Run
+		  RedrawWorld
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RedrawWorld()
+		  // get the world to draw everything
+		  mWorld.DrawInContext mScripter
 		End Sub
 	#tag EndMethod
 
@@ -205,10 +276,13 @@ End
 	#tag Constant, Name = kImageFilters, Type = String, Dynamic = False, Default = \"image/jpeg;image/png;/image/gif", Scope = Public
 	#tag EndConstant
 
+	#tag Constant, Name = kSampleMap1, Type = String, Dynamic = False, Default = \"World 5 5\rBeepers 3 3 1\rRobot 4 3 1 0\rWall 2 2 1\rWall 3 2 1\rWall 1 1 4\rWall 2 1 4\rWall 2 2 4\rWall 3 1 4\rWall 3 2 4\rWall 3 3 4\rWall 4 1 4\rWall 4 2 4\rWall 4 3 4\rWall 4 4 4", Scope = Public
+	#tag EndConstant
+
 
 #tag EndWindowCode
 
-#tag Events ApplyButton
+#tag Events RunButton
 	#tag Event
 		Sub Action()
 		  ApplyScript
@@ -224,6 +298,13 @@ End
 	#tag Event
 		Sub CompilerError(line As Integer, errorNumber As Integer, errorMsg As String)
 		  msgBox "Compiler error in line "+str(line)+" """+nthField(me.source,chr(13),line)+""": "+chr(13)+errormsg
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadMapButton
+	#tag Event
+		Sub Action()
+		  LoadMap ScriptEntry.Text
 		End Sub
 	#tag EndEvent
 #tag EndEvents

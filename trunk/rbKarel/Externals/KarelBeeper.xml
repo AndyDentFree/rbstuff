@@ -16,6 +16,15 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawInContext(viaScripter as KarelScripter)</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
+   <SourceLine>dim x as integer = viaScripter.Avenue2X( mAvenue )</SourceLine>
+   <SourceLine>dim y as integer = viaScripter.Street2Y( mStreet )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
+   <SourceLine>const innerRadius = 4</SourceLine>
+   <SourceLine>viaScripter.FillCircle x-innerRadius, y-innerRadius, 2*innerRadius</SourceLine>
+   <SourceLine>const outerRadius = 8</SourceLine>
+   <SourceLine>viaScripter.DrawCircle x-outerRadius, y-outerRadius, 2*outerRadius</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -74,18 +83,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <InheritsFrom>Object</InheritsFrom>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Street</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
-  </ViewProperty>
-  <ViewProperty>
-   <ObjName>Avenue</ObjName>
-   <PropertyGroup>Behavior</PropertyGroup>
-   <PropertyValue>0</PropertyValue>
-   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>
