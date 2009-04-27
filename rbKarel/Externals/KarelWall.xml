@@ -87,19 +87,38 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IsBetween(ave1 as integer, street1 as integer, ave2 as integer, street2 as integer) As Boolean</SourceLine>
-   <SourceLine>// this is not strictly a spatial IsBetween so much as IsAdjacentAndBetween because it only is used for walls right in front of Karel</SourceLine>
-   <SourceLine>//@bug - the test for between only works when wall is 1 cell long</SourceLine>
-   <SourceLine>if mAvenue&lt;&gt;ave1 or mStreet&lt;&gt;street1 then return false   // first location is not at wall start</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// makes simplifying assumption that if you take off at an angle we are probably in the way</SourceLine>
+   <SourceLine>// horizontal lines</SourceLine>
+   <SourceLine>if mOnEdge = KarelScripter.North or mOnEdge = KarelScripter.South then</SourceLine>
+   <SourceLine>if street1 = street2 then return false  // we don't block anything that is horizontal</SourceLine>
+   <SourceLine>if street1 &gt; street2 then</SourceLine>
+   <SourceLine>dim tempStreet as integer = street1</SourceLine>
+   <SourceLine>street1 = street2</SourceLine>
+   <SourceLine>street2 = tempStreet</SourceLine>
+   <SourceLine>end if  // swap street1 and 2</SourceLine>
    <SourceLine>if mOnEdge = KarelScripter.North then</SourceLine>
-   <SourceLine>if street2 &gt; street1 then return true  // we're on Upper side and street numbers go up</SourceLine>
-   <SourceLine>elseif mOnEdge = KarelScripter.South then</SourceLine>
-   <SourceLine>if street2 &lt; street1 then return true</SourceLine>
-   <SourceLine>elseif mOnEdge = KarelScripter.East then</SourceLine>
-   <SourceLine>if ave2 &gt; ave1 then return true</SourceLine>
+   <SourceLine>// North is above the point</SourceLine>
+   <SourceLine>if street1 &lt;= mStreet and street2 &gt; mStreet and ave1 &lt;= mAvenue and ave2 &gt;= mAvenue then return true</SourceLine>
    <SourceLine>else</SourceLine>
-   <SourceLine>if ave2 &lt; ave1 then return true</SourceLine>
+   <SourceLine>  // South is below the point</SourceLine>
+   <SourceLine>if street1 &lt; mStreet and street2 &gt;= mStreet and ave1 &lt;= mAvenue and ave2 &gt;= mAvenue then return true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// vertical lines</SourceLine>
+   <SourceLine>if ave1 = ave2 then return false  // we don't block verticals</SourceLine>
+   <SourceLine>if ave1 &gt; ave2 then</SourceLine>
+   <SourceLine>dim tempAve as integer = ave1</SourceLine>
+   <SourceLine>ave1 = ave2</SourceLine>
+   <SourceLine>ave2 = tempAve</SourceLine>
+   <SourceLine>end if  // swap ave1 &amp; 2</SourceLine>
+   <SourceLine>if mOnEdge = KarelScripter.East then</SourceLine>
+   <SourceLine>// East is right of the point</SourceLine>
+   <SourceLine>if street1 &lt;= mStreet and street2 &gt;= mStreet and ave1 &lt;= mAvenue and ave2 &gt; mAvenue then return true</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// West is left of the point</SourceLine>
+   <SourceLine>if street1 &lt;= mStreet and street2 &gt;= mStreet and ave1 &lt; mAvenue and ave2 &gt;= mAvenue then return true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine>return false</SourceLine>
    <SourceLine>End Function</SourceLine>

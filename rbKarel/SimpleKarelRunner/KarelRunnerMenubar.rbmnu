@@ -173,6 +173,15 @@ Begin Menu KarelRunnerMenubar
          MenuModifier = True
          AutoEnable = True
       End
+      Begin MenuItem SamplesMap2
+         SpecialMenu = 0
+         Text = "Map 2"
+         Index = -2147483648
+         ShortcutKey = "2"
+         Shortcut = "Cmd+2"
+         MenuModifier = True
+         AutoEnable = True
+      End
       Begin MenuItem UntitledSeparator
          SpecialMenu = 0
          Text = "-"
@@ -195,6 +204,16 @@ Begin Menu KarelRunnerMenubar
          Index = -2147483648
          ShortcutKey = "2"
          Shortcut = "Cmd+Shift+2"
+         MenuModifier = True
+         AltMenuModifier = True
+         AutoEnable = True
+      End
+      Begin MenuItem SamplesKarel3
+         SpecialMenu = 0
+         Text = "Karel 3"
+         Index = -2147483648
+         ShortcutKey = "3"
+         Shortcut = "Cmd+Shift+3"
          MenuModifier = True
          AltMenuModifier = True
          AutoEnable = True
