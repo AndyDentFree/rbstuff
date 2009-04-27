@@ -1,5 +1,5 @@
 #tag Window
-Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
+Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
    BackColor       =   &hFFFFFF
    Backdrop        =   0
    CloseButton     =   True
@@ -458,19 +458,6 @@ End
 
 
 	#tag MenuHandler
-		Function EditSelectAll() As Boolean Handles EditSelectAll.Action
-			' quick hack given just one edit field
-			if ScriptsTab.Value=0 then
-			WorldEntry.SelStart = 0
-			WorldEntry.SelLength = WorldEntry.Text.Len
-			else
-			ScriptEntry.SelStart = 0
-			ScriptEntry.SelLength = ScriptEntry.Text.Len
-			end if
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
 		Function KarelLoadMap() As Boolean Handles KarelLoadMap.Action
 			LoadMapButton.Push
 			Return True
@@ -534,7 +521,7 @@ End
 		  
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
-		  Script.Source = ScriptEntry.text
+		  Script.Source = PrepareKarelScript(ScriptEntry.text)
 		  
 		  StatusDisplay.Text = ""
 		  try
@@ -580,33 +567,6 @@ End
 		  
 		  StepButton.Enabled=true
 		  //@TODO work out a way for the RBScript to be put on hold here but user able to use GUI - maybe run script in thread?
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ApplyScriptImmediately()
-		  // kept for posterity and comparisons but note that this runs the entire script and then displays results
-		  // REGARDLESS of what you set on SpeedSlider
-		  if ScriptEntry.text.len=0 then
-		    MsgBox "You must enter a Karel Program to Run"
-		    return
-		  end if
-		  
-		  RedrawWorld
-		  
-		  // reload some states
-		  mScripter.UseWorld mWorld  // force it to reload robot etc.
-		  if SayCheck.Value then
-		    mScripter.SetLogger new KarelLogSpeech
-		  else
-		    mScripter.SetLogger nil
-		  end if
-		  
-		  
-		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
-		  script.Context = mScripter
-		  Script.Source = ScriptEntry.text
-		  script.Run
 		End Sub
 	#tag EndMethod
 
@@ -695,7 +655,7 @@ End
 #tag Events ScriptsTab
 	#tag Event
 		Sub Change()
-		  if me.value=0 then 
+		  if me.value=0 then
 		    WorldEntry.SetFocus
 		  else
 		    ScriptEntry.SetFocus
