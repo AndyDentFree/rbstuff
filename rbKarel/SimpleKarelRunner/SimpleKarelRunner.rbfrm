@@ -1,5 +1,5 @@
 #tag Window
-Begin Window SimpleKarelRunner Implements KarelWorldObserver
+Begin Window SimpleKarelRunner Implements KarelWorldObserver, KarelStepApprover
    BackColor       =   &hFFFFFF
    Backdrop        =   0
    CloseButton     =   True
@@ -165,6 +165,155 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver
       Visible         =   True
       Width           =   97
    End
+   Begin CheckBox SayCheck
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Caption         =   "Say each change"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   20
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   534
+      Underline       =   ""
+      Value           =   False
+      Visible         =   True
+      Width           =   171
+   End
+   Begin CheckBox StepCheck
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Caption         =   "Single step moves"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   False
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   20
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   566
+      Underline       =   ""
+      Value           =   False
+      Visible         =   False
+      Width           =   143
+   End
+   Begin PushButton StepButton
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Cancel          =   ""
+      Caption         =   "Step"
+      Default         =   ""
+      Enabled         =   False
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   175
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   566
+      Underline       =   ""
+      Visible         =   False
+      Width           =   80
+   End
+   Begin Slider SpeedSlider
+      AutoDeactivate  =   True
+      Enabled         =   True
+      Height          =   16
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   78
+      LineStep        =   100
+      LiveScroll      =   ""
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Maximum         =   5000
+      Minimum         =   0
+      PageStep        =   20
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   507
+      Value           =   500
+      Visible         =   True
+      Width           =   298
+   End
+   Begin StaticText StaticText1
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   20
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   ""
+      LockTop         =   ""
+      Multiline       =   ""
+      Scope           =   0
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      Text            =   "Speed:"
+      TextAlign       =   0
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   502
+      Underline       =   ""
+      Visible         =   True
+      Width           =   46
+   End
 End
 #tag EndWindow
 
@@ -249,7 +398,14 @@ End
 		  
 		  RedrawWorld
 		  
+		  // reload some states
 		  mScripter.UseWorld mWorld  // force it to reload robot etc.
+		  if SayCheck.Value then
+		    mScripter.SetLogger new KarelLogSpeech
+		  else
+		    mScripter.SetLogger nil
+		  end if
+		  
 		  
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
@@ -282,6 +438,15 @@ End
 		Sub RedrawWorld()
 		  // get the world to draw everything
 		  mWorld.DrawInContext mScripter
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub StepNeeded()
+		  // Part of the KarelStepApprover interface.
+		  
+		  StepButton.Enabled=true
+		  //@TODO work out a way for the RBScript to be put on hold here but user able to use GUI - maybe run script in thread?
 		End Sub
 	#tag EndMethod
 
@@ -333,6 +498,13 @@ End
 	#tag Event
 		Sub Action()
 		  LoadMap ScriptEntry.Text
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events SpeedSlider
+	#tag Event
+		Sub ValueChanged()
+		  mScripter.MovePause = me.Value / 1000.0  // milliseconds to seconds
 		End Sub
 	#tag EndEvent
 #tag EndEvents

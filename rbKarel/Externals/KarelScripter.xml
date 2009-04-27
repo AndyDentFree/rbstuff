@@ -16,6 +16,9 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub TurnOn()</SourceLine>
    <SourceLine>mKarelOn = true</SourceLine>
+   <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent "Turn On at street " + str(mStreet) + " avenue " + str(mAvenue), self</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -33,6 +36,9 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub TurnOff()</SourceLine>
    <SourceLine>mKarelOn = false</SourceLine>
+   <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent "Turn Off", self</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -188,6 +194,9 @@
    <SourceLine>Sub TurnLeft()</SourceLine>
    <SourceLine>mDirection = LeftDirection</SourceLine>
    <SourceLine>mWorld.TurnRobotTo mDirection</SourceLine>
+   <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent "Turn Left", self</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -380,6 +389,9 @@
    <SourceLine>end if</SourceLine>
    <SourceLine>mStreet = NextStreet</SourceLine>
    <SourceLine>mAvenue = NextAvenue</SourceLine>
+   <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent "Move to street " + str(mStreet) + " avenue " + str(mAvenue), self</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>Wait MovePause</SourceLine>
    <SourceLine>mWorld.MoveRobotTo mStreet, mAvenue</SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -652,6 +664,9 @@
    <SourceLine>Sub PickBeeper()</SourceLine>
    <SourceLine>if mWorld.PickBeeperFrom(mAvenue, mStreet) then</SourceLine>
    <SourceLine>mBeeperBag = mBeeperBag + 1</SourceLine>
+   <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent "Pick Beeper at street " + str(mStreet) + " avenue " + str(mAvenue), self</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>else</SourceLine>
    <SourceLine>ErrorShutdown "Beeper not at location when tried to PickBeeper"</SourceLine>
    <SourceLine>end if</SourceLine>
@@ -673,7 +688,9 @@
    <SourceLine>Sub PutBeeper()</SourceLine>
    <SourceLine>mWorld.PutBeeperAt mAvenue, mStreet</SourceLine>
    <SourceLine>mBeeperBag = mBeeperBag - 1</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
+   <SourceLine>mLogger.LogKarelEvent "Put Beeper at street " + str(mStreet) + " avenue " + str(mAvenue), self</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
