@@ -500,6 +500,24 @@ End
 		End Function
 	#tag EndMenuHandler
 
+	#tag MenuHandler
+		Function SamplesMap2() As Boolean Handles SamplesMap2.Action
+			WorldEntry.Text = kSampleMap2
+			ScriptsTab.Value = 0
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesKarel3() As Boolean Handles SamplesKarel3.Action
+			ScriptEntry.Text = kSampleKarel3
+			ScriptsTab.Value = 1
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
 
 	#tag Method, Flags = &h0
 		Sub ApplyScript()
@@ -597,6 +615,12 @@ End
 	#tag EndConstant
 
 	#tag Constant, Name = kSampleKarel2, Type = String, Dynamic = False, Default = \"TurnOn\rdim i as integer\rfor i \x3D 1 to 3\r  TurnLeft\r  Move\rNext", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kSampleMap2, Type = String, Dynamic = False, Default = \"World 5 5\rRobot 3 3 1 0\rWall 3 3 4\rwall 3 3 1\rwall 3 4 4\rwall 2 3 1", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kSampleKarel3, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rif frontIsBlocked then\r  say \"blocked\"\rend if", Scope = Public
 	#tag EndConstant
 
 
