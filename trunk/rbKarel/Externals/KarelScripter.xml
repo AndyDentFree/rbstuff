@@ -201,6 +201,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub TurnLeft()</SourceLine>
+   <SourceLine>Wait MovePause  // this implements the speed of playback</SourceLine>
    <SourceLine>mDirection = LeftDirection</SourceLine>
    <SourceLine>mWorld.TurnRobotTo mDirection</SourceLine>
    <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
@@ -401,7 +402,7 @@
    <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
    <SourceLine>mLogger.LogKarelEvent "Move to street " + str(mStreet) + " avenue " + str(mAvenue), self</SourceLine>
    <SourceLine>end if</SourceLine>
-   <SourceLine>Wait MovePause</SourceLine>
+   <SourceLine>Wait MovePause  // this implements the speed of playback</SourceLine>
    <SourceLine>mWorld.MoveRobotTo mStreet, mAvenue</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -421,6 +422,7 @@
    <SourceLine>Sub ErrorShutdown(msg as string)</SourceLine>
    <SourceLine>Log msg</SourceLine>
    <SourceLine>mKarelOn = false</SourceLine>
+   <SourceLine>mWorld.ErrorShutdown msg</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

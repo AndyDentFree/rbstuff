@@ -1,46 +1,44 @@
 <?xml version="1.0"?>
 <RBProject version="2009r2.1">
-<block type="Module" ID="1520610">
- <ObjName>KarelWorldObserver</ObjName>
+<block type="Module" ID="515551023">
+ <ObjName>KarelException</ObjName>
  <ObjContainerID>1873437378</ObjContainerID>
  <IsClass>1</IsClass>
+ <Superclass>RuntimeException</Superclass>
  <ItemFlags>1</ItemFlags>
- <IsInterface>1</IsInterface>
+ <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
  <Method>
-  <ItemName>WorldUpdated</ItemName>
+  <ItemName>Constructor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub WorldUpdated(whichWorld as KarelWorld)</SourceLine>
-   <SourceLine></SourceLine>
+   <SourceLine>Sub Constructor(msg as String)</SourceLine>
+   <SourceLine>ErrorMessage = msg</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>whichWorld as KarelWorld</ItemParams>
+  <ItemParams>msg as String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
- <Method>
-  <ItemName>ErrorShutdown</ItemName>
+ <Property>
+  <ItemName>ErrorMessage</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub ErrorShutdown(whichWorld as KarelWorld, errorMsg as string)</SourceLine>
+   <SourceLine>ErrorMessage As string</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
+  <ItemDeclaration>ErrorMessage As string</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>whichWorld as KarelWorld, errorMsg as string</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -74,6 +72,20 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Message</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
+   <InheritsFrom>RuntimeException</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ErrorNumber</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>RuntimeException</InheritsFrom>
   </ViewProperty>
  </ViewBehavior>
 </block>
