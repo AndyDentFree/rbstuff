@@ -734,7 +734,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Say(msg as String)</SourceLine>
-   <SourceLine>Speak msg</SourceLine>
+   <SourceLine>SpeakSynchronously msg</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

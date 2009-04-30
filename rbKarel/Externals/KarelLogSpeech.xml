@@ -19,7 +19,7 @@
    <SourceLine>if lenb(mPrefix) &gt; 0 then</SourceLine>
    <SourceLine>msg = mPrefix + " " + msg</SourceLine>
    <SourceLine>end if</SourceLine>
-   <SourceLine>speak msg</SourceLine>
+   <SourceLine>SpeakSynchronously msg</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
