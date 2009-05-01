@@ -227,7 +227,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      Maximum         =   5000
+      Maximum         =   1500
       Minimum         =   0
       PageStep        =   250
       Scope           =   0
@@ -235,7 +235,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   507
-      Value           =   4500
+      Value           =   1000
       Visible         =   True
       Width           =   298
    End
@@ -601,7 +601,7 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub SetMovePauseFromSlider()
 		  // slider ascends from left to right but we want delay to decrease from left to right, to give an ascending SPEED control
-		  // range of 0..5000 is 0..5 seconds with default of 4500 = 0.5second initial pause
+		  // eg: a range of 0..2000 is 0..2 seconds with default of 1500 = 0.5 second initial pause
 		  dim flippedMilliSeconds as integer = SpeedSlider.Maximum - SpeedSlider.Value
 		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
 		End Sub
