@@ -568,7 +568,16 @@ End
 		  script.Context = mWorld
 		  Script.Source = mWorld.CleanupWorld(mapScript)
 		  mWorld.Reset
+		  
+		  // probably never have slow looping world scripts, but just in case, disable running another script
+		  RunButton.Enabled=false
+		  LoadMapButton.Enabled = false
+		  
 		  script.Run  // to redefine the world
+		  
+		  RunButton.Enabled=true
+		  LoadMapButton.Enabled = true
+		  
 		  mScripter.UseWorld mWorld  // needs to get sizes from here
 		  RedrawWorld
 		  
@@ -681,6 +690,7 @@ End
 	#tag Event
 		Sub Run()
 		  RunButton.Enabled=false
+		  LoadMapButton.Enabled = false
 		  StatusDisplay.Text = ""
 		  try
 		    script.Run
@@ -688,6 +698,7 @@ End
 		    StatusDisplay.Text = e.ErrorMessage
 		  end
 		  RunButton.Enabled=true
+		  LoadMapButton.Enabled = true
 		End Sub
 	#tag EndEvent
 #tag EndEvents
