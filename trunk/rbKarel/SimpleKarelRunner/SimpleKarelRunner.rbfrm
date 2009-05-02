@@ -96,7 +96,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       AutoDeactivate  =   True
       Bold            =   False
       Cancel          =   False
-      Caption         =   "Load Map:"
+      Caption         =   "Load World:"
       Default         =   False
       Enabled         =   True
       Height          =   20
