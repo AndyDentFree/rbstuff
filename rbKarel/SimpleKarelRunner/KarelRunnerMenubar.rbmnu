@@ -11,13 +11,32 @@ Begin Menu KarelRunnerMenubar
       Text = "&File"
       Index = -2147483648
       AutoEnable = True
-      Begin MenuItem FileOpenImage
+      Begin MenuItem FileOpen
          SpecialMenu = 0
-         Text = "Open Image..."
+         Text = "Open.."
          Index = -2147483648
          ShortcutKey = "O"
          Shortcut = "Cmd+O"
          MenuModifier = True
+         AutoEnable = True
+      End
+      Begin MenuItem FileSave
+         SpecialMenu = 0
+         Text = "Save"
+         Index = -2147483648
+         ShortcutKey = "S"
+         Shortcut = "Cmd+S"
+         MenuModifier = True
+         AutoEnable = True
+      End
+      Begin MenuItem FileSaveas
+         SpecialMenu = 0
+         Text = "Save as..."
+         Index = -2147483648
+         ShortcutKey = "S"
+         Shortcut = "Cmd+Shift+S"
+         MenuModifier = True
+         AltMenuModifier = True
          AutoEnable = True
       End
       Begin MenuItem UntitledMenu1
@@ -140,7 +159,7 @@ Begin Menu KarelRunnerMenubar
          MenuModifier = True
          AutoEnable = True
       End
-      Begin AppleMenuItem KarelAboutrbKarel
+      Begin AppleMenuItem KarelAbout
          SpecialMenu = 0
          Text = "About rbKarel..."
          Index = -2147483648
@@ -158,66 +177,6 @@ Begin Menu KarelRunnerMenubar
       Text = ""
       Index = -2147483648
       AutoEnable = True
-   End
-   Begin MenuItem SamplesMenu
-      SpecialMenu = 0
-      Text = "Samples"
-      Index = -2147483648
-      AutoEnable = True
-      Begin MenuItem SamplesMap1
-         SpecialMenu = 0
-         Text = "Map 1"
-         Index = -2147483648
-         ShortcutKey = "1"
-         Shortcut = "Cmd+1"
-         MenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem SamplesMap2
-         SpecialMenu = 0
-         Text = "Map 2"
-         Index = -2147483648
-         ShortcutKey = "2"
-         Shortcut = "Cmd+2"
-         MenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem UntitledSeparator
-         SpecialMenu = 0
-         Text = "-"
-         Index = -2147483648
-         AutoEnable = True
-      End
-      Begin MenuItem SamplesKarel1
-         SpecialMenu = 0
-         Text = "Karel 1"
-         Index = -2147483648
-         ShortcutKey = "1"
-         Shortcut = "Cmd+Shift+1"
-         MenuModifier = True
-         AltMenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem SamplesKarel2
-         SpecialMenu = 0
-         Text = "Karel 2"
-         Index = -2147483648
-         ShortcutKey = "2"
-         Shortcut = "Cmd+Shift+2"
-         MenuModifier = True
-         AltMenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem SamplesKarel3
-         SpecialMenu = 0
-         Text = "Karel 3"
-         Index = -2147483648
-         ShortcutKey = "3"
-         Shortcut = "Cmd+Shift+3"
-         MenuModifier = True
-         AltMenuModifier = True
-         AutoEnable = True
-      End
    End
 End
 #tag EndMenu

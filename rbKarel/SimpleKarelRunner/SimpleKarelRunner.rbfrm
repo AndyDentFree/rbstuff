@@ -440,7 +440,7 @@ End
 		  mWorld = new KarelWorld(10, 10)
 		  mWorld.AddObserver self
 		  mScripter = new KarelScripter( DestCanvas.Graphics, mWorld )
-		  
+		  ScriptsTab.Value = 0  // kick the value so the Change event is triggered and the menu titles updated
 		End Sub
 	#tag EndEvent
 
@@ -453,6 +453,30 @@ End
 	#tag Event
 		Sub Resizing()
 		  RedrawWorld
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub EnableMenuItems()
+		  if ScriptsTab.Value=0 then
+		    FileSave.Enabled = mWorldDirty
+		    FileSaveas.Enabled = WorldEntry.Text.LenB > 0 or mWorldDirty
+		  else
+		    FileSave.Enabled = mScriptDirty
+		    FileSaveas.Enabled = ScriptEntry.Text.LenB > 0 or mScriptDirty
+		  end if
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Function CancelClose(appQuitting as Boolean) As Boolean
+		  return not SaveIfDirty("quitting")  // CancelClose is kinda weird - a True means cancel!
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub Close()
+		  Quit
 		End Sub
 	#tag EndEvent
 
@@ -513,6 +537,61 @@ End
 		Function SamplesKarel3() As Boolean Handles SamplesKarel3.Action
 			ScriptEntry.Text = kSampleKarel3
 			ScriptsTab.Value = 1
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function FileOpen() As Boolean Handles FileOpen.Action
+			if not SaveIfDirty("opening a new one") then return True  // cancelled a dialog
+			
+			dim f as FolderItem = GetOpenFolderItem(KarelFileTypes.Text)
+			if f is nil then return True
+			
+			if ScriptsTab.Value=0 then
+			mCurrentWorldFile = f
+			WorldEntry.Text = OpenDoc(f)
+			mWorldDirty = false
+			else
+			mCurrentScriptFile = f
+			ScriptEntry.Text = OpenDoc(f)
+			mScriptDirty = false
+			end if
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function FileSave() As Boolean Handles FileSave.Action
+			if ScriptsTab.Value=0 then
+			SaveDoc(mCurrentWorldFile, WorldEntry.Text)
+			mWorldDirty = false
+			else
+			Savedoc(mCurrentScriptFile, ScriptEntry.Text)
+			mScriptDirty = false
+			end if
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function FileSaveas() As Boolean Handles FileSaveas.Action
+			call HandleSaveAs
+			
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function FileQuit() As Boolean Handles FileQuit.Action
+			if SaveIfDirty("quitting") then
+			Quit
+			end if
+			// otherwise swallows the event
 			Return True
 			
 		End Function
@@ -632,6 +711,78 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function OpenDoc(f as FolderItem) As String
+		  dim t as TextInputStream
+		  t = f.OpenAsTextFile
+		  return t.ReadAll  // implicitly closes as t goes out of scope
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SaveDoc(f as FolderItem, text as string)
+		  Dim t as TextOutputStream
+		  t = f.CreateTextFile
+		  t.Write text
+		  t.close
+		  t = nil
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function SaveIfDirty(partReason as String) As Boolean
+		  if ScriptsTab.Value=0 then
+		    if mWorldDirty and WorldEntry.Text.LenB > 0 then
+		      dim d as new MessageDialog
+		      select case d.ShowModalWith(self, "Do you want to save changes to your World before " + partReason + "?", "Save", "Don't Save", "Cancel")
+		      case d.ActionButton
+		        if  mCurrentWorldFile is nil then
+		          return HandleSaveAs
+		        end if
+		        SaveDoc(mCurrentWorldFile, WorldEntry.Text)
+		        
+		      case  d.CancelButton
+		        return false // cancelled
+		      end Select
+		    end if
+		    
+		  else
+		    if mScriptDirty and ScriptEntry.Text.LenB > 0 then
+		      dim d as new MessageDialog
+		      select case d.ShowModalWith(self, "Do you want to save changes to your Script before " + partReason + "?", "Save", "Don't Save", "Cancel")
+		      case d.ActionButton
+		        Savedoc(mCurrentScriptFile, ScriptEntry.Text)
+		      case  d.CancelButton
+		        return false // cancelled
+		      end Select
+		    end if
+		  end if
+		  return true  // either didn't need saving or saved OK including allowing for a SaveAs for a new document
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function HandleSaveAs() As Boolean
+		  if ScriptsTab.Value=0 then
+		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled World.txt")
+		    if f is nil then return false  // cancelled
+		    
+		    SaveDoc(f, WorldEntry.Text)
+		    mCurrentWorldFile = f
+		    mWorldDirty = false
+		    
+		  else
+		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled Script.txt")
+		    if f is nil then return false  // cancelled
+		    
+		    Savedoc(mCurrentScriptFile, ScriptEntry.Text)
+		    mCurrentScriptFile = f
+		    mScriptDirty = false
+		  end if
+		  return true
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -647,6 +798,22 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mSaveRunCaption As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mCurrentWorldFile As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mCurrentScriptFile As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mWorldDirty As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mScriptDirty As Boolean
 	#tag EndProperty
 
 
@@ -726,6 +893,8 @@ End
 		    script.Run
 		  catch e as KarelException
 		    StatusDisplay.Text = e.ErrorMessage
+		  catch ignored as ThreadEndException
+		    // could later do something here to catch these but should be due to our killing ourselves
 		  catch e2 as RuntimeException
 		    StatusDisplay.Text = e2.Message
 		  end
@@ -741,9 +910,30 @@ End
 		Sub Change()
 		  if me.value=0 then
 		    WorldEntry.SetFocus
+		    FileOpen.Text = "Open World..."
+		    FileSave.Text = "Save World"
+		    FileSaveAs.Text = "Save World as..."
 		  else
 		    ScriptEntry.SetFocus
+		    FileOpen.Text = "Open Script..."
+		    FileSave.Text = "Save Script"
+		    FileSaveAs.Text = "Save Script as..."
 		  end if
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ScriptEntry
+	#tag Event
+		Sub TextChange()
+		  mScriptDirty = true
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events WorldEntry
+	#tag Event
+		Sub TextChange()
+		  mWorldDirty = true
 		End Sub
 	#tag EndEvent
 #tag EndEvents

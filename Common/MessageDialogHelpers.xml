@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+<RBProject version="2009r2.1">
+<block type="Module" ID="-1101432152">
+ <ObjName>MessageDialogHelpers</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>0</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>ShowModalWith</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ShowModalWith(extends dlg as MessageDialog, inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1) As MessageDialogButton</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Caption = cancelBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = True</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return dlg.ShowModal()</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends dlg as MessageDialog, inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1</ItemParams>
+  <ItemResult>MessageDialogButton</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ShowModalWith</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ShowModalWith(extends dlg as MessageDialog, inMsg as string, actionBtn as string, altActionBtn as string, cancelBtn as string, iconCode as integer = 1) As MessageDialogButton</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.AlternateActionButton.Caption = altActionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Caption = cancelBtn</SourceLine>
+   <SourceLine>dlg.AlternateActionButton.Visible = True</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = True</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return dlg.ShowModal()</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends dlg as MessageDialog, inMsg as string, actionBtn as string, altActionBtn as string, cancelBtn as string, iconCode as integer = 1</ItemParams>
+  <ItemResult>MessageDialogButton</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ModalMessage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ModalMessage(inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1) As boolean</SourceLine>
+   <SourceLine>dim dlg as new MessageDialog</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Caption = cancelBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = True</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return dlg.ShowModal() = dlg.ActionButton</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1</ItemParams>
+  <ItemResult>boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ModalMessage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ModalMessage(inMsg as string, actionBtn as string = "OK", iconCode as integer = 1)</SourceLine>
+   <SourceLine>dim dlg as new MessageDialog</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = false</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine>call dlg.ShowModal()</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inMsg as string, actionBtn as string = "OK", iconCode as integer = 1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ModalMessageWithin</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ModalMessageWithin(owner as Window, inMsg as string, actionBtn as string = "OK", iconCode as integer = 1)</SourceLine>
+   <SourceLine>dim dlg as new MessageDialog</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = false</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine>call dlg.ShowModalWithin( owner )</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>owner as Window, inMsg as string, actionBtn as string = "OK", iconCode as integer = 1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ModalMessageWithin</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ModalMessageWithin(owner as Window, inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1) As boolean</SourceLine>
+   <SourceLine>dim dlg as new MessageDialog</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Caption = cancelBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = True</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return dlg.ShowModalWithin( owner ) = dlg.ActionButton</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>owner as Window, inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1</ItemParams>
+  <ItemResult>boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ShowModalWith</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ShowModalWith(extends dlg as MessageDialog, owner as Window, inMsg as string, actionBtn as string, altActionBtn as string, cancelBtn as string, iconCode as integer = 1) As MessageDialogButton</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.AlternateActionButton.Caption = altActionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Caption = cancelBtn</SourceLine>
+   <SourceLine>dlg.AlternateActionButton.Visible = True</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = True</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return dlg.ShowModalWithin(owner)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends dlg as MessageDialog, owner as Window, inMsg as string, actionBtn as string, altActionBtn as string, cancelBtn as string, iconCode as integer = 1</ItemParams>
+  <ItemResult>MessageDialogButton</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ShowModalWith</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ShowModalWith(extends dlg as MessageDialog, owner as Window, inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1) As MessageDialogButton</SourceLine>
+   <SourceLine>dlg.icon = iconCode</SourceLine>
+   <SourceLine>dlg.ActionButton.Caption = actionBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Caption = cancelBtn</SourceLine>
+   <SourceLine>dlg.CancelButton.Visible = True</SourceLine>
+   <SourceLine>dlg.Message = inMsg</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return dlg.ShowModalWithin(owner)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends dlg as MessageDialog, owner as Window, inMsg as string, actionBtn as string, cancelBtn as string, iconCode as integer = 1</ItemParams>
+  <ItemResult>MessageDialogButton</ItemResult>
+ </Method>
+ <Note>
+  <ItemName>about</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>about</NoteLine>
+   <NoteLine>shortcut methods to make it quick to compose &amp; display a MessageDialog</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>cautionIcon</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>cautionIcon</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>noMessageIcon</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>noMessageIcon</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>-1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>noteIcon</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>noteIcon</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>stopIcon</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>stopIcon</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>questionIcon</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>questionIcon</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>3</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>buttonCancel</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>buttonCancel</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>buttonDontSave</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>buttonDontSave</ItemName>
+  <ItemType>1</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>buttonOK</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>buttonOK</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+</block>
+</RBProject>
