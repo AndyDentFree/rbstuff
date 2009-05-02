@@ -503,6 +503,11 @@
    <SourceLine>for each obs as KarelWorldObserver in mObservers</SourceLine>
    <SourceLine>obs.ErrorShutdown self, msg</SourceLine>
    <SourceLine>next</SourceLine>
+   <SourceLine>if mOurThread is nil then</SourceLine>
+   <SourceLine>' unable to actually stop running</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>mOurThread.Kill  ' will stop any KarelScripter that is using us as well</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -510,6 +515,23 @@
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
   <ItemParams>msg as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RunBy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RunBy(boss as Thread)</SourceLine>
+   <SourceLine>mOurThread = boss</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>boss as Thread</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>
@@ -691,6 +713,20 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>mWallCleaner As RegEx</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mOurThread</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mOurThread As Thread</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mOurThread As Thread</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <ViewBehavior>

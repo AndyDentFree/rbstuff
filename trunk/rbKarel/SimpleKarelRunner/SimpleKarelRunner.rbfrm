@@ -604,6 +604,9 @@ End
 		Sub ErrorShutdown(whichWorld as KarelWorld, errorMsg as string)
 		  StatusDisplay.Text = errorMsg
 		  beep
+		  mAmRunning = false
+		  RunButton.Caption = mSaveRunCaption
+		  LoadMapButton.Enabled = true
 		End Sub
 	#tag EndMethod
 
@@ -622,6 +625,13 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub StopKarel()
+		  mWorld.ErrorShutdown "Stop was pressed"
+		  
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -629,6 +639,14 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mWorld As KarelWorld
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		mAmRunning As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mSaveRunCaption As string
 	#tag EndProperty
 
 
@@ -656,19 +674,28 @@ End
 #tag Events RunButton
 	#tag Event
 		Sub Action()
-		  RunKarel
+		  if mAmRunning then
+		    StopKarel
+		  else
+		    RunKarel
+		  end if
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events Script
 	#tag Event
 		Sub RuntimeError(line As Integer, error As RuntimeException)
-		  msgBox "Runtime error in line "+nthField(me.source,chr(13),line)+"."
+		  if error is nil then
+		    msgBox "Runtime error in line " + str(line) + " "+nthField(me.source, EndOfLine, line)+"."
+		  else
+		    msgBox "Runtime error '" + error.Message + "' in line " + str(line) + " "+nthField(me.source, EndOfLine, line)+"."
+		  end if
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub CompilerError(line As Integer, errorNumber As Integer, errorMsg As String)
 		  msgBox "Compiler error in line "+str(line)+" """+nthField(me.source,chr(13),line)+""": "+chr(13)+errormsg
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -689,16 +716,23 @@ End
 #tag Events KarelThread
 	#tag Event
 		Sub Run()
-		  RunButton.Enabled=false
 		  LoadMapButton.Enabled = false
 		  StatusDisplay.Text = ""
+		  mSaveRunCaption = RunButton.Caption
+		  RunButton.Caption = "Stop"
+		  mAmRunning = true
 		  try
+		    mWorld.RunBy me
 		    script.Run
 		  catch e as KarelException
 		    StatusDisplay.Text = e.ErrorMessage
+		  catch e2 as RuntimeException
+		    StatusDisplay.Text = e2.Message
 		  end
-		  RunButton.Enabled=true
+		  mAmRunning = false
 		  LoadMapButton.Enabled = true
+		  RunButton.Caption = mSaveRunCaption
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
