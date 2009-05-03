@@ -446,14 +446,14 @@ End
 
 	#tag Event
 		Sub Resized()
-		  mScripter.UseWorld mWorld  // needs to get sizes from here
+		  mScripter.WorldResized
 		  RedrawWorld
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Resizing()
-		  mScripter.UseWorld mWorld  // needs to get sizes from here
+		  mScripter.WorldResized
 		  RedrawWorld
 		End Sub
 	#tag EndEvent
@@ -612,7 +612,7 @@ End
 		  RedrawWorld
 		  
 		  // reload some states
-		  mScripter.UseWorld mWorld  // force it to reload robot etc.
+		  //mScripter.WorldResized
 		  if SayCheck.Value then
 		    mScripter.SetLogger new KarelLogSpeech
 		  else
@@ -639,8 +639,9 @@ End
 	#tag Method, Flags = &h0
 		Sub WorldUpdated(whichWorld as KarelWorld)
 		  // Part of the KarelWorldObserver interface.
-		  RedrawWorld
-		  
+		  if not mLoadingWorld then
+		    RedrawWorld
+		  end if
 		End Sub
 	#tag EndMethod
 
@@ -656,7 +657,9 @@ End
 		  RunButton.Enabled=false
 		  LoadMapButton.Enabled = false
 		  
+		  mLoadingWorld = true  // so don't trigger endless updates whilst adding things
 		  script.Run  // to redefine the world
+		  mLoadingWorld = false
 		  
 		  RunButton.Enabled=true
 		  LoadMapButton.Enabled = true
@@ -735,10 +738,11 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Function SaveIfDirty(partReason as String) As Boolean
+		  // Note leading ampersands to make buttons alt-keyable on Windows and cmd-S and cmd-D on Mac
 		  if ScriptsTab.Value=0 then
 		    if mWorldDirty and WorldEntry.Text.LenB > 0 then
 		      dim d as new MessageDialog
-		      select case d.ShowModalWith(self, "Do you want to save changes to your World before " + partReason + "?", "Save", "Don't Save", "Cancel")
+		      select case d.ShowModalWith(self, "Do you want to save changes to your World before " + partReason + "?", "&Save", "&Don't Save", "Cancel")
 		      case d.ActionButton
 		        if  mCurrentWorldFile is nil then
 		          return HandleSaveAs
@@ -753,7 +757,7 @@ End
 		  else
 		    if mScriptDirty and ScriptEntry.Text.LenB > 0 then
 		      dim d as new MessageDialog
-		      select case d.ShowModalWith(self, "Do you want to save changes to your Script before " + partReason + "?", "Save", "Don't Save", "Cancel")
+		      select case d.ShowModalWith(self, "Do you want to save changes to your Script before " + partReason + "?", "&Save", "&Don't Save", "Cancel")
 		      case d.ActionButton
 		        Savedoc(mCurrentScriptFile, ScriptEntry.Text)
 		      case  d.CancelButton
@@ -818,6 +822,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mScriptDirty As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mLoadingWorld As Boolean
 	#tag EndProperty
 
 
@@ -905,7 +913,7 @@ End
 		  mAmRunning = false
 		  LoadMapButton.Enabled = true
 		  RunButton.Caption = mSaveRunCaption
-		  
+		  KarelRun.Enabled = true  // enable forced here because seems to be lag in EnableMenuItems if just using cmd-key
 		End Sub
 	#tag EndEvent
 #tag EndEvents
