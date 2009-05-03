@@ -803,6 +803,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub UseWorld(inWorld as KarelWorld)</SourceLine>
+   <SourceLine>// WARNING calling this will do things to reset the robot so only call if world actually reloaded</SourceLine>
    <SourceLine>dim k as KarelRobot = inWorld.CurrentRobot</SourceLine>
    <SourceLine>if k&lt;&gt; nil then</SourceLine>
    <SourceLine>mAvenue = k.Avenue</SourceLine>
@@ -812,9 +813,8 @@
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>mWorld = inWorld</SourceLine>
-   <SourceLine>// update increments that depend on number of avenues and streets, would also need to recalc if resize physical Graphics mDest</SourceLine>
-   <SourceLine>CalcAvenueGapX</SourceLine>
-   <SourceLine>CalcStreetGapY</SourceLine>
+   <SourceLine>WorldResized</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -955,6 +955,25 @@
   <Shared>0</Shared>
   <ItemParams></ItemParams>
   <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>WorldResized</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub WorldResized()</SourceLine>
+   <SourceLine>// update increments that depend on number of avenues and streets, would also need to recalc if resize physical Graphics mDest</SourceLine>
+   <SourceLine>CalcAvenueGapX</SourceLine>
+   <SourceLine>CalcStreetGapY</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>
