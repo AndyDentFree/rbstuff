@@ -37,7 +37,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   20
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
@@ -64,11 +64,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   False
       Left            =   403
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
@@ -105,11 +105,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   False
       Left            =   403
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   3
       TabPanelIndex   =   0
@@ -134,11 +134,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   ""
       Left            =   20
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   0
       TabIndex        =   4
@@ -165,11 +165,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   ""
       Left            =   20
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       State           =   0
       TabIndex        =   5
@@ -196,11 +196,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   ""
       Left            =   175
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
@@ -222,11 +222,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Left            =   78
       LineStep        =   250
       LiveScroll      =   ""
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Maximum         =   1500
       Minimum         =   0
       PageStep        =   250
@@ -251,11 +251,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   ""
       Left            =   20
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   ""
+      LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   ""
+      LockTop         =   False
       Multiline       =   ""
       Scope           =   0
       TabIndex        =   8
@@ -446,12 +446,14 @@ End
 
 	#tag Event
 		Sub Resized()
+		  mScripter.UseWorld mWorld  // needs to get sizes from here
 		  RedrawWorld
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Resizing()
+		  mScripter.UseWorld mWorld  // needs to get sizes from here
 		  RedrawWorld
 		End Sub
 	#tag EndEvent
