@@ -300,7 +300,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   ""
-      TabDefinition   =   "World\rKarel"
+      TabDefinition   =   "World\rScript"
       TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
