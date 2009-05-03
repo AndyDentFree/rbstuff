@@ -110,7 +110,16 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub PutBeeperAt(avenue as integer, street as integer)</SourceLine>
+   <SourceLine>dim foundOne as Boolean</SourceLine>
+   <SourceLine>for each bp as KarelBeeper in mBeepers</SourceLine>
+   <SourceLine>if bp.AtLocation( avenue, street ) then</SourceLine>
+   <SourceLine>bp.count = bp.count + 1</SourceLine>
+   <SourceLine>foundOne = true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>if not foundOne then</SourceLine>
    <SourceLine>mBeepers.Append new KarelBeeper( avenue, street )</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>UpdateObservers</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -131,7 +140,10 @@
    <SourceLine>for i as integer = 0 to UBound(mBeepers)</SourceLine>
    <SourceLine>dim bp as KarelBeeper = mBeepers(i)</SourceLine>
    <SourceLine>if bp.AtLocation( avenue, street ) then</SourceLine>
+   <SourceLine>bp.count = bp.count - 1</SourceLine>
+   <SourceLine>if bp.count = 0 then</SourceLine>
    <SourceLine>mBeepers.Remove i</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine>UpdateObservers</SourceLine>
    <SourceLine>return true</SourceLine>
    <SourceLine>end if</SourceLine>
@@ -268,6 +280,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Robot(street as integer, avenue as integer, facing as integer, initialBeepers as integer)</SourceLine>
+   <SourceLine>if facing &lt;1 and facing &gt; 4 then facing = 1</SourceLine>
    <SourceLine>mRobots.Append new KarelRobot(avenue, street, facing, initialBeepers)</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -402,6 +415,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Robot(street as integer, avenue as integer, facing as integer)</SourceLine>
+   <SourceLine>if facing &lt;1 and facing &gt; 4 then facing = 1</SourceLine>
    <SourceLine>mRobots.Append new KarelRobot(avenue, street, facing, 0)  // no beepers</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>

@@ -2,7 +2,7 @@
 <RBProject version="2009r2.1">
 <block type="Module" ID="510044857">
  <ObjName>GraphicsScripter</ObjName>
- <ObjContainerID>1873437378</ObjContainerID>
+ <ObjContainerID>1248096523</ObjContainerID>
  <IsClass>1</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -22,6 +22,7 @@
    <SourceLine>mDestPicture = dest ' remember for CascadeEffects</SourceLine>
    <SourceLine>mDest = dest.Graphics</SourceLine>
    <SourceLine>mSurface = dest.RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1506,6 +1507,23 @@
   <Shared>0</Shared>
   <ItemParams>assigns c as Color</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StringWidth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StringWidth(text as string) As double</SourceLine>
+   <SourceLine>return mDest.StringWidth(text)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>text as string</ItemParams>
+  <ItemResult>double</ItemResult>
  </Method>
  <Note>
   <ItemName>About</ItemName>
