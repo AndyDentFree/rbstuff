@@ -16,16 +16,36 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawInContext(viaScripter as KarelScripter)</SourceLine>
-   <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
    <SourceLine>dim x as integer = viaScripter.Avenue2X( mAvenue )</SourceLine>
    <SourceLine>dim y as integer = viaScripter.Street2Y( mStreet )</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>viaScripter.PenSize = 1</SourceLine>
    <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
-   <SourceLine>const innerRadius = 4</SourceLine>
+   <SourceLine>if count = 1 then</SourceLine>
+   <SourceLine>const innerRadius = 8</SourceLine>
    <SourceLine>viaScripter.FillCircle x-innerRadius, y-innerRadius, 2*innerRadius</SourceLine>
-   <SourceLine>const outerRadius = 8</SourceLine>
-   <SourceLine>viaScripter.DrawCircle x-outerRadius, y-outerRadius, 2*outerRadius</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>const innerRadius = 8</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.lavenderblush  // background</SourceLine>
+   <SourceLine>viaScripter.FillCircle x-innerRadius, y-innerRadius, 2*innerRadius</SourceLine>
+   <SourceLine>dim countStr as string = str(count)</SourceLine>
+   <SourceLine>if count &gt; 99 then</SourceLine>
+   <SourceLine>viaScripter.TextSize = 8</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>viaScripter.TextSize = 10</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.crimson</SourceLine>
+   <SourceLine>dim textW as double = viaScripter.StringWidth(countStr)</SourceLine>
+   <SourceLine>viaScripter.DrawString countStr, x-textW/2+1, y+viaScripter.TextAscent/2 - 1</SourceLine>
+   <SourceLine>const textRingRadius = 9</SourceLine>
+   <SourceLine>viaScripter.PenColor = viaScripter.black</SourceLine>
+   <SourceLine>viaScripter.DrawCircle x-textRingRadius, y-textRingRadius, 2*textRingRadius</SourceLine>
+   <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>const outerRadius = 14</SourceLine>
+   <SourceLine>viaScripter.PenSize = 2</SourceLine>
+   <SourceLine>viaScripter.DrawCircle x-outerRadius, y-outerRadius, 2*outerRadius</SourceLine>
+   <SourceLine>viaScripter.PenSize = 1</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -33,6 +53,26 @@
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
   <ItemParams>viaScripter as KarelScripter</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor(inAvenue as integer, inStreet as integer)</SourceLine>
+   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
+   <SourceLine>Super.Constructor inAvenue, inStreet</SourceLine>
+   <SourceLine>count = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>inAvenue as integer, inStreet as integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>
@@ -50,6 +90,20 @@
   </ItemSource>
   <ItemFlags>0</ItemFlags>
  </Note>
+ <Property>
+  <ItemName>count</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>count As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>count As Integer</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
@@ -83,6 +137,12 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>count</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
   </ViewProperty>
  </ViewBehavior>
 </block>

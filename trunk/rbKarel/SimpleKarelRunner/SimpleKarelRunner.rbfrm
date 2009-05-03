@@ -467,11 +467,13 @@ End
 		    FileSave.Enabled = mScriptDirty
 		    FileSaveas.Enabled = ScriptEntry.Text.LenB > 0 or mScriptDirty
 		  end if
+		  KarelRun.Enabled = not mAmRunning
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Function CancelClose(appQuitting as Boolean) As Boolean
+		  if appQuitting then return false  // Quit has its own question
 		  return not SaveIfDirty("quitting")  // CancelClose is kinda weird - a True means cancel!
 		End Function
 	#tag EndEvent
@@ -855,15 +857,15 @@ End
 	#tag Event
 		Sub RuntimeError(line As Integer, error As RuntimeException)
 		  if error is nil then
-		    msgBox "Runtime error in line " + str(line) + " "+nthField(me.source, EndOfLine, line)+"."
+		    msgBox "Runtime error in line " + str(line) + " "+nthField(me.source, EndOfLine, line+1)+"."
 		  else
-		    msgBox "Runtime error '" + error.Message + "' in line " + str(line) + " "+nthField(me.source, EndOfLine, line)+"."
+		    msgBox "Runtime error '" + error.Message + "' in line " + str(line) + " "+nthField(me.source, EndOfLine, line+1)+"."
 		  end if
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub CompilerError(line As Integer, errorNumber As Integer, errorMsg As String)
-		  msgBox "Compiler error in line "+str(line)+" """+nthField(me.source,chr(13),line)+""": "+chr(13)+errormsg
+		  msgBox "Compiler error in line "+str(line)+" """+nthField(me.source, chr(13), line+1)+""": "+chr(13)+errormsg
 		  
 		End Sub
 	#tag EndEvent

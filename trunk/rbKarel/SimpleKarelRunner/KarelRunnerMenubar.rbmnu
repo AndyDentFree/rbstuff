@@ -142,7 +142,7 @@ Begin Menu KarelRunnerMenubar
          ShortcutKey = "R"
          Shortcut = "Cmd+R"
          MenuModifier = True
-         AutoEnable = True
+         AutoEnable = False
       End
       Begin MenuItem 
          SpecialMenu = 2
