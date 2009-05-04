@@ -809,7 +809,7 @@ End
 		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled Script.txt")
 		    if f is nil then return false  // cancelled
 		    
-		    Savedoc(mCurrentScriptFile, ScriptEntry.Text)
+		    Savedoc(f, ScriptEntry.Text)
 		    mCurrentScriptFile = f
 		    mScriptDirty = false
 		  end if
