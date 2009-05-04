@@ -10,8 +10,12 @@ If you copy them to the location next to the executable, your Documents or Share
 will be found automatically and add menus Scripts and Worlds to the menu bar.
 
 DEPENDENCIES
-Requires GraphicsScripter, SpeechUtilities and MessageDialogHelpers 
-from http://code.google.com/p/rbstuff/source/browse/#svn/trunk/Common
+From http://code.google.com/p/rbstuff/source/browse/#svn/trunk/Common
+Requires 
+- GraphicsScripter, 
+- SpeechUtilities, 
+- MessageDialogHelpers and
+- StaticTextWithURL
 
 SOURCE
 http://code.google.com/p/rbstuff/source/browse/#svn/trunk/rbKarel

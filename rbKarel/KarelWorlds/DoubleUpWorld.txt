@@ -1,0 +1,4 @@
+World 3 7
+beepers 2 1 1000
+robot 1 1 2 0
+beepers 1 5 5

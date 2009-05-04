@@ -2,13 +2,8 @@
 Protected Class App
 Inherits Application
 	#tag MenuHandler
-		Function About() As Boolean Handles About.Action
-			dim msg as new MessageDialog
-			msg.Title = "About ScriptGraphics"
-			msg.Message = "ScriptGraphics lets you write RBScripts to draw on a canvas"
-			msg.Explanation = "this app by Andy Dent - dent@oofile.com.au"
-			msg.Icon = 0
-			dim b as MessageDialogButton = msg.ShowModal()
+		Function KarelAbout() As Boolean Handles KarelAbout.Action
+			SimpleKarelAbout.ShowModal
 		End Function
 	#tag EndMenuHandler
 
