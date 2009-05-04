@@ -1,0 +1,31 @@
+' Mountains - a world definition for rbKarel
+World 10 15
+
+Robot 1 1 2 0
+Wall 1 1 2
+Wall 2 1 2
+Wall 3 1 2
+Wall 4 1 2
+Wall 5 1 2
+
+Wall 1 4 2
+Wall 2 4 2
+Wall 3 4 2
+Wall 4 4 2
+Wall 5 4 2
+Wall 6 4 2
+Wall 7 4 2
+
+Wall 1 7 2
+Wall 2 7 2
+Wall 3 7 2
+
+Wall 1 10 2
+Wall 2 10 2
+Wall 3 10 2
+Wall 4 10 2
+Wall 5 10 2
+Wall 6 10 2
+Wall 7 10 2
+Wall 8 10 2
+Wall 9 10 2

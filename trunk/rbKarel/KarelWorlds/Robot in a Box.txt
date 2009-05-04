@@ -1,0 +1,8 @@
+' Robot in a Box - a trivial rbKarel Map
+
+World 5 5
+Robot 3 3 1 0
+Wall 3 3 4
+wall 3 3 1
+wall 3 4 4
+wall 2 3 1
