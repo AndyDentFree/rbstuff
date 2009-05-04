@@ -1,0 +1,45 @@
+' Mountain climber - a script for rbKarel
+
+TurnOn
+dim i as integer
+for i=0 to 3
+  ClimbWall
+  ClimbDown
+  move
+  move
+Next
+
+sub ClimbWall()
+  TurnLeft
+  dim i as integer
+  for i = 1 to 10
+    If RightIsClear then
+      TurnRight
+      move
+      exit
+    else
+      move
+    end
+  Next
+end sub
+
+sub ClimbDown()
+  TurnRight
+  dim i as integer
+  for i = 1 to 10
+    If FrontIsClear then
+    move
+    else
+    TurnLeft
+    exit
+    end
+  Next
+end sub
+
+
+
+sub TurnRight()
+  TurnLeft
+  TurnLeft
+  TurnLeft
+end sub
