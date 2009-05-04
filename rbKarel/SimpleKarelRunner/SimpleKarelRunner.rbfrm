@@ -548,7 +548,7 @@ End
 
 	#tag MenuHandler
 		Function FileOpen() As Boolean Handles FileOpen.Action
-			if not SaveIfDirty("opening a new one") then return True  // cancelled a dialog
+			if not SaveIfDirty("opening a different one") then return True  // cancelled a dialog
 			
 			dim f as FolderItem = GetOpenFolderItem(KarelFileTypes.Text)
 			if f is nil then return True
@@ -570,11 +570,19 @@ End
 	#tag MenuHandler
 		Function FileSave() As Boolean Handles FileSave.Action
 			if ScriptsTab.Value=0 then
+			if mCurrentWorldFile is nil then
+			call HandleSaveAs
+			else
 			SaveDoc(mCurrentWorldFile, WorldEntry.Text)
 			mWorldDirty = false
+			end if
+			else
+			if mCurrentScriptFile is nil then
+			call HandleSaveAs
 			else
 			Savedoc(mCurrentScriptFile, ScriptEntry.Text)
 			mScriptDirty = false
+			end if
 			end if
 			Return True
 			
@@ -596,6 +604,24 @@ End
 			Quit
 			end if
 			// otherwise swallows the event
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function FileNew() As Boolean Handles FileNew.Action
+			if not SaveIfDirty("creating a new one") then return True  // cancelled a dialog
+			
+			if ScriptsTab.Value=0 then
+			mCurrentWorldFile = nil
+			WorldEntry.Text = ""
+			mWorldDirty = false
+			else
+			mCurrentScriptFile = nil
+			ScriptEntry.Text = ""
+			mScriptDirty = false
+			end if
 			Return True
 			
 		End Function

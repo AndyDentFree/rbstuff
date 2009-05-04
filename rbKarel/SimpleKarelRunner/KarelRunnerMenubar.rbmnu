@@ -11,6 +11,15 @@ Begin Menu KarelRunnerMenubar
       Text = "&File"
       Index = -2147483648
       AutoEnable = True
+      Begin MenuItem FileNew
+         SpecialMenu = 0
+         Text = "New"
+         Index = -2147483648
+         ShortcutKey = "N"
+         Shortcut = "Cmd+N"
+         MenuModifier = True
+         AutoEnable = True
+      End
       Begin MenuItem FileOpen
          SpecialMenu = 0
          Text = "Open.."
