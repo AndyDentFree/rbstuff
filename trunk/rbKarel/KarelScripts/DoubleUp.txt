@@ -1,0 +1,61 @@
+loadupwithbeepers
+movetobeepers
+movepile
+movepileback
+gohome
+
+sub gohome()
+turnleft
+turnleft
+while frontisclear
+move
+wend
+turnleft
+turnleft
+end sub
+
+sub movepileback()
+move
+while nexttoabeeper
+pickbeeper
+moveback
+putbeeper
+move
+wend
+end sub
+
+sub movepile()
+while nexttoabeeper
+pickbeeper
+move
+putbeeper
+putbeeper
+moveback
+wend
+end sub
+
+sub moveback()
+turnleft
+turnleft
+move
+turnleft
+turnleft
+end sub
+
+sub loadupwithbeepers()
+turnleft
+move
+while nexttoabeeper
+pickbeeper
+wend
+turnleft
+turnleft
+move
+turnleft
+end sub
+
+sub movetobeepers()
+while nexttoabeeper=false
+move
+wend
+end sub
