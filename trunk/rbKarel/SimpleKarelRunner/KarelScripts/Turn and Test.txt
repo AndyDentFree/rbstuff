@@ -1,0 +1,6 @@
+' Turn and Test - an rbKarel script that says if blocked
+TurnOn
+TurnLeft
+if frontIsBlocked then
+  say "blocked"
+end if
