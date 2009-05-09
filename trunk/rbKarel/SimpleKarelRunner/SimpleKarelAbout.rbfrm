@@ -7,7 +7,7 @@ Begin Window SimpleKarelAbout
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   228
+   Height          =   244
    ImplicitInstance=   True
    LiveResize      =   False
    MacProcID       =   0
@@ -48,7 +48,7 @@ Begin Window SimpleKarelAbout
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   188
+      Top             =   204
       Underline       =   ""
       Visible         =   True
       Width           =   80
@@ -207,6 +207,33 @@ Begin Window SimpleKarelAbout
       Underline       =   ""
       Visible         =   True
       Width           =   228
+   End
+   Begin Canvas Canvas1
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   False
+      Backdrop        =   2073942485
+      DoubleBuffer    =   False
+      Enabled         =   False
+      EraseBackground =   False
+      Height          =   127
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   303
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   ""
+      LockTop         =   ""
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   61
+      UseFocusRing    =   False
+      Visible         =   True
+      Width           =   119
    End
 End
 #tag EndWindow
