@@ -308,11 +308,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TextSize        =   0
       Top             =   14
       Underline       =   ""
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   430
       Begin EditField ScriptEntry
-         AcceptTabs      =   False
+         AcceptTabs      =   True
          Alignment       =   0
          AutoDeactivate  =   True
          BackColor       =   16777215
@@ -344,7 +344,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          Styled          =   False
          TabIndex        =   0
          TabPanelIndex   =   2
-         TabStop         =   True
+         TabStop         =   False
          Text            =   ""
          TextColor       =   0
          TextFont        =   "System"
@@ -356,7 +356,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          Width           =   420
       End
       Begin EditField WorldEntry
-         AcceptTabs      =   False
+         AcceptTabs      =   True
          Alignment       =   0
          AutoDeactivate  =   True
          BackColor       =   16777215
@@ -388,7 +388,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          Styled          =   False
          TabIndex        =   0
          TabPanelIndex   =   1
-         TabStop         =   True
+         TabStop         =   False
          Text            =   ""
          TextColor       =   0
          TextFont        =   "System"
@@ -785,6 +785,9 @@ End
 		      dim d as new MessageDialog
 		      select case d.ShowModalWith(self, "Do you want to save changes to your Script before " + partReason + "?", "&Save", "&Don't Save", "Cancel")
 		      case d.ActionButton
+		        if  mCurrentScriptFile is nil then
+		          return HandleSaveAs
+		        end if
 		        Savedoc(mCurrentScriptFile, ScriptEntry.Text)
 		      case  d.CancelButton
 		        return false // cancelled
