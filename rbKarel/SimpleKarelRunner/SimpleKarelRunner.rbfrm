@@ -748,7 +748,9 @@ End
 		Protected Function OpenDoc(f as FolderItem) As String
 		  dim t as TextInputStream
 		  t = f.OpenAsTextFile
-		  return t.ReadAll  // implicitly closes as t goes out of scope
+		  dim cleanedString as string = t.ReadAll  
+		  return cleanedString.ReplaceAll( chr(9), SpacesReplacingTab )
+		  // implicitly closes as t goes out of scope
 		End Function
 	#tag EndMethod
 
@@ -876,6 +878,9 @@ End
 	#tag Constant, Name = kSampleKarel3, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rif frontIsBlocked then\r  say \"blocked\"\rend if", Scope = Public
 	#tag EndConstant
 
+	#tag Constant, Name = SpacesReplacingTab, Type = String, Dynamic = False, Default = \"    ", Scope = Public
+	#tag EndConstant
+
 
 #tag EndWindowCode
 
@@ -970,11 +975,29 @@ End
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  if Key=chr(9) then
+		    me.SelText = SpacesReplacingTab
+		    return true
+		  end if
+		  return false
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events WorldEntry
 	#tag Event
 		Sub TextChange()
 		  mWorldDirty = true
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  if Key=chr(9) then
+		    me.SelText = SpacesReplacingTab
+		    return true
+		  end if
+		  return false
+		End Function
 	#tag EndEvent
 #tag EndEvents
