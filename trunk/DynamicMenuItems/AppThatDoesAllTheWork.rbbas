@@ -3,6 +3,8 @@ Protected Class AppThatDoesAllTheWork
 Inherits Application
 	#tag Event
 		Sub EnableMenuItems()
+		  // enabling for the menu items added through NewDynamic
+		  // you can put logic in here to decide if individual dynamic items are enabled or not depending on program state
 		  dim i as integer
 		  for i = UBound(mDynamicMenuItems) downto 0
 		    mDynamicMenuItems(i).enabled = true
@@ -57,7 +59,7 @@ Inherits Application
 
 	#tag MenuHandler
 		Function DynamicItem() As Boolean Handles DynamicItem.Action
-			// This is the handler for a dynamically created item. We carefully named the handler the same as the 
+			// This is the handler for a dynamically created item. We carefully named the handler the same as the
 			// name we intended to use on the future menu item.
 			// There is no way to specify a menu handler with index as a parameter, thus we do the same logic
 			// no matter which item is invoked.
@@ -69,6 +71,10 @@ Inherits Application
 
 	#tag MenuHandler
 		Function NewDynamicSubclass() As Boolean Handles NewDynamicSubclass.Action
+			// add unique menu items using a delegate to be handled
+			// these items don't need any logic in EnableMenuItems - the DynamicallyHandledMenuItem class
+			// enables itself if it has a delegate handler, mimicing the "autoenable" behaviour.
+			
 			// get the top-level menu, which does NOT appear at startup
 			const TotallyDynamicTitle = "Totally"
 			dim tdMenu as MenuItem = app.MenuBar.child( TotallyDynamicTitle )
@@ -77,10 +83,10 @@ Inherits Application
 			App.MenuBar.Insert(2, tdMenu)
 			end if
 			
-			static dynItemIndex as integer  // easy way to keep ascending index values, starts at zero
+			static dynItemIndex as integer  // easy way to keep ascending index values, starts at zero, just to generate unique names
 			dim dynItem as new DynamicallyHandledMenuItem( AddressOf HandleDynamicSubItem,  "Dynamic sub dude " + str(dynItemIndex) )
 			dynItem.Name = "DynamicSubItem"
-			dynItem.Index = dynItemIndex
+			dynItem.Tag = "Created at " + str(Microseconds)  // instead of setting index, like the NewDynamic sample, put arbitrary value into the Tag
 			dynItemIndex = dynItemIndex + 1
 			tdMenu.Append dynItem
 			Return True
@@ -96,13 +102,7 @@ Inherits Application
 		  // This is the handler for a dynamically created item.
 		  // it needs to be passed as a delegate, so it matches DynamicallyHandledMenuItem.DynamicMenuHandler
 		  
-		  
-		  dim indexHack as integer = handleItem.Index
-		  if indexHack=0 then
-		    MsgBox "Sub Dude!"
-		  else
-		    MsgBox "Hey, dynamic dude side-kick " + str(indexHack)
-		  end if
+		  MsgBox "Hey, dynamic dude  " + handleItem.Tag.StringValue
 		  Return True
 		  
 		End Function
