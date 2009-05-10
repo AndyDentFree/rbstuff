@@ -13,7 +13,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub StepNeeded()</SourceLine>
+   <SourceLine>Sub StepNeeded(msg as String)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
@@ -21,7 +21,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams></ItemParams>
+  <ItemParams>msg as String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <ViewBehavior>

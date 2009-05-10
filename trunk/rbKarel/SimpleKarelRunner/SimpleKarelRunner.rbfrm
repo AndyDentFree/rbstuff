@@ -158,7 +158,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Caption         =   "Single step moves"
       DataField       =   ""
       DataSource      =   ""
-      Enabled         =   False
+      Enabled         =   True
       Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
@@ -180,7 +180,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Top             =   566
       Underline       =   ""
       Value           =   False
-      Visible         =   False
+      Visible         =   True
       Width           =   143
    End
    Begin PushButton StepButton
@@ -209,7 +209,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TextSize        =   0
       Top             =   566
       Underline       =   ""
-      Visible         =   False
+      Visible         =   True
       Width           =   80
    End
    Begin Slider SpeedSlider
@@ -431,6 +431,68 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Visible         =   True
       Width           =   473
    End
+   Begin StaticText StepActionMsg
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   42
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   ""
+      LockTop         =   ""
+      Multiline       =   ""
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      Text            =   "dynamic msg shows here"
+      TextAlign       =   0
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   589
+      Underline       =   ""
+      Visible         =   False
+      Width           =   458
+   End
+   Begin StaticText StepAboutPrompt
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   267
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   ""
+      LockTop         =   ""
+      Multiline       =   ""
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      Text            =   "About to:"
+      TextAlign       =   0
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   566
+      Underline       =   ""
+      Visible         =   False
+      Width           =   100
+   End
 End
 #tag EndWindow
 
@@ -480,6 +542,10 @@ End
 
 	#tag Event
 		Sub Close()
+		  if mAmRunning then
+		    mAmRunning = false
+		    KarelThread.Kill  // immediate kill so it doesn't try to update any controls, eg: if single-stepping, which are now gone
+		  end if
 		  Quit
 		End Sub
 	#tag EndEvent
@@ -637,18 +703,35 @@ End
 		  
 		  RedrawWorld
 		  
-		  // reload some states
-		  //mScripter.WorldResized
+		  
+		  dim CurrentLogger as KarelLogger
 		  if SayCheck.Value then
-		    mScripter.SetLogger new KarelLogSpeech
+		    CurrentLogger = new KarelLogSpeech
+		    mScripter.SetLogger CurrentLogger
 		  else
 		    mScripter.SetLogger nil
 		  end if
 		  
+		  // do after other loggers established above
+		  if StepCheck.Value then
+		    dim stepper as new KarelStepLogger(self) 
+		    if CurrentLogger is nil then
+		      CurrentLogger =  stepper
+		    else
+		      if CurrentLogger isa KarelMultiLogger then
+		        KarelMultiLogger(CurrentLogger).Loggers.Insert(0, stepper) // put stepper first so no actions until step
+		      else
+		        CurrentLogger = new KarelMultiLogger( stepper, CurrentLogger ) // put stepper first so no actions until step
+		      end if
+		    end if
+		    mScripter.SetLogger CurrentLogger
+		  end if
+		  mStepButtonPressed = false  // flag will be set by user pressing button, see StepNeeded for wait loop
 		  
 		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
 		  script.Context = mScripter
 		  Script.Source = KarelScripter.PrepareKarelScript(ScriptEntry.text)
+		  
 		  
 		  ClearErrorDisplay
 		  SetMovePauseFromSlider
@@ -704,11 +787,21 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub StepNeeded()
+		Sub StepNeeded(msg as String)
 		  // Part of the KarelStepApprover interface.
 		  
-		  StepButton.Enabled=true
-		  //@TODO work out a way for the RBScript to be put on hold here but user able to use GUI - maybe run script in thread?
+		  StepButton.Enabled= true
+		  StepAboutPrompt.Visible = true
+		  StepActionMsg.text = msg
+		  StepActionMsg.Visible = true
+		  // spins waiting for that button to be enabled, this will be called from a separate non-GUI thread running Karel
+		  Do
+		    app.YieldToNextThread
+		  loop until mStepButtonPressed or StepCheck.value=false
+		  StepButton.Enabled = false
+		  mStepButtonPressed = false
+		  StepAboutPrompt.Visible = false
+		  StepActionMsg.Visible = false
 		End Sub
 	#tag EndMethod
 
@@ -822,6 +915,34 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub SetupLoggers()
+		  // moved here because user can change active loggers just by checking or unchecking as we run
+		  dim CurrentLogger as KarelLogger
+		  if SayCheck.Value then
+		    CurrentLogger = new KarelLogSpeech
+		    mScripter.SetLogger CurrentLogger
+		  else
+		    mScripter.SetLogger nil
+		  end if
+		  
+		  // do after other loggers established above
+		  if StepCheck.Value then
+		    dim stepper as new KarelStepLogger(self)
+		    if CurrentLogger is nil then
+		      CurrentLogger =  stepper
+		    else
+		      if CurrentLogger isa KarelMultiLogger then
+		        KarelMultiLogger(CurrentLogger).Loggers.Insert(0, stepper) // put stepper first so no actions until step
+		      else
+		        CurrentLogger = new KarelMultiLogger( stepper, CurrentLogger ) // put stepper first so no actions until step
+		      end if
+		    end if
+		    mScripter.SetLogger CurrentLogger
+		  end if
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -857,6 +978,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mLoadingWorld As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mStepButtonPressed As Boolean
 	#tag EndProperty
 
 
@@ -916,6 +1041,31 @@ End
 	#tag Event
 		Sub Action()
 		  LoadMap WorldEntry.Text
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events SayCheck
+	#tag Event
+		Sub Action()
+		  if mAmRunning then
+		    SetupLoggers
+		  end if
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events StepCheck
+	#tag Event
+		Sub Action()
+		  if mAmRunning then
+		    SetupLoggers
+		  end if
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events StepButton
+	#tag Event
+		Sub Action()
+		  mStepButtonPressed = true
 		End Sub
 	#tag EndEvent
 #tag EndEvents

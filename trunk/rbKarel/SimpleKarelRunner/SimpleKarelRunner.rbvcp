@@ -30,6 +30,7 @@ Class=StaticTextWithURL;../../Common/StaticTextWithURL.xml;&h42F538F8;&h4A64710B
 Class=DynamicallyHandledMenuItem;../../Common/DynamicDelegatingMenuItem.xml;&h114F0957;&h4A64710B;false
 Folder=bigIconsForAbout;bigIconsForAbout;&h59B819D7;&h0;false
 Picture=rbKarelapp128;icons/rbKarel-app-128.png;&h7B9DD9D5;&h59B819D7;false;0;&h0
+Class=KarelStepLogger;../Externals/KarelStepLogger.xml;&hE0A61D2;&h6FAA62C2;false
 DefaultWindow=SimpleKarelRunner
 AppMenuBar=KarelRunnerMenubar
 MajorVersion=0
