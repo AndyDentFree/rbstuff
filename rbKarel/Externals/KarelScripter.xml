@@ -202,11 +202,12 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub TurnLeft()</SourceLine>
    <SourceLine>Wait MovePause  // this implements the speed of playback</SourceLine>
-   <SourceLine>mDirection = LeftDirection</SourceLine>
-   <SourceLine>mWorld.TurnRobotTo mDirection</SourceLine>
    <SourceLine>if mLogger&lt;&gt;nil then</SourceLine>
    <SourceLine>mLogger.LogKarelEvent "Turn Left", self</SourceLine>
    <SourceLine>end if</SourceLine>
+   <SourceLine>mDirection = LeftDirection</SourceLine>
+   <SourceLine>mWorld.TurnRobotTo mDirection</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>

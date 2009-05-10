@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <RBProject version="2009r2.1">
-<block type="Module" ID="125392947">
- <ObjName>KarelMultiLogger</ObjName>
+<block type="Module" ID="1222863173">
+ <ObjName>KarelStepLogger</ObjName>
  <ObjContainerID>1873437378</ObjContainerID>
  <IsClass>1</IsClass>
  <Interfaces>KarelLogger</Interfaces>
@@ -15,11 +15,7 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub LogKarelEvent(msg as String, fromKarel as KarelScripter)</SourceLine>
-   <SourceLine>// Part of the KarelLogger interface.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>for each kl as KarelLogger in Loggers</SourceLine>
-   <SourceLine>kl.LogKarelEvent msg, fromKarel</SourceLine>
-   <SourceLine>next</SourceLine>
+   <SourceLine>mApprover.StepNeeded msg  // we have to wait for this to synchronously return</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -35,15 +31,15 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor(ParamArray inLoggers as KarelLogger)</SourceLine>
-   <SourceLine>Loggers = inLoggers</SourceLine>
+   <SourceLine>Sub Constructor(inApprover as KarelStepApprover)</SourceLine>
+   <SourceLine>mApprover = inApprover</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>ParamArray inLoggers as KarelLogger</ItemParams>
+  <ItemParams>inApprover as KarelStepApprover</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Note>
@@ -53,23 +49,23 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>About</NoteLine>
-   <NoteLine>Gives us an easy way to attach multiple loggers in order. For example, you might want both spoken and file logging.</NoteLine>
+   <NoteLine>Fakes out the log event to provide a synchronous stepping point.</NoteLine>
    <NoteLine></NoteLine>
   </ItemSource>
   <ItemFlags>0</ItemFlags>
  </Note>
  <Property>
-  <ItemName>Loggers()</ItemName>
+  <ItemName>mApprover</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Loggers() As KarelLogger</SourceLine>
+   <SourceLine>mApprover As KarelStepApprover</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>Loggers() As KarelLogger</ItemDeclaration>
-  <ItemFlags>0</ItemFlags>
+  <ItemDeclaration>mApprover As KarelStepApprover</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
   <Shared>0</Shared>
  </Property>
  <ViewBehavior>
