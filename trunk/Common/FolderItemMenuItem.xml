@@ -1,49 +1,97 @@
 <?xml version="1.0"?>
 <RBProject version="2009r2.1">
-<block type="Module" ID="836644700">
- <ObjName>DynamicDelegatingMenuItem</ObjName>
+<block type="Module" ID="1268542167">
+ <ObjName>FolderItemMenuItem</ObjName>
  <ObjContainerID>1248096523</ObjContainerID>
  <IsClass>1</IsClass>
- <Superclass>MenuItem</Superclass>
+ <Superclass>DynamicDelegatingMenuItem</Superclass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
  <Compatibility></Compatibility>
- <HookInstance>
-  <ItemName>EnableMenu</ItemName>
+ <Method>
+  <ItemName>MakeMenuForFlatFolder</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub EnableMenu()</SourceLine>
-   <SourceLine>self.Enabled = mHandler &lt;&gt; nil</SourceLine>
+   <SourceLine> Shared Sub MakeMenuForFlatFolder(mb as MenuBar, menuName as string, menuPos as integer, fromFolder as FolderItem, itemHandler as DynamicDelegatingMenuItem.DynamicMenuHandler, fileAcceptor as FolderItemMenuItem.FolderItemToMenuTitle)</SourceLine>
+   <SourceLine>dim files() as FolderItem</SourceLine>
+   <SourceLine>for i as integer = 1 to fromFolder.Count</SourceLine>
+   <SourceLine>files.Append fromFolder.Item(i)</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if files.Ubound = -1 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim topMenu as  MenuItem = mb.child( menuName )</SourceLine>
+   <SourceLine>if topMenu is nil then</SourceLine>
+   <SourceLine>topMenu = new MenuItem( menuName )</SourceLine>
+   <SourceLine>if menuPos &gt; mb.count then</SourceLine>
+   <SourceLine>mb.append topMenu</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>mb.Insert(menuPos, topMenu)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// generate sorted list regardless of weird processing order used by directories</SourceLine>
+   <SourceLine>// not very efficient but only processing relatively small lists</SourceLine>
+   <SourceLine>dim sortedNames() as string</SourceLine>
+   <SourceLine>dim sortLookup as new Dictionary</SourceLine>
+   <SourceLine>for each fi as FolderItem in files</SourceLine>
+   <SourceLine>dim fiTitle as string = fileAcceptor.Invoke(fi)  // blank means don't use</SourceLine>
+   <SourceLine>if fiTitle.LenB &gt; 0 then</SourceLine>
+   <SourceLine>sortLookup.Value( fiTitle ) = fi</SourceLine>
+   <SourceLine>sortedNames.Append fiTitle</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>sortedNames.sort</SourceLine>
+   <SourceLine>for each name as string in sortedNames</SourceLine>
+   <SourceLine>dim fi as FolderItem = sortLookup.Value(name)</SourceLine>
+   <SourceLine>topMenu.Append  new FolderItemMenuItem( fi, itemHandler, name  )</SourceLine>
+   <SourceLine>next</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
- </HookInstance>
- <HookInstance>
-  <ItemName>Action</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>1</Shared>
+  <ItemParams>mb as MenuBar, menuName as string, menuPos as integer, fromFolder as FolderItem, itemHandler as DynamicDelegatingMenuItem.DynamicMenuHandler, fileAcceptor as FolderItemMenuItem.FolderItemToMenuTitle</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function Action() As Boolean</SourceLine>
-   <SourceLine>return mHandler.Invoke( self )</SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
- </HookInstance>
- <DelegateDeclaration>
-  <ItemName>DynamicMenuHandler</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Delegate Function DynamicMenuHandler(handleItem as DynamicDelegatingMenuItem) As Boolean</SourceLine>
+   <SourceLine>Sub Constructor(theFile as FolderItem, itemHandler as DynamicDelegatingMenuItem.DynamicMenuHandler)</SourceLine>
+   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
+   <SourceLine>// Constructor(handler as DynamicMenuHandler, Text As String, Tag As Variant = Nil) -- From DynamicDelegatingMenuItem</SourceLine>
+   <SourceLine>Super.Constructor itemHandler, theFile.Name, theFile</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
-  <ItemParams>handleItem as DynamicDelegatingMenuItem</ItemParams>
-  <ItemResult>Boolean</ItemResult>
+  <ItemParams>theFile as FolderItem, itemHandler as DynamicDelegatingMenuItem.DynamicMenuHandler</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <DelegateDeclaration>
+  <ItemName>FolderItemToMenuTitle</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Delegate Function FolderItemToMenuTitle(fi as FolderItem) As String</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>fi as FolderItem</ItemParams>
+  <ItemResult>String</ItemResult>
  </DelegateDeclaration>
  <Method>
   <ItemName>Constructor</ItemName>
@@ -51,60 +99,20 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor(handler as DynamicMenuHandler)</SourceLine>
+   <SourceLine>Sub Constructor(theFile as FolderItem, itemHandler as DynamicDelegatingMenuItem.DynamicMenuHandler, theTitle as string)</SourceLine>
    <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
-   <SourceLine>// Note that this may need modifications if there are multiple constructor choices.</SourceLine>
-   <SourceLine>// Possible constructor calls:</SourceLine>
-   <SourceLine>// Constructor(Text As String, Tag As Variant=Nil) -- From MenuItem</SourceLine>
-   <SourceLine>// Constructor() -- From MenuItem</SourceLine>
-   <SourceLine>Super.Constructor</SourceLine>
-   <SourceLine>mHandler = handler</SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
-  <ItemParams>handler as DynamicMenuHandler</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>Constructor</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Constructor(handler as DynamicMenuHandler, Text As String, Tag As Variant = Nil)</SourceLine>
-   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
-   <SourceLine>// Note that this may need modifications if there are multiple constructor choices.</SourceLine>
-   <SourceLine>// Possible constructor calls:</SourceLine>
-   <SourceLine>// Constructor(Text As String, Tag As Variant=Nil) -- From MenuItem</SourceLine>
-   <SourceLine>// Constructor() -- From MenuItem</SourceLine>
-   <SourceLine>Super.Constructor Text, Tag</SourceLine>
-   <SourceLine>mHandler = handler</SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
-  <ItemParams>handler as DynamicMenuHandler, Text As String, Tag As Variant = Nil</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Property>
-  <ItemName>mHandler</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>mHandler As DynamicMenuHandler</SourceLine>
+   <SourceLine>// Constructor(handler as DynamicMenuHandler, Text As String, Tag As Variant = Nil) -- From DynamicDelegatingMenuItem</SourceLine>
+   <SourceLine>Super.Constructor itemHandler, theTitle, theFile</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
-  <ItemDeclaration>mHandler As DynamicMenuHandler</ItemDeclaration>
-  <ItemFlags>1</ItemFlags>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
   <Shared>0</Shared>
- </Property>
+  <ItemParams>theFile as FolderItem, itemHandler as DynamicDelegatingMenuItem.DynamicMenuHandler, theTitle as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Super</ObjName>

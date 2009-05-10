@@ -503,6 +503,7 @@ End
 		  mWorld.AddObserver self
 		  mScripter = new KarelScripter( DestCanvas.Graphics, mWorld )
 		  ScriptsTab.Value = 0  // kick the value so the Change event is triggered and the menu titles updated
+		  SetupDynamicFolderMenus
 		End Sub
 	#tag EndEvent
 
@@ -614,22 +615,7 @@ End
 
 	#tag MenuHandler
 		Function FileOpen() As Boolean Handles FileOpen.Action
-			if not SaveIfDirty("opening a different one") then return True  // cancelled a dialog
-			
-			dim f as FolderItem = GetOpenFolderItem(KarelFileTypes.Text)
-			if f is nil then return True
-			
-			if ScriptsTab.Value=0 then
-			mCurrentWorldFile = f
-			WorldEntry.Text = OpenDoc(f)
-			mWorldDirty = false
-			else
-			mCurrentScriptFile = f
-			ScriptEntry.Text = OpenDoc(f)
-			mScriptDirty = false
-			end if
-			Return True
-			
+			return HandleFileOpen
 		End Function
 	#tag EndMenuHandler
 
@@ -943,6 +929,105 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function FindSpecialFolder(folderName as string) As FolderItem
+		  // runs through list of standard folders looking for children.
+		  
+		  static foldersToCheck() as FolderItem = Array( _
+		  app.ExecutableFile.Parent, _
+		  SpecialFolder.Documents, _
+		  SpecialFolder.SharedDocuments, _
+		  SpecialFolder.UserHome, _
+		  SpecialFolder.ApplicationData)
+		  
+		  for each fld as FolderItem in foldersToCheck
+		    dim maybeF as FolderItem = fld.Child(folderName)
+		    if maybeF <> nil and maybeF.Exists then
+		      return maybeF
+		    end if
+		  next
+		  return nil
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SetupDynamicFolderMenus()
+		  mWorldsFolder = FindSpecialFolder("KarelWorlds")
+		  mScriptsFolder = FindSpecialFolder("KarelScripts")
+		  
+		  if mWorldsFolder<>nil then
+		    FolderItemMenuItem.MakeMenuForFlatFolder App.MenuBar, "Worlds", 5, mWorldsFolder, AddressOf handleWorldsMenu, AddressOf FileIsOKAsScript
+		  end if
+		  if mScriptsFolder<>nil then
+		    FolderItemMenuItem.MakeMenuForFlatFolder App.MenuBar, "Scripts", 6, mScriptsFolder, AddressOf handleScriptsMenu, AddressOf FileIsOKAsScript
+		  end if
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function handleWorldsMenu(handleItem as DynamicDelegatingMenuItem) As Boolean
+		  ScriptsTab.Value=0  // force switch to Worlds
+		  dim fileToOpen as FolderItem = handleItem.Tag
+		  call HandleFileOpen(fileToOpen)
+		  return true
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function handleScriptsMenu(handleItem as DynamicDelegatingMenuItem) As Boolean
+		  ScriptsTab.Value=1  // force switch to script
+		  dim fileToOpen as FolderItem = handleItem.Tag
+		  call HandleFileOpen(fileToOpen)
+		  return true
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function FileIsOKAsScript(fi as FolderItem) As String
+		  // implements delegate FolderItemMenuItem.FolderItemToMenuTitle
+		  if fi.Directory then return ""
+		  
+		  dim candidateName as string = fi.Name
+		  if candidateName.left(1)="." then return ""
+		  
+		  if candidateName.right(4)=".txt" then
+		    return candidateName.left( candidateName.len-4 )
+		  end if
+		  
+		  if candidateName.right(5)=".text" then
+		    return candidateName.left( candidateName.len-5 )
+		  end if
+		  
+		  return ""  // default is fail to add
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function HandleFileOpen(f as FolderItem = nil) As Boolean
+		  if not SaveIfDirty("opening a different one") then return True  // cancelled a dialog
+		  
+		  // can be called with known FolderItem
+		  if f is nil then
+		    f = GetOpenFolderItem(KarelFileTypes.Text)
+		  end if
+		  if f is nil then return True
+		  
+		  if ScriptsTab.Value=0 then
+		    mCurrentWorldFile = f
+		    WorldEntry.Text = OpenDoc(f)
+		    mWorldDirty = false
+		  else
+		    mCurrentScriptFile = f
+		    ScriptEntry.Text = OpenDoc(f)
+		    mScriptDirty = false
+		  end if
+		  Return True
+		  
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -982,6 +1067,14 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mStepButtonPressed As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mWorldsFolder As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mScriptsFolder As FolderItem
 	#tag EndProperty
 
 

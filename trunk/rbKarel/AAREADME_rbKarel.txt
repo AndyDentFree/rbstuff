@@ -12,6 +12,7 @@ will be found automatically and add menus Scripts and Worlds to the menu bar.
 DEPENDENCIES
 On http://code.google.com/p/rbstuff/source/browse/#svn/trunk/Common
 - DynamicDelegatingMenuHandler
+- FolderItemMenuItem
 - GraphicsScripter 
 - MessageDialogHelpers
 - SpeechUtilities
