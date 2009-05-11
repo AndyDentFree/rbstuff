@@ -1,6 +1,8 @@
 #summary REALbasic adaption of Karel the Robot.
 #labels Featured
 
+See rbKarelGettingStarted for a quick guide on how to use the program.
+
 == Introduction ==
 
 Conceptual port of "Karel the Robot" to REALbasic
