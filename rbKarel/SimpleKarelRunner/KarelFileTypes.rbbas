@@ -2,7 +2,7 @@
 	#tag FileType
 		CodeName=Text
 		Extension=.text;.txt
-		Flags=&h0
+		Flags=&h1
 		MacCreator=????
 		MacType=TEXT
 		Name=text/plain
