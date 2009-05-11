@@ -15,10 +15,10 @@ Note that this version is not based on any source code from any previous Karel i
 
 == Nice to have ==
   * user override of drawing Karel, beepers, walls, background
-  * able to paste in examples from classical Karel
+  * able to paste in examples from classical Karel (done, apart from ITERATE)
   * simpler graphical way to handle some things like drawing walls
   * drawing pictures that are selected through File Open dialogs and remembered as named graphics (or file paths)
-  * Karel-centric drawing so the drawing primitives exposed through GraphicsScripter can be used without explicit coords - does this imply things like squares and circles are logically centred on Karel's location?  
+  * Karel-centric drawing so the drawing primitives exposed through GraphicsScripter can be used without explicit coords - implemented by providing coordinate transformation from Avenue2X and Street2Y.  
   * debugger with ability to break based on Karel's state as he moves, so you could stop as he got close to a wall (without explicitly writing this into the Karel program)
   * Observable properties with the ability to build GUI elements to configure them, like Netlogo. For example, if MovePause was exposed as a Karel property, a Karel program updating it (so the user controls variable speed) should trigger a GUI slider being updated if one is visible.
 
