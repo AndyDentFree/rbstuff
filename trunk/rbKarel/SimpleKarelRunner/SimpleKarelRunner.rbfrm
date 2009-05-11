@@ -537,7 +537,7 @@ End
 	#tag Event
 		Function CancelClose(appQuitting as Boolean) As Boolean
 		  if appQuitting then return false  // Quit has its own question
-		  return not SaveIfDirty("quitting")  // CancelClose is kinda weird - a True means cancel!
+		  return not SaveIfDirty("quitting", true)  // CancelClose is kinda weird - a True means cancel!
 		End Function
 	#tag EndEvent
 
@@ -652,7 +652,7 @@ End
 
 	#tag MenuHandler
 		Function FileQuit() As Boolean Handles FileQuit.Action
-			if SaveIfDirty("quitting") then
+			if SaveIfDirty("quitting", true) then
 			Quit
 			end if
 			// otherwise swallows the event
@@ -700,7 +700,7 @@ End
 		  
 		  // do after other loggers established above
 		  if StepCheck.Value then
-		    dim stepper as new KarelStepLogger(self) 
+		    dim stepper as new KarelStepLogger(self)
 		    if CurrentLogger is nil then
 		      CurrentLogger =  stepper
 		    else
@@ -827,7 +827,7 @@ End
 		Protected Function OpenDoc(f as FolderItem) As String
 		  dim t as TextInputStream
 		  t = f.OpenAsTextFile
-		  dim cleanedString as string = t.ReadAll  
+		  dim cleanedString as string = t.ReadAll
 		  return cleanedString.ReplaceAll( chr(9), SpacesReplacingTab )
 		  // implicitly closes as t goes out of scope
 		End Function
@@ -844,15 +844,29 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function SaveIfDirty(partReason as String) As Boolean
+		Protected Function SaveIfDirty(partReason as String, checkBoth as Boolean = false) As Boolean
 		  // Note leading ampersands to make buttons alt-keyable on Windows and cmd-S and cmd-D on Mac
-		  if ScriptsTab.Value=0 then
+		  
+		  dim checkScripts as Boolean = false
+		  dim checkWorlds as Boolean = false
+		  if checkBoth then
+		    checkScripts = true
+		    checkWorlds = true
+		  else
+		    if ScriptsTab.Value=0 then
+		      checkWorlds = true
+		    else
+		      checkScripts = true
+		    end if
+		  end if
+		  
+		  if checkWorlds then
 		    if mWorldDirty and WorldEntry.Text.LenB > 0 then
 		      dim d as new MessageDialog
 		      select case d.ShowModalWith(self, "Do you want to save changes to your World before " + partReason + "?", "&Save", "&Don't Save", "Cancel")
 		      case d.ActionButton
 		        if  mCurrentWorldFile is nil then
-		          return HandleSaveAs
+		          if not HandleSaveAs then return false  // fall through for default true return or cancelling by scripts if checkScripts
 		        end if
 		        SaveDoc(mCurrentWorldFile, WorldEntry.Text)
 		        
@@ -860,8 +874,9 @@ End
 		        return false // cancelled
 		      end Select
 		    end if
-		    
-		  else
+		  end if
+		  
+		  if checkScripts then
 		    if mScriptDirty and ScriptEntry.Text.LenB > 0 then
 		      dim d as new MessageDialog
 		      select case d.ShowModalWith(self, "Do you want to save changes to your Script before " + partReason + "?", "&Save", "&Don't Save", "Cancel")
@@ -875,6 +890,7 @@ End
 		      end Select
 		    end if
 		  end if
+		  
 		  return true  // either didn't need saving or saved OK including allowing for a SaveAs for a new document
 		End Function
 	#tag EndMethod
@@ -941,11 +957,28 @@ End
 		  SpecialFolder.ApplicationData)
 		  
 		  for each fld as FolderItem in foldersToCheck
-		    dim maybeF as FolderItem = fld.Child(folderName)
-		    if maybeF <> nil and maybeF.Exists then
-		      return maybeF
+		    if fld<>nil then
+		      // on different platforms, the special folders above may return nil
+		      dim maybeF as FolderItem = fld.Child(folderName)
+		      if maybeF <> nil and maybeF.Exists then
+		        return maybeF
+		      end if
 		    end if
 		  next
+		  
+		  #if TargetWin32
+		    // loop again looking for shortcuts, just returning one of them works if they are shortcut to a directory
+		    dim linkName as string = folderName+".lnk"
+		    for each fld as FolderItem in foldersToCheck
+		      if fld<>nil then
+		        // on different platforms, the special folders above may return nil
+		        dim maybeF as FolderItem = fld.Child(linkName)
+		        if maybeF <> nil and maybeF.Exists then
+		          return maybeF
+		        end if
+		      end if
+		    next
+		  #endif
 		  return nil
 		End Function
 	#tag EndMethod
