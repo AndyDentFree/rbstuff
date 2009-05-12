@@ -14,79 +14,73 @@ Created by Richard E. Pattis in his book Karel The Robot: A Gentle Introduction 
 = Karel =
 
 Karel understands 4 basic instructions:
-  * Move - moves Karel forward one square in the direction he is facing
-  * TurnLeft - turns Karel 90 degrees to the left
-  * PutBeeper - Places a beeper from his beeper bag at the place where he is standing
-  * PickBeeper - Picks up a beeper from the square where he is standing
+  * `Move` - moves Karel forward one square in the direction he is facing
+  * `TurnLeft` - turns Karel 90 degrees to the left
+  * `PutBeeper` - Places a beeper from his beeper bag at the place where he is standing
+  * `PickBeeper` - Picks up a beeper from the square where he is standing
 
 Karel can also detect a number of things about his world including:
 
-  * FrontIsClear	 - the field ahead of Karel is clear
-  * FrontIsBlocked - the field ahead of Karel is blocked
-  * LeftIsClear - the field on the left hand side of Karel is clear
-  * LeftIsBlocked - the field on the left hand side of Karel is blocked
-  * RightIsClear	the - field on the right hand side of Karel is clear
-  * RightIsBlocked - the field on the right hand side of Karel is blocked
-  * NextToABeeper - the field on which Karel is contains a beeper
-  * NotNextToABeeper - the field on which Karel is does not contain a beeper
-  * AnyBeepersInBeeperBag - Karel has at least one beeper in his bag
-  * NoBeepersInBeeperBag - Karel has no beepers in his bag
-  * FacingNorth - Karel is facing towards north
-  * NotFacingNorth - Karel is not facing towards north
-  * FacingSouth - Karel is facing towards south
-  * NotFacingSouth - Karel is not facing towards south
-  * FacingEast - Karel is facing towards east
-  * NotFacingEast - Karel is not facing towards east
-  * FacingWest - Karel is facing towards west
-  * NotFacingWest - Karel is not facing towards west
+  * `FrontIsClear`	 - the field ahead of Karel is clear
+  * `FrontIsBlocked` - the field ahead of Karel is blocked
+  * `LeftIsClear` - the field on the left hand side of Karel is clear
+  * `LeftIsBlocked` - the field on the left hand side of Karel is blocked
+  * `RightIsClear`	 - the field on the right hand side of Karel is clear
+  * `RightIsBlocked` - the field on the right hand side of Karel is blocked
+  * `NextToABeeper` - the field on which Karel is contains a beeper
+  * `NotNextToABeeper` - the field on which Karel is does not contain a beeper
+  * `AnyBeepersInBeeperBag` - Karel has at least one beeper in his bag
+  * `NoBeepersInBeeperBag` - Karel has no beepers in his bag
+  * `FacingNorth` - Karel is facing towards north
+  * `NotFacingNorth` - Karel is not facing towards north
+  * `FacingSouth` - Karel is facing towards south
+  * `NotFacingSouth` - Karel is not facing towards south
+  * `FacingEast` - Karel is facing towards east
+  * `NotFacingEast` - Karel is not facing towards east
+  * `FacingWest` - Karel is facing towards west
+  * `NotFacingWest` - Karel is not facing towards west
 
 Using the commands above as well as if, while and for statements a Karel script may look something like this:
 
-//Start Script<br><br>
+{{{
+//Start Script
 
-while FrontIsClear<br>
-  Move<br>
-wend<br>
+while FrontIsClear
+  Move
+wend
 
-If LeftIsClear then<br>
-  turnLeft<br>
-end<br>
+If LeftIsClear then
+  turnLeft
+end
 
 For i=0 to 5
-
-  if AnyBeepersInBeeperBag then<br>
-    PutBeeper<br>
+  if AnyBeepersInBeeperBag then
+    PutBeeper
   end
+Next
 
-Next<br><br>
-
-//End Script<br><br>
-
+//End Script
+}}}
 In order to develop a students programming skills and solve problems using correct programming techniques, methods can be created. For example the code above could be re-written as:
-
-movetonextwall<br>
+{{{
+movetonextwall
 turnandplacebeeper
 
-sub movetonextwall()<br>
-  while FrontIsClear<br>
-    Move<br>
-  wend<br>
+sub movetonextwall()
+  while FrontIsClear
+    Move
+  wend
 end sub
 
-sub turnandplacebeeper()<br>
-  If LeftIsClear then<br>
-    turnLeft<br>
+sub turnandplacebeeper()
+  If LeftIsClear then
+    turnLeft
   end
 
-  For i=0 to 5<br>
-    if AnyBeepersInBeeperBag then<br>
-      PutBeeper<br>
-    end<br>
-  Next<br>
-end sub<br><br>
-
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  For i=0 to 5
+    if AnyBeepersInBeeperBag then
+      PutBeeper
+    end
+  Next
+end sub
+}}}
