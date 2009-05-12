@@ -40,6 +40,50 @@ Karel can also detect a number of things about his world including:
   * FacingWest - Karel is facing towards west
   * NotFacingWest - Karel is not facing towards west
 
+Using the commands above as well as if, while and for statements a Karel script may look something like this:
+
+//Start Script<br><br>
+
+while FrontIsClear<br>
+  Move<br>
+wend<br>
+
+If LeftIsClear then<br>
+  turnLeft<br>
+end<br>
+
+For i=0 to 5
+
+  if AnyBeepersInBeeperBag then<br>
+    PutBeeper<br>
+  end
+
+Next<br><br>
+
+//End Script<br><br>
+
+In order to develop a students programming skills and solve problems using correct programming techniques, methods can be created. For example the code above could be re-written as:
+
+movetonextwall<br>
+turnandplacebeeper
+
+sub movetonextwall()<br>
+  while FrontIsClear<br>
+    Move<br>
+  wend<br>
+end sub
+
+sub turnandplacebeeper()<br>
+  If LeftIsClear then<br>
+    turnLeft<br>
+  end
+
+  For i=0 to 5<br>
+    if AnyBeepersInBeeperBag then<br>
+      PutBeeper<br>
+    end<br>
+  Next<br>
+end sub<br><br>
 
 
 Add your content here.  Format your content with:
