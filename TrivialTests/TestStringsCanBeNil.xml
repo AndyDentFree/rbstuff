@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<RBProject version="2009r2.1">
+<block type="Project" ID="0">
+ <ProjectSavedInVers>2009.021</ProjectSavedInVers>
+ <ProjMgrUser></ProjMgrUser>
+ <ProjMgrServer></ProjMgrServer>
+ <MajorVersion>1</MajorVersion>
+ <MinorVersion>0</MinorVersion>
+ <SubVersion>0</SubVersion>
+ <Release>0</Release>
+ <NonRelease>0</NonRelease>
+ <Region></Region>
+ <ShortVersion></ShortVersion>
+ <LongVersion></LongVersion>
+ <InfoVersion></InfoVersion>
+ <AutoIncVersion>0</AutoIncVersion>
+ <DefaultViewID>0</DefaultViewID>
+ <ProjectType>1</ProjectType>
+ <DefaultLanguage>0</DefaultLanguage>
+ <CurrentLanguage>0</CurrentLanguage>
+ <DefaultEncoding>0</DefaultEncoding>
+ <BuildFlags>24576</BuildFlags>
+ <Icon>
+ </Icon>
+ <MacCreator></MacCreator>
+ <BuildCarbonName>My Application</BuildCarbonName>
+ <BuildCarbonMachOName>TestStringNullability</BuildCarbonMachOName>
+ <BundleIdentifier></BundleIdentifier>
+ <BuildSize>4194304</BuildSize>
+ <BuildMinSize>2097152</BuildMinSize>
+ <BuildSizeAsString>4096</BuildSizeAsString>
+ <BuildMinSizeAsString>2048</BuildMinSizeAsString>
+ <WinMDICaption></WinMDICaption>
+ <BuildWinName>TestStringNullability.exe</BuildWinName>
+ <BuildWinMDI>0</BuildWinMDI>
+ <BuildWinCompanyName></BuildWinCompanyName>
+ <BuildWinProductName></BuildWinProductName>
+ <BuildWinInternalName></BuildWinInternalName>
+ <BuildLinuxX86Name>TestStringNullability</BuildLinuxX86Name>
+ <DebuggerCommandLine></DebuggerCommandLine>
+</block>
+<block type="Module" ID="1722789270">
+ <ObjName>App</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>ConsoleApplication</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <IsApplicationObject>1</IsApplicationObject>
+ <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>Run</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Run(args() as String) As Integer</SourceLine>
+   <SourceLine>dim v as Variant</SourceLine>
+   <SourceLine>TestString v</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <Method>
+  <ItemName>TestString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub TestString(foo as String)</SourceLine>
+   <SourceLine>if foo is nil then</SourceLine>
+   <SourceLine>print "Yes, Strings can be nil, if they come from an empty Variant"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>foo as String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <PropertyVal Name="MenuBar">0</PropertyVal>
+ <ViewBehavior>
+ </ViewBehavior>
+</block>
+<block type="UIState" ID="0">
+ <WindowState>
+  <OpenTab>
+   <ObjContainerID>0</ObjContainerID>
+   <EditSplit>340</EditSplit>
+   <ProjectListSortColumn>3</ProjectListSortColumn>
+   <ProjectListColumnSortDirection>1</ProjectListColumnSortDirection>
+  </OpenTab>
+  <OpenTab>
+   <ObjContainerID>1722789270</ObjContainerID>
+   <AlternateEditorID>1</AlternateEditorID>
+   <LeftSplitter>160</LeftSplitter>
+   <EmptyEventState>0</EmptyEventState>
+   <CodeItemID>0</CodeItemID>
+  </OpenTab>
+  <LastLocation>(Home)</LastLocation>
+  <EditBounds><Rect left="494" top="72" width="1065" height="970"/></EditBounds>
+ </WindowState>
+</block>
+</RBProject>
