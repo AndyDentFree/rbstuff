@@ -32,7 +32,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   480
+      Height          =   467
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -40,16 +40,16 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   11
+      Top             =   20
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   480
+      Width           =   473
    End
    Begin PushButton RunButton
       AutoDeactivate  =   True
@@ -63,7 +63,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   403
+      Left            =   396
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -75,7 +75,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   12
-      Top             =   503
+      Top             =   526
       Underline       =   False
       Visible         =   True
       Width           =   97
@@ -104,7 +104,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   403
+      Left            =   396
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -116,7 +116,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   12
-      Top             =   535
+      Top             =   559
       Underline       =   False
       Visible         =   True
       Width           =   97
@@ -146,7 +146,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   534
+      Top             =   558
       Underline       =   ""
       Value           =   False
       Visible         =   True
@@ -177,7 +177,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   566
+      Top             =   590
       Underline       =   ""
       Value           =   False
       Visible         =   True
@@ -207,7 +207,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   566
+      Top             =   590
       Underline       =   ""
       Visible         =   True
       Width           =   80
@@ -234,7 +234,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   507
+      Top             =   531
       Value           =   1000
       Visible         =   True
       Width           =   298
@@ -265,7 +265,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   502
+      Top             =   526
       Underline       =   ""
       Visible         =   True
       Width           =   46
@@ -294,7 +294,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Left            =   512
       LockBottom      =   True
       LockedInPosition=   True
-      LockLeft        =   True
+      LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
       Panels          =   ""
@@ -331,7 +331,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          LimitText       =   0
          LockBottom      =   True
          LockedInPosition=   False
-         LockLeft        =   True
+         LockLeft        =   False
          LockRight       =   True
          LockTop         =   True
          Mask            =   ""
@@ -412,10 +412,10 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   ""
       Left            =   20
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   ""
-      LockRight       =   ""
+      LockLeft        =   True
+      LockRight       =   False
       LockTop         =   ""
       Multiline       =   ""
       Scope           =   0
@@ -443,9 +443,9 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       InitialParent   =   ""
       Italic          =   ""
       Left            =   42
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   ""
+      LockLeft        =   True
       LockRight       =   ""
       LockTop         =   ""
       Multiline       =   ""
@@ -457,7 +457,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   589
+      Top             =   613
       Underline       =   ""
       Visible         =   False
       Width           =   458
@@ -488,10 +488,46 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   566
+      Top             =   590
       Underline       =   ""
       Visible         =   False
       Width           =   100
+   End
+   Begin DisclosureTriangle DiscloseScripts
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      Enabled         =   True
+      Facing          =   0
+      Height          =   18
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   936
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Value           =   True
+      Visible         =   True
+      Width           =   18
+   End
+   Begin Timer WorldResizedTimer
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   -24
+      LockedInPosition=   False
+      Mode            =   1
+      Period          =   2
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   158
+      Width           =   32
    End
 End
 #tag EndWindow
@@ -1061,6 +1097,21 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub AdjustWorldSizeToMatchScriptVisibility()
+		  dim rightEdge as integer
+		  dim indentRight as integer = DestCanvas.Left
+		  if ScriptsTab.Visible then
+		    rightEdge = ScriptsTab.Left - indentRight
+		  else
+		    rightEdge = Width - indentRight
+		  end if
+		  DestCanvas.Width = rightEdge - DestCanvas.Left
+		  
+		  WorldResizedTimer.Mode = timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -1275,5 +1326,23 @@ End
 		  end if
 		  return false
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events DiscloseScripts
+	#tag Event
+		Sub Action()
+		  ScriptsTab.Visible = me.Value
+		  AdjustWorldSizeToMatchScriptVisibility
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events WorldResizedTimer
+	#tag Event
+		Sub Action()
+		  // here so if anything needs to cause world resizing to be reacted to outside of their current event handling code they can kick the timer
+		  mScripter.WorldResized
+		  RedrawWorld
+		End Sub
 	#tag EndEvent
 #tag EndEvents
