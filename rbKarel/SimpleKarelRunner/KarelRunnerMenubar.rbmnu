@@ -151,7 +151,7 @@ Begin Menu KarelRunnerMenubar
          ShortcutKey = "R"
          Shortcut = "Cmd+R"
          MenuModifier = True
-         AutoEnable = False
+         AutoEnable = True
       End
       Begin MenuItem 
          SpecialMenu = 2
@@ -159,14 +159,14 @@ Begin Menu KarelRunnerMenubar
          Index = -2147483648
          AutoEnable = True
       End
-      Begin MenuItem KarelLoadMap
+      Begin MenuItem KarelLoadWorld
          SpecialMenu = 0
-         Text = "Load Map"
+         Text = "Load World"
          Index = -2147483648
          ShortcutKey = "L"
          Shortcut = "Cmd+L"
          MenuModifier = True
-         AutoEnable = True
+         AutoEnable = False
       End
       Begin AppleMenuItem KarelAbout
          SpecialMenu = 0

@@ -566,7 +566,7 @@ End
 		    FileSave.Enabled = mScriptDirty
 		    FileSaveas.Enabled = ScriptEntry.Text.LenB > 0 or mScriptDirty
 		  end if
-		  KarelRun.Enabled = not mAmRunning
+		  KarelLoadWorld.Enabled = not mAmRunning
 		End Sub
 	#tag EndEvent
 
@@ -589,7 +589,7 @@ End
 
 
 	#tag MenuHandler
-		Function KarelLoadMap() As Boolean Handles KarelLoadMap.Action
+		Function KarelLoadWorld() As Boolean Handles KarelLoadWorld.Action
 			LoadMapButton.Push
 			Return True
 			
@@ -832,7 +832,10 @@ End
 		  StatusDisplay.Text = errorMsg
 		  beep
 		  mAmRunning = false
+		  // have to fix up names and state of menus and buttons here because don't go through the normal exit logic in the thread
+		  // SimpleKarelRunner.KarelThread.Run which usually does the cleanup
 		  RunButton.Caption = mSaveRunCaption
+		  karelRun.Text = mSaveRunMenu
 		  LoadMapButton.Enabled = true
 		End Sub
 	#tag EndMethod
@@ -1161,6 +1164,10 @@ End
 		Protected mScriptsFolder As FolderItem
 	#tag EndProperty
 
+	#tag Property, Flags = &h1
+		Protected mSaveRunMenu As string
+	#tag EndProperty
+
 
 	#tag Constant, Name = kImageFilters, Type = String, Dynamic = False, Default = \"image/jpeg;image/png;/image/gif", Scope = Public
 	#tag EndConstant
@@ -1260,6 +1267,9 @@ End
 		  StatusDisplay.Text = ""
 		  mSaveRunCaption = RunButton.Caption
 		  RunButton.Caption = "Stop"
+		  mSaveRunMenu = KarelRun.Text
+		  KarelRun.Text = "Stop"
+		  
 		  mAmRunning = true
 		  try
 		    mWorld.RunBy me
@@ -1274,7 +1284,8 @@ End
 		  mAmRunning = false
 		  LoadMapButton.Enabled = true
 		  RunButton.Caption = mSaveRunCaption
-		  KarelRun.Enabled = true  // enable forced here because seems to be lag in EnableMenuItems if just using cmd-key
+		  KarelRun.Text = mSaveRunMenu
+		  KarelLoadWorld.Enabled = true  // enable forced here because seems to be lag in EnableMenuItems if just using cmd-key
 		End Sub
 	#tag EndEvent
 #tag EndEvents
