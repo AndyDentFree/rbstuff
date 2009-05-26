@@ -24,6 +24,302 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
    Title           =   "Karel's World"
    Visible         =   True
    Width           =   960
+   Begin Canvas ControlGrouper
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   131
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   13
+      LockBottom      =   ""
+      LockedInPosition=   True
+      LockLeft        =   ""
+      LockRight       =   ""
+      LockTop         =   ""
+      Scope           =   0
+      TabIndex        =   15
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   502
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   495
+      Begin CheckBox SayCheck
+         AutoDeactivate  =   True
+         Bold            =   ""
+         Caption         =   "Say each change"
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   ""
+         Left            =   20
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         State           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         Top             =   546
+         Underline       =   ""
+         Value           =   False
+         Visible         =   True
+         Width           =   171
+      End
+      Begin CheckBox StepCheck
+         AutoDeactivate  =   True
+         Bold            =   ""
+         Caption         =   "Single step moves"
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   ""
+         Left            =   20
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         State           =   0
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         Top             =   578
+         Underline       =   ""
+         Value           =   False
+         Visible         =   True
+         Width           =   143
+      End
+      Begin PushButton StepButton
+         AutoDeactivate  =   True
+         Bold            =   ""
+         Cancel          =   ""
+         Caption         =   "Step"
+         Default         =   ""
+         Enabled         =   False
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   ""
+         Left            =   175
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   2
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         Top             =   578
+         Underline       =   ""
+         Visible         =   True
+         Width           =   80
+      End
+      Begin Slider SpeedSlider
+         AutoDeactivate  =   True
+         Enabled         =   True
+         Height          =   16
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Left            =   78
+         LineStep        =   250
+         LiveScroll      =   ""
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Maximum         =   1500
+         Minimum         =   0
+         PageStep        =   250
+         Scope           =   0
+         TabIndex        =   3
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Top             =   519
+         Value           =   1000
+         Visible         =   True
+         Width           =   298
+      End
+      Begin StaticText StaticText1
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   ""
+         Left            =   20
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   False
+         Multiline       =   ""
+         Scope           =   0
+         TabIndex        =   4
+         TabPanelIndex   =   0
+         Text            =   "Speed:"
+         TextAlign       =   0
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         Top             =   513
+         Underline       =   ""
+         Visible         =   True
+         Width           =   46
+      End
+      Begin PushButton RunButton
+         AutoDeactivate  =   True
+         Bold            =   False
+         Cancel          =   False
+         Caption         =   "Run:"
+         Default         =   False
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   False
+         Left            =   396
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   5
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   12
+         Top             =   514
+         Underline       =   False
+         Visible         =   True
+         Width           =   97
+      End
+      Begin StaticText StepActionMsg
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   ""
+         Left            =   42
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   ""
+         Multiline       =   ""
+         Scope           =   0
+         TabIndex        =   6
+         TabPanelIndex   =   0
+         Text            =   "dynamic msg shows here"
+         TextAlign       =   0
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         Top             =   601
+         Underline       =   ""
+         Visible         =   False
+         Width           =   458
+      End
+      Begin StaticText StepAboutPrompt
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   ""
+         Left            =   267
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   ""
+         LockRight       =   ""
+         LockTop         =   ""
+         Multiline       =   ""
+         Scope           =   0
+         TabIndex        =   7
+         TabPanelIndex   =   0
+         Text            =   "About to:"
+         TextAlign       =   0
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         Top             =   578
+         Underline       =   ""
+         Visible         =   False
+         Width           =   100
+      End
+      Begin PushButton LoadMapButton
+         AutoDeactivate  =   True
+         Bold            =   False
+         Cancel          =   False
+         Caption         =   "Load World:"
+         Default         =   False
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "ControlGrouper"
+         Italic          =   False
+         Left            =   396
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   8
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   12
+         Top             =   547
+         Underline       =   False
+         Visible         =   True
+         Width           =   97
+      End
+   End
    Begin Canvas DestCanvas
       AcceptFocus     =   False
       AcceptTabs      =   False
@@ -51,35 +347,6 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Visible         =   True
       Width           =   473
    End
-   Begin PushButton RunButton
-      AutoDeactivate  =   True
-      Bold            =   False
-      Cancel          =   False
-      Caption         =   "Run:"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   396
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   12
-      Top             =   526
-      Underline       =   False
-      Visible         =   True
-      Width           =   97
-   End
    Begin RbScript Script
       EncodingFont    =   ""
       Height          =   32
@@ -91,184 +358,6 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabPanelIndex   =   0
       Top             =   59
       Width           =   32
-   End
-   Begin PushButton LoadMapButton
-      AutoDeactivate  =   True
-      Bold            =   False
-      Cancel          =   False
-      Caption         =   "Load World:"
-      Default         =   False
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   396
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   12
-      Top             =   559
-      Underline       =   False
-      Visible         =   True
-      Width           =   97
-   End
-   Begin CheckBox SayCheck
-      AutoDeactivate  =   True
-      Bold            =   ""
-      Caption         =   "Say each change"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   20
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      State           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   558
-      Underline       =   ""
-      Value           =   False
-      Visible         =   True
-      Width           =   171
-   End
-   Begin CheckBox StepCheck
-      AutoDeactivate  =   True
-      Bold            =   ""
-      Caption         =   "Single step moves"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   20
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      State           =   0
-      TabIndex        =   5
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   590
-      Underline       =   ""
-      Value           =   False
-      Visible         =   True
-      Width           =   143
-   End
-   Begin PushButton StepButton
-      AutoDeactivate  =   True
-      Bold            =   ""
-      Cancel          =   ""
-      Caption         =   "Step"
-      Default         =   ""
-      Enabled         =   False
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   175
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   590
-      Underline       =   ""
-      Visible         =   True
-      Width           =   80
-   End
-   Begin Slider SpeedSlider
-      AutoDeactivate  =   True
-      Enabled         =   True
-      Height          =   16
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   78
-      LineStep        =   250
-      LiveScroll      =   ""
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Maximum         =   1500
-      Minimum         =   0
-      PageStep        =   250
-      Scope           =   0
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   531
-      Value           =   1000
-      Visible         =   True
-      Width           =   298
-   End
-   Begin StaticText StaticText1
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   20
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
-      TabIndex        =   8
-      TabPanelIndex   =   0
-      Text            =   "Speed:"
-      TextAlign       =   0
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   526
-      Underline       =   ""
-      Visible         =   True
-      Width           =   46
    End
    Begin Thread KarelThread
       Height          =   32
@@ -411,7 +500,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   ""
-      Left            =   20
+      Left            =   33
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -429,69 +518,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Top             =   645
       Underline       =   ""
       Visible         =   True
-      Width           =   473
-   End
-   Begin StaticText StepActionMsg
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   42
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   ""
-      Multiline       =   ""
-      Scope           =   0
-      TabIndex        =   11
-      TabPanelIndex   =   0
-      Text            =   "dynamic msg shows here"
-      TextAlign       =   0
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   613
-      Underline       =   ""
-      Visible         =   False
-      Width           =   458
-   End
-   Begin StaticText StepAboutPrompt
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   267
-      LockBottom      =   ""
-      LockedInPosition=   False
-      LockLeft        =   ""
-      LockRight       =   ""
-      LockTop         =   ""
-      Multiline       =   ""
-      Scope           =   0
-      TabIndex        =   12
-      TabPanelIndex   =   0
-      Text            =   "About to:"
-      TextAlign       =   0
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   590
-      Underline       =   ""
-      Visible         =   False
-      Width           =   100
+      Width           =   467
    End
    Begin DisclosureTriangle DiscloseScripts
       AcceptFocus     =   False
@@ -528,6 +555,30 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabPanelIndex   =   0
       Top             =   158
       Width           =   32
+   End
+   Begin DisclosureTriangle DiscloseControlButtons
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      Enabled         =   True
+      Facing          =   0
+      Height          =   18
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   20
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   ""
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   633
+      Value           =   True
+      Visible         =   True
+      Width           =   18
    End
 End
 #tag EndWindow
@@ -710,6 +761,22 @@ End
 			ScriptEntry.Text = ""
 			mScriptDirty = false
 			end if
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function KarelHideControls() As Boolean Handles KarelHideControls.Action
+			DiscloseControlButtons.Value = not DiscloseControlButtons.Value
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function KarelHideScripts() As Boolean Handles KarelHideScripts.Action
+			DiscloseScripts.Value = not DiscloseScripts.Value
 			Return True
 			
 		End Function
@@ -1115,6 +1182,22 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub   AdjustWorldSizeToMatchControlsVisibility()
+		  dim bottomEdge as integer
+		  dim indentBottom as integer = DestCanvas.Top  // fixed indent from next visible control is 
+		  if ControlGrouper.Visible then
+		    bottomEdge = ControlGrouper.Top - indentBottom
+		  else
+		    bottomEdge = ControlGrouper.Top + ControlGrouper.Height  
+		    // bottom of control grouper is where we draw the line to leave room for error message
+		  end if
+		  DestCanvas.height = bottomEdge - DestCanvas.top
+		  
+		  WorldResizedTimer.Mode = timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		mScripter As KarelScripter
@@ -1193,41 +1276,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events RunButton
-	#tag Event
-		Sub Action()
-		  if mAmRunning then
-		    StopKarel
-		  else
-		    RunKarel
-		  end if
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events Script
-	#tag Event
-		Sub RuntimeError(line As Integer, error As RuntimeException)
-		  if error is nil then
-		    msgBox "Runtime error in line " + str(line) + " "+nthField(me.source, EndOfLine, line+1)+"."
-		  else
-		    msgBox "Runtime error '" + error.Message + "' in line " + str(line) + " "+nthField(me.source, EndOfLine, line+1)+"."
-		  end if
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub CompilerError(line As Integer, errorNumber As Integer, errorMsg As String)
-		  msgBox "Compiler error in line "+str(line)+" """+nthField(me.source, chr(13), line+1)+""": "+chr(13)+errormsg
-		  
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events LoadMapButton
-	#tag Event
-		Sub Action()
-		  LoadMap WorldEntry.Text
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events SayCheck
 	#tag Event
 		Sub Action()
@@ -1257,6 +1305,41 @@ End
 	#tag Event
 		Sub ValueChanged()
 		  SetMovePauseFromSlider
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events RunButton
+	#tag Event
+		Sub Action()
+		  if mAmRunning then
+		    StopKarel
+		  else
+		    RunKarel
+		  end if
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LoadMapButton
+	#tag Event
+		Sub Action()
+		  LoadMap WorldEntry.Text
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Script
+	#tag Event
+		Sub RuntimeError(line As Integer, error As RuntimeException)
+		  if error is nil then
+		    msgBox "Runtime error in line " + str(line) + " "+nthField(me.source, EndOfLine, line+1)+"."
+		  else
+		    msgBox "Runtime error '" + error.Message + "' in line " + str(line) + " "+nthField(me.source, EndOfLine, line+1)+"."
+		  end if
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub CompilerError(line As Integer, errorNumber As Integer, errorMsg As String)
+		  msgBox "Compiler error in line "+str(line)+" """+nthField(me.source, chr(13), line+1)+""": "+chr(13)+errormsg
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1343,6 +1426,12 @@ End
 	#tag Event
 		Sub Action()
 		  ScriptsTab.Visible = me.Value
+		  ControlGrouper.Visible = me.Value
+		  if me.value then
+		    KarelHideScripts.Text = "Hide Scripts"
+		  else
+		    KarelHideScripts.Text = "Show Scripts"
+		  end if
 		  AdjustWorldSizeToMatchScriptVisibility
 		  
 		End Sub
@@ -1354,6 +1443,20 @@ End
 		  // here so if anything needs to cause world resizing to be reacted to outside of their current event handling code they can kick the timer
 		  mScripter.WorldResized
 		  RedrawWorld
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events DiscloseControlButtons
+	#tag Event
+		Sub Action()
+		  ControlGrouper.Visible = me.Value
+		  if me.value then
+		    KarelHideControls.Text = "Hide Controls"
+		  else
+		    KarelHideControls.Text = "Show Controls"
+		  end if
+		  AdjustWorldSizeToMatchControlsVisibility
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
