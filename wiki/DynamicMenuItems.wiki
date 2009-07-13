@@ -3,7 +3,7 @@
 
 Shows three different ways of handling dynamic menu items and adding an entire top-level menu
 
-See the [http://code.google.com/p/rbstuff/source/browse/#svn/trunk/DynamicMenuItems source in svn]
+See the [http://code.google.com/p/rbstuff/source/browse/#svn/trunk/DynamicMenuItems source in svn] or [http://rbstuff.googlecode.com/files/DynamicMenuItems.zip Download a zip].
 
 == Cloning Approach (traditional) ==
 Tests inserting an item into the File Menu and how to react.
