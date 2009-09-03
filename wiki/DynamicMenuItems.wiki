@@ -36,3 +36,5 @@ Instead of using a `MenuHandler`, pass a delegate function into a subclass of `M
 See `NewDynamicSubclass` and the handler method `HandleDynamicSubItem.`
 
 Note that you don't have to make them indexed subitems, because the entire menu item is passed to the delegate, you have easy access to the Tag parameter of the menu item, unlike traditional handlers.
+
+This delegate approach means you only need to add ONE subclass to your project, the [http://code.google.com/p/rbstuff/source/browse/trunk/Common/DynamicDelegatingMenuItem.xml DynamicDelegatingMenuItem] and you can have any number of dynamic menu items with unique handlers
