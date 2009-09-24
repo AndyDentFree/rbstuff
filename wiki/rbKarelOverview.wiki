@@ -3,6 +3,8 @@
 
 See [rbKarelGettingStarted] for a quick guide on how to use the program.
 
+http://www.aussiedesignedsoftware.com/img/rbKarelLoaded.png
+
 == Introduction ==
 
 Conceptual port of "Karel the Robot" to REALbasic
