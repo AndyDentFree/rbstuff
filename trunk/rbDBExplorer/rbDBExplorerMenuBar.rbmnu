@@ -1,54 +1,20 @@
 #tag Menu
-Begin Menu KarelRunnerMenubar
-   Begin MenuItem UntitledMenu2
-      SpecialMenu = 1
-      Text = ""
-      Index = -2147483648
-      AutoEnable = True
-   End
+Begin Menu rbDBExplorerMenuBar
    Begin MenuItem FileMenu
       SpecialMenu = 0
       Text = "&File"
       Index = -2147483648
       AutoEnable = True
-      Begin MenuItem FileNew
-         SpecialMenu = 0
-         Text = "New"
-         Index = -2147483648
-         ShortcutKey = "N"
-         Shortcut = "Cmd+N"
-         MenuModifier = True
-         AutoEnable = True
-      End
       Begin MenuItem FileOpen
          SpecialMenu = 0
-         Text = "Open.."
+         Text = "Open"
          Index = -2147483648
          ShortcutKey = "O"
          Shortcut = "Cmd+O"
          MenuModifier = True
          AutoEnable = True
       End
-      Begin MenuItem FileSave
-         SpecialMenu = 0
-         Text = "Save"
-         Index = -2147483648
-         ShortcutKey = "S"
-         Shortcut = "Cmd+S"
-         MenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem FileSaveas
-         SpecialMenu = 0
-         Text = "Save as..."
-         Index = -2147483648
-         ShortcutKey = "S"
-         Shortcut = "Cmd+Shift+S"
-         MenuModifier = True
-         AltMenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem UntitledMenu1
+      Begin MenuItem UntitledSeparator
          SpecialMenu = 0
          Text = "-"
          Index = -2147483648
@@ -56,17 +22,10 @@ Begin Menu KarelRunnerMenubar
       End
       Begin QuitMenuItem FileQuit
          SpecialMenu = 0
-         Text = "Quit"
+         Text = "#App.kFileQuit"
          Index = -2147483648
-         ShortcutKey = "Q"
-         Shortcut = "Cmd+Q"
-         MenuModifier = True
-         AutoEnable = True
-      End
-      Begin MenuItem 
-         SpecialMenu = 2
-         Text = ""
-         Index = -2147483648
+         ShortcutKey = "#App.kFileQuitShortcut"
+         Shortcut = "#App.kFileQuitShortcut"
          AutoEnable = True
       End
    End
@@ -84,19 +43,10 @@ Begin Menu KarelRunnerMenubar
          MenuModifier = True
          AutoEnable = True
       End
-      Begin MenuItem UntitledMenu0
+      Begin MenuItem UntitledMenu1
          SpecialMenu = 0
          Text = "-"
          Index = -2147483648
-         AutoEnable = True
-      End
-      Begin MenuItem EditSelectAll
-         SpecialMenu = 0
-         Text = "Select All"
-         Index = -2147483648
-         ShortcutKey = "A"
-         Shortcut = "Cmd+A"
-         MenuModifier = True
          AutoEnable = True
       End
       Begin MenuItem EditCut
@@ -128,44 +78,56 @@ Begin Menu KarelRunnerMenubar
       End
       Begin MenuItem EditClear
          SpecialMenu = 0
-         Text = "Clear"
+         Text = "#App.kEditClear"
          Index = -2147483648
          AutoEnable = True
       End
-      Begin MenuItem 
-         SpecialMenu = 2
-         Text = ""
+      Begin MenuItem UntitledMenu0
+         SpecialMenu = 0
+         Text = "-"
          Index = -2147483648
+         AutoEnable = True
+      End
+      Begin MenuItem EditSelectAll
+         SpecialMenu = 0
+         Text = "Select &All"
+         Index = -2147483648
+         ShortcutKey = "A"
+         Shortcut = "Cmd+A"
+         MenuModifier = True
          AutoEnable = True
       End
    End
-   Begin MenuItem KarelMenu
+   Begin MenuItem DBMenu
       SpecialMenu = 0
-      Text = "Karel"
+      Text = "DB"
       Index = -2147483648
       AutoEnable = True
-      Begin MenuItem KarelRun
+      Begin MenuItem DBExec
          SpecialMenu = 0
-         Text = "&Run"
+         Text = "Exec"
          Index = -2147483648
-         ShortcutKey = "R"
-         Shortcut = "Cmd+R"
+         ShortcutKey = "1"
+         Shortcut = "Cmd+1"
          MenuModifier = True
          AutoEnable = True
       End
-      Begin MenuItem KarelLoadWorld
+      Begin MenuItem DBSelect
          SpecialMenu = 0
-         Text = "Load World"
+         Text = "Select"
          Index = -2147483648
-         ShortcutKey = "L"
-         Shortcut = "Cmd+L"
+         ShortcutKey = "2"
+         Shortcut = "Cmd+2"
          MenuModifier = True
-         AutoEnable = False
+         AutoEnable = True
       End
-      Begin MenuItem 
-         SpecialMenu = 2
-         Text = ""
+      Begin MenuItem DBShowTables
+         SpecialMenu = 0
+         Text = "Show Tables"
          Index = -2147483648
+         ShortcutKey = "3"
+         Shortcut = "Cmd+3"
+         MenuModifier = True
          AutoEnable = True
       End
       Begin MenuItem UntitledSeparator0
@@ -174,36 +136,21 @@ Begin Menu KarelRunnerMenubar
          Index = -2147483648
          AutoEnable = True
       End
-      Begin MenuItem KarelHideControls
+      Begin MenuItem DBSaveCommand
          SpecialMenu = 0
-         Text = "Hide Controls"
+         Text = "Save Command"
          Index = -2147483648
+         ShortcutKey = "+"
+         Shortcut = "Cmd++"
+         MenuModifier = True
          AutoEnable = True
       End
-      Begin MenuItem KarelHideScripts
+      Begin AppleMenuItem AboutApp
          SpecialMenu = 0
-         Text = "Hide Scripts"
+         Text = "About rbDBExplorer..."
          Index = -2147483648
          AutoEnable = True
       End
-      Begin AppleMenuItem KarelAbout
-         SpecialMenu = 0
-         Text = "About rbKarel..."
-         Index = -2147483648
-         AutoEnable = True
-      End
-      Begin AppleMenuItem 
-         SpecialMenu = 2
-         Text = ""
-         Index = -2147483648
-         AutoEnable = True
-      End
-   End
-   Begin MenuItem 
-      SpecialMenu = 2
-      Text = ""
-      Index = -2147483648
-      AutoEnable = True
    End
 End
 #tag EndMenu
