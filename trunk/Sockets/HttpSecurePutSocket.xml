@@ -1,0 +1,457 @@
+<?xml version="1.0"?>
+<RBProject version="2009r4">
+<block type="Module" ID="1038253850">
+ <ObjName>HttpSecurePutSocket</ObjName>
+ <ObjContainerID>498701259</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>SSLSocket</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>Connected</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Connected()</SourceLine>
+   <SourceLine>if mPutBody.Len &gt; 0 then</SourceLine>
+   <SourceLine>WritePutRequest</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <HookInstance>
+  <ItemName>DataAvailable</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DataAvailable()</SourceLine>
+   <SourceLine>dim raw as string = self.ReadAll</SourceLine>
+   <SourceLine>if raw.lenb is 0 then</SourceLine>
+   <SourceLine>// there is data in the buffer but not sufficient for an entire packet to be decrypted</SourceLine>
+   <SourceLine>// so we know we will get another DataAvailable callback, which might be after calling close!</SourceLine>
+   <SourceLine>// see the SSLSocket help in the Language Reference</SourceLine>
+   <SourceLine>// not sure how we can tell we have received all data - maybe in the headers?</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim lineSplit as integer = raw.InStr(EndOfLine.Windows)</SourceLine>
+   <SourceLine>if lineSplit = 0 then return  // read empty content</SourceLine>
+   <SourceLine>dim firstLine as string = raw.left(lineSplit-1)</SourceLine>
+   <SourceLine>dim content as string</SourceLine>
+   <SourceLine>dim receivedHeaders as new InternetHeaders</SourceLine>
+   <SourceLine>do</SourceLine>
+   <SourceLine>dim startLine as integer = lineSplit+2</SourceLine>
+   <SourceLine>dim nextSplit as integer = raw.InStr(startLine, EndOfLine.Windows)</SourceLine>
+   <SourceLine>if nextSplit = 0 then exit // end of content</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if nextSplit = startLine then  // blank line</SourceLine>
+   <SourceLine>content = raw.mid(nextSplit+2)  // everything from here on is content</SourceLine>
+   <SourceLine>exit</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim headerLine as string = raw.mid(startLine, nextSplit-startLine)</SourceLine>
+   <SourceLine>dim firstColonAt as integer = headerline.InStr(":")  // content may include colons, eg: dates</SourceLine>
+   <SourceLine>if firstColonAt &gt; 0 then</SourceLine>
+   <SourceLine>receivedHeaders.AppendHeader headerLine.Left(firstColonAt-1), headerLine.mid(firstColonAt+1)</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// might put logging in here</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>lineSplit = nextSplit</SourceLine>
+   <SourceLine>loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if firstLine = "HTTP/1.1 401 Authorization Required" then</SourceLine>
+   <SourceLine>// ask user code to supply credentials via event, like HttpSocket</SourceLine>
+   <SourceLine>dim authName as string</SourceLine>
+   <SourceLine>dim authPwd as string</SourceLine>
+   <SourceLine>if AuthenticationRequired(receivedHeaders, authName, authPwd) then</SourceLine>
+   <SourceLine>// resend request with added header</SourceLine>
+   <SourceLine>dim encAuth as string = EncodeBase64(authName+":"+authPwd)</SourceLine>
+   <SourceLine>mAuthLine = "Authorization: Basic aW5mb3JnZTpnb2xkZmFyYjI3MzI=" + EndOfLine.windows</SourceLine>
+   <SourceLine>'self.RequestHeaders.AppendHeader "Authorization", "Basic " + encAuth</SourceLine>
+   <SourceLine>writePutRequest</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>DataReceived receivedHeaders, content</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <Method>
+  <ItemName>ClearRequestHeaders</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ClearRequestHeaders()</SourceLine>
+   <SourceLine>mRequestHeaders = new InternetHeaders</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Constructor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Constructor()</SourceLine>
+   <SourceLine>// Calling the overridden superclass constructor.</SourceLine>
+   <SourceLine>// Note that this may need modifications if there are multiple constructor choices.</SourceLine>
+   <SourceLine>// Possible constructor calls:</SourceLine>
+   <SourceLine>// Constructor() -- From TCPSocket</SourceLine>
+   <SourceLine>Super.Constructor</SourceLine>
+   <SourceLine>mRequestHeaders = new InternetHeaders</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PutRequest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub PutRequest(fullURL as String, body as string)</SourceLine>
+   <SourceLine>// for a full URL eg: http://10.21.71.10/api/venues/1.xml</SourceLine>
+   <SourceLine>// or one with a port http://10.21.71.10:8080/api/venues/1.xml</SourceLine>
+   <SourceLine>if body.len = 0 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if fullURL.left(7)="http://" then</SourceLine>
+   <SourceLine>fullURL = fullURL.mid(8)</SourceLine>
+   <SourceLine>ElseIf fullURL.left(8)="https://" then</SourceLine>
+   <SourceLine>fullURL = fullURL.mid(9)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim firstSlashAt as integer = fullURL.InStr("/")</SourceLine>
+   <SourceLine>dim inAddress as string</SourceLine>
+   <SourceLine>if firstSlashAt = 0 then</SourceLine>
+   <SourceLine>inAddress = fullURL</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>inAddress = fullURL.left(firstSlashAt-1)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>mLocalPath = fullURL.mid(firstSlashAt)  // include leading slash</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim colonAt as integer = inAddress.InStr(":")</SourceLine>
+   <SourceLine>if colonAt = 0 then</SourceLine>
+   <SourceLine>self.Address = inAddress</SourceLine>
+   <SourceLine>self.port = 443</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>self.Address = inAddress.left(colonAt-1)</SourceLine>
+   <SourceLine>dim postColon as string = inAddress.mid(colonAt+1)</SourceLine>
+   <SourceLine>self.port = postColon.val</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// key secure bits (other than default port 443 above</SourceLine>
+   <SourceLine>self.Secure = true</SourceLine>
+   <SourceLine>self.ConnectionType = SSLSocket.TLSv1  // SSLv23  // or SSLv2 etc. or TLSv1</SourceLine>
+   <SourceLine>' not needed for our ConcertForge API with its self-signed cert</SourceLine>
+   <SourceLine>'self.CertificateFile = someFolderItem</SourceLine>
+   <SourceLine>'self.CertificatePassword = "some string to enter here"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.SetRequestHeader("Host", self.address)  // URL goes in Host so it can vector to various multi-home hosts</SourceLine>
+   <SourceLine>self.SetRequestHeader("Content-Type", "application/xml")</SourceLine>
+   <SourceLine>self.SetRequestHeader("Content-Length", str( body.len) )</SourceLine>
+   <SourceLine>self.SetRequestHeader("Accept", "*/*")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>mPutBody = body</SourceLine>
+   <SourceLine>mAuthLine = ""  // cleared before call AuthenticationRequired event</SourceLine>
+   <SourceLine>// NOW INITIATE COMMS</SourceLine>
+   <SourceLine>Connect</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>fullURL as String, body as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SetRequestHeader</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub SetRequestHeader(name as string, value as string)</SourceLine>
+   <SourceLine>mRequestHeaders.AppendHeader name, value</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>name as string, value as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>WritePutRequest</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub WritePutRequest()</SourceLine>
+   <SourceLine>// based on advice at http://www.jmarshall.com/easy/http/</SourceLine>
+   <SourceLine>dim allHeaders as string = self.requestHeaders.Source+EndOfLine.Windows</SourceLine>
+   <SourceLine>dim packet as string</SourceLine>
+   <SourceLine>packet =  "PUT " + mLocalpath + " HTTP/1.1" + EndOfLine.Windows _</SourceLine>
+   <SourceLine>+ mAuthLine _</SourceLine>
+   <SourceLine>+ allHeaders _</SourceLine>
+   <SourceLine>+ EndOfLine.Windows _  // standard requires a blank line after headers</SourceLine>
+   <SourceLine>+ mPutBody</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>self.Write packet</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Hook>
+  <ItemName>AuthenticationRequired</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>headers as InternetHeaders, ByRef name as string, ByRef password as String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Hook>
+ <Hook>
+  <ItemName>DataReceived</ItemName>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemFlags>33</ItemFlags>
+  <SystemFlags>0</SystemFlags>
+  <ItemParams>headers as InternetHeaders, content as string</ItemParams>
+  <ItemResult></ItemResult>
+ </Hook>
+ <Note>
+  <ItemName>About - Authentication</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>About - Authentication</NoteLine>
+   <NoteLine>A service typically gets a response with headers like the following - note the first line is in the raw headers only</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>HTTP/1.1 401 Authorization Required</NoteLine>
+   <NoteLine>Date: Wed, 12 Aug 2009 12:21:07 GMT</NoteLine>
+   <NoteLine>Server: Apache/2.2.8 (Ubuntu) Phusion_Passenger/2.2.4</NoteLine>
+   <NoteLine>X-Powered-By: Phusion Passenger (mod_rails/mod_rack) 2.2.4</NoteLine>
+   <NoteLine>WWW-Authenticate: Basic realm="Application"</NoteLine>
+   <NoteLine>X-Runtime: 4</NoteLine>
+   <NoteLine>Cache-Control: no-cache</NoteLine>
+   <NoteLine>Set-Cookie: _concertforge_session=BAh7BjoPc2Vzc2lvbl9pZCIlNDBlMjQ2MjFjZDQyNWM0OTVmNGY2NWNiMGI1ZGI0NTY%3D--ab612822253a77497711aa92327a0a4e770c8e33; path=/; HttpOnly</NoteLine>
+   <NoteLine>Content-Length: 27</NoteLine>
+   <NoteLine>Status: 401</NoteLine>
+   <NoteLine>Content-Type: application/xml; charset=utf-8</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>HTTP responses</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>HTTP responses</NoteLine>
+   <NoteLine>HTTP/1.0 200 OK</NoteLine>
+   <NoteLine>Date: Fri, 31 Dec 1999 23:59:59 GMT</NoteLine>
+   <NoteLine>Content-Type: text/html</NoteLine>
+   <NoteLine>Content-Length: 1354</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>&lt;html&gt;</NoteLine>
+   <NoteLine>&lt;body&gt;</NoteLine>
+   <NoteLine>&lt;h1&gt;Happy New Millennium!&lt;/h1&gt;</NoteLine>
+   <NoteLine>(more file contents)</NoteLine>
+   <NoteLine>.</NoteLine>
+   <NoteLine>.</NoteLine>
+   <NoteLine>.</NoteLine>
+   <NoteLine>&lt;/body&gt;</NoteLine>
+   <NoteLine>&lt;/html&gt;</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>About</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>About</NoteLine>
+   <NoteLine>HttpSocket work-alike that provides a PUT facility</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Written by Andy Dent</NoteLine>
+   <NoteLine>mailto:dent@oofile.com.au</NoteLine>
+   <NoteLine>http://www.aussiedesignedsoftware.com/</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Released courtesy of Anthony Dellos of Inforge Systems who funded the original development</NoteLine>
+   <NoteLine>http://www.inforge.com/</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Property>
+  <ItemName>mAuthLine</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mAuthLine As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mAuthLine As String</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mLocalPath</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mLocalPath As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mLocalPath As String</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mPutBody</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mPutBody As string</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mPutBody As string</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mRequestHeaders</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mRequestHeaders As InternetHeaders</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mRequestHeaders As InternetHeaders</ItemDeclaration>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>RequestHeaders</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RequestHeaders As InternetHeaders</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RequestHeaders As InternetHeaders</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <SetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Set</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Set</SourceLine>
+  </SetAccessor>
+  <GetAccessor>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Get</SourceLine>
+   <SourceLine>return mRequestHeaders</SourceLine>
+   <SourceLine>End Get</SourceLine>
+  </GetAccessor>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>ConnectionType</ObjName>
+   <Visible>1</Visible>
+   <EditorType>Integer</EditorType>
+   <InheritsFrom>SSLSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CertificateFile</ObjName>
+   <Visible>1</Visible>
+   <EditorType>FolderItem</EditorType>
+   <InheritsFrom>SSLSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CertificateRejectionFile</ObjName>
+   <Visible>1</Visible>
+   <EditorType>FolderItem</EditorType>
+   <InheritsFrom>SSLSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Secure</ObjName>
+   <Visible>1</Visible>
+   <EditorType>Boolean</EditorType>
+   <InheritsFrom>SSLSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>CertificatePassword</ObjName>
+   <Visible>1</Visible>
+   <EditorType>String</EditorType>
+   <InheritsFrom>SSLSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>TCPSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>TCPSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>TCPSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>TCPSocket</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <ItemType>Integer</ItemType>
+   <InheritsFrom>TCPSocket</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>
