@@ -37,9 +37,9 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   13
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   True
-      LockLeft        =   ""
+      LockLeft        =   True
       LockRight       =   ""
       LockTop         =   ""
       Scope           =   0
@@ -75,6 +75,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TabStop         =   True
          TextFont        =   "System"
          TextSize        =   0
+         TextUnit        =   0
          Top             =   546
          Underline       =   ""
          Value           =   False
@@ -106,6 +107,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TabStop         =   True
          TextFont        =   "System"
          TextSize        =   0
+         TextUnit        =   0
          Top             =   578
          Underline       =   ""
          Value           =   False
@@ -136,6 +138,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TabStop         =   True
          TextFont        =   "System"
          TextSize        =   0
+         TextUnit        =   0
          Top             =   578
          Underline       =   ""
          Visible         =   True
@@ -163,6 +166,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TabIndex        =   3
          TabPanelIndex   =   0
          TabStop         =   True
+         TickStyle       =   0
          Top             =   519
          Value           =   1000
          Visible         =   True
@@ -194,6 +198,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TextColor       =   &h000000
          TextFont        =   "System"
          TextSize        =   0
+         TextUnit        =   0
          Top             =   513
          Underline       =   ""
          Visible         =   True
@@ -223,6 +228,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TabStop         =   True
          TextFont        =   "System"
          TextSize        =   12
+         TextUnit        =   0
          Top             =   514
          Underline       =   False
          Visible         =   True
@@ -254,6 +260,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TextColor       =   &h000000
          TextFont        =   "System"
          TextSize        =   0
+         TextUnit        =   0
          Top             =   601
          Underline       =   ""
          Visible         =   False
@@ -285,6 +292,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TextColor       =   &h000000
          TextFont        =   "System"
          TextSize        =   0
+         TextUnit        =   0
          Top             =   578
          Underline       =   ""
          Visible         =   False
@@ -314,6 +322,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TabStop         =   True
          TextFont        =   "System"
          TextSize        =   12
+         TextUnit        =   0
          Top             =   547
          Underline       =   False
          Visible         =   True
@@ -395,6 +404,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
+      TextUnit        =   0
       Top             =   14
       Underline       =   ""
       Value           =   1
@@ -438,6 +448,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TextColor       =   0
          TextFont        =   "System"
          TextSize        =   12
+         TextUnit        =   0
          Top             =   59
          Underline       =   False
          UseFocusRing    =   True
@@ -482,6 +493,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          TextColor       =   0
          TextFont        =   "System"
          TextSize        =   12
+         TextUnit        =   0
          Top             =   51
          Underline       =   False
          UseFocusRing    =   True
@@ -515,6 +527,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       TextColor       =   &hFF0033
       TextFont        =   "System"
       TextSize        =   0
+      TextUnit        =   0
       Top             =   645
       Underline       =   ""
       Visible         =   True
@@ -566,11 +579,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   20
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   ""
-      LockRight       =   True
-      LockTop         =   True
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   14
       TabPanelIndex   =   0
@@ -584,6 +597,36 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function CancelClose(appQuitting as Boolean) As Boolean
+		  if appQuitting then return false  // Quit has its own question
+		  return not SaveIfDirty("quitting", true)  // CancelClose is kinda weird - a True means cancel!
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub Close()
+		  if mAmRunning then
+		    mAmRunning = false
+		    KarelThread.Kill  // immediate kill so it doesn't try to update any controls, eg: if single-stepping, which are now gone
+		  end if
+		  Quit
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub EnableMenuItems()
+		  if ScriptsTab.Value=0 then
+		    FileSave.Enabled = mWorldDirty
+		    FileSaveas.Enabled = WorldEntry.Text.LenB > 0 or mWorldDirty
+		  else
+		    FileSave.Enabled = mScriptDirty
+		    FileSaveas.Enabled = ScriptEntry.Text.LenB > 0 or mScriptDirty
+		  end if
+		  KarelLoadWorld.Enabled = not mAmRunning
+		End Sub
+	#tag EndEvent
+
 	#tag Event
 		Sub Open()
 		  mWorld = new KarelWorld(10, 10)
@@ -608,93 +651,20 @@ End
 		End Sub
 	#tag EndEvent
 
-	#tag Event
-		Sub EnableMenuItems()
-		  if ScriptsTab.Value=0 then
-		    FileSave.Enabled = mWorldDirty
-		    FileSaveas.Enabled = WorldEntry.Text.LenB > 0 or mWorldDirty
-		  else
-		    FileSave.Enabled = mScriptDirty
-		    FileSaveas.Enabled = ScriptEntry.Text.LenB > 0 or mScriptDirty
-		  end if
-		  KarelLoadWorld.Enabled = not mAmRunning
-		End Sub
-	#tag EndEvent
-
-	#tag Event
-		Function CancelClose(appQuitting as Boolean) As Boolean
-		  if appQuitting then return false  // Quit has its own question
-		  return not SaveIfDirty("quitting", true)  // CancelClose is kinda weird - a True means cancel!
-		End Function
-	#tag EndEvent
-
-	#tag Event
-		Sub Close()
-		  if mAmRunning then
-		    mAmRunning = false
-		    KarelThread.Kill  // immediate kill so it doesn't try to update any controls, eg: if single-stepping, which are now gone
-		  end if
-		  Quit
-		End Sub
-	#tag EndEvent
-
 
 	#tag MenuHandler
-		Function KarelLoadWorld() As Boolean Handles KarelLoadWorld.Action
-			LoadMapButton.Push
-			Return True
+		Function FileNew() As Boolean Handles FileNew.Action
+			if not SaveIfDirty("creating a new one") then return True  // cancelled a dialog
 			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function KarelRun() As Boolean Handles KarelRun.Action
-			RunButton.Push
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesMap1() As Boolean Handles SamplesMap1.Action
-			WorldEntry.Text = kSampleMap1
-			ScriptsTab.Value = 0
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesKarel1() As Boolean Handles SamplesKarel1.Action
-			ScriptEntry.Text = kSampleKarel1
-			ScriptsTab.Value = 1
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesKarel2() As Boolean Handles SamplesKarel2.Action
-			ScriptEntry.Text = kSampleKarel2
-			ScriptsTab.Value = 1
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesMap2() As Boolean Handles SamplesMap2.Action
-			WorldEntry.Text = kSampleMap2
-			ScriptsTab.Value = 0
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesKarel3() As Boolean Handles SamplesKarel3.Action
-			ScriptEntry.Text = kSampleKarel3
-			ScriptsTab.Value = 1
+			if ScriptsTab.Value=0 then
+			mCurrentWorldFile = nil
+			WorldEntry.Text = ""
+			mWorldDirty = false
+			else
+			mCurrentScriptFile = nil
+			ScriptEntry.Text = ""
+			mScriptDirty = false
+			end if
 			Return True
 			
 		End Function
@@ -703,6 +673,17 @@ End
 	#tag MenuHandler
 		Function FileOpen() As Boolean Handles FileOpen.Action
 			return HandleFileOpen
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function FileQuit() As Boolean Handles FileQuit.Action
+			if SaveIfDirty("quitting", true) then
+			Quit
+			end if
+			// otherwise swallows the event
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
@@ -738,35 +719,6 @@ End
 	#tag EndMenuHandler
 
 	#tag MenuHandler
-		Function FileQuit() As Boolean Handles FileQuit.Action
-			if SaveIfDirty("quitting", true) then
-			Quit
-			end if
-			// otherwise swallows the event
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function FileNew() As Boolean Handles FileNew.Action
-			if not SaveIfDirty("creating a new one") then return True  // cancelled a dialog
-			
-			if ScriptsTab.Value=0 then
-			mCurrentWorldFile = nil
-			WorldEntry.Text = ""
-			mWorldDirty = false
-			else
-			mCurrentScriptFile = nil
-			ScriptEntry.Text = ""
-			mScriptDirty = false
-			end if
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
 		Function KarelHideControls() As Boolean Handles KarelHideControls.Action
 			DiscloseControlButtons.Value = not DiscloseControlButtons.Value
 			Return True
@@ -782,6 +734,283 @@ End
 		End Function
 	#tag EndMenuHandler
 
+	#tag MenuHandler
+		Function KarelLoadWorld() As Boolean Handles KarelLoadWorld.Action
+			LoadMapButton.Push
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function KarelRun() As Boolean Handles KarelRun.Action
+			RunButton.Push
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesKarel1() As Boolean Handles SamplesKarel1.Action
+			ScriptEntry.Text = kSampleKarel1
+			ScriptsTab.Value = 1
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesKarel2() As Boolean Handles SamplesKarel2.Action
+			ScriptEntry.Text = kSampleKarel2
+			ScriptsTab.Value = 1
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesKarel3() As Boolean Handles SamplesKarel3.Action
+			ScriptEntry.Text = kSampleKarel3
+			ScriptsTab.Value = 1
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesMap1() As Boolean Handles SamplesMap1.Action
+			WorldEntry.Text = kSampleMap1
+			ScriptsTab.Value = 0
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SamplesMap2() As Boolean Handles SamplesMap2.Action
+			WorldEntry.Text = kSampleMap2
+			ScriptsTab.Value = 0
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+
+	#tag Method, Flags = &h1
+		Protected Sub AdjustWorldSizeToMatchControlsVisibility()
+		  dim bottomEdge as integer
+		  dim indentBottom as integer = DestCanvas.Top  // fixed indent from next visible control is
+		  if ControlGrouper.Visible then
+		    bottomEdge = ControlGrouper.Top - indentBottom
+		  else
+		    bottomEdge = ControlGrouper.Top + ControlGrouper.Height
+		    // bottom of control grouper is where we draw the line to leave room for error message
+		  end if
+		  DestCanvas.height = bottomEdge - DestCanvas.top
+		  
+		  WorldResizedTimer.Mode = timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub AdjustWorldSizeToMatchScriptVisibility()
+		  dim rightEdge as integer
+		  dim indentRight as integer = DestCanvas.Left
+		  if ScriptsTab.Visible then
+		    rightEdge = ScriptsTab.Left - indentRight
+		  else
+		    rightEdge = Width - indentRight
+		  end if
+		  DestCanvas.Width = rightEdge - DestCanvas.Left
+		  
+		  WorldResizedTimer.Mode = timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub ClearErrorDisplay()
+		  StatusDisplay.Text = ""
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ErrorShutdown(whichWorld as KarelWorld, errorMsg as string)
+		  StatusDisplay.Text = errorMsg
+		  beep
+		  mAmRunning = false
+		  // have to fix up names and state of menus and buttons here because don't go through the normal exit logic in the thread
+		  // SimpleKarelRunner.KarelThread.Run which usually does the cleanup
+		  RunButton.Caption = mSaveRunCaption
+		  karelRun.Text = mSaveRunMenu
+		  LoadMapButton.Enabled = true
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function FileIsOKAsScript(fi as FolderItem) As String
+		  // implements delegate FolderItemMenuItem.FolderItemToMenuTitle
+		  if fi.Directory then return ""
+		  
+		  dim candidateName as string = fi.Name
+		  if candidateName.left(1)="." then return ""
+		  
+		  if candidateName.right(4)=".txt" then
+		    return candidateName.left( candidateName.len-4 )
+		  end if
+		  
+		  if candidateName.right(5)=".text" then
+		    return candidateName.left( candidateName.len-5 )
+		  end if
+		  
+		  return ""  // default is fail to add
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function FindSpecialFolder(folderName as string) As FolderItem
+		  // runs through list of standard folders looking for children.
+		  
+		  static foldersToCheck() as FolderItem = Array( _
+		  app.ExecutableFile.Parent, _
+		  SpecialFolder.Documents, _
+		  SpecialFolder.SharedDocuments, _
+		  SpecialFolder.UserHome, _
+		  SpecialFolder.ApplicationData)
+		  
+		  for each fld as FolderItem in foldersToCheck
+		    if fld<>nil then
+		      // on different platforms, the special folders above may return nil
+		      dim maybeF as FolderItem = fld.Child(folderName)
+		      if maybeF <> nil and maybeF.Exists then
+		        return maybeF
+		      end if
+		    end if
+		  next
+		  
+		  #if TargetWin32
+		    // loop again looking for shortcuts, just returning one of them works if they are shortcut to a directory
+		    dim linkName as string = folderName+".lnk"
+		    for each fld as FolderItem in foldersToCheck
+		      if fld<>nil then
+		        // on different platforms, the special folders above may return nil
+		        dim maybeF as FolderItem = fld.Child(linkName)
+		        if maybeF <> nil and maybeF.Exists then
+		          return maybeF
+		        end if
+		      end if
+		    next
+		  #endif
+		  return nil
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function HandleFileOpen(f as FolderItem = nil) As Boolean
+		  if not SaveIfDirty("opening a different one") then return True  // cancelled a dialog
+		  
+		  // can be called with known FolderItem
+		  if f is nil then
+		    f = GetOpenFolderItem(KarelFileTypes.Text)
+		  end if
+		  if f is nil then return True
+		  
+		  if ScriptsTab.Value=0 then
+		    mCurrentWorldFile = f
+		    WorldEntry.Text = OpenDoc(f)
+		    mWorldDirty = false
+		  else
+		    mCurrentScriptFile = f
+		    ScriptEntry.Text = OpenDoc(f)
+		    mScriptDirty = false
+		  end if
+		  Return True
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function HandleSaveAs() As Boolean
+		  if ScriptsTab.Value=0 then
+		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled World.txt")
+		    if f is nil then return false  // cancelled
+		    
+		    SaveDoc(f, WorldEntry.Text)
+		    mCurrentWorldFile = f
+		    mWorldDirty = false
+		    
+		  else
+		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled Script.txt")
+		    if f is nil then return false  // cancelled
+		    
+		    Savedoc(f, ScriptEntry.Text)
+		    mCurrentScriptFile = f
+		    mScriptDirty = false
+		  end if
+		  return true
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function handleScriptsMenu(handleItem as DynamicDelegatingMenuItem) As Boolean
+		  ScriptsTab.Value=1  // force switch to script
+		  dim fileToOpen as FolderItem = handleItem.Tag
+		  call HandleFileOpen(fileToOpen)
+		  return true
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function handleWorldsMenu(handleItem as DynamicDelegatingMenuItem) As Boolean
+		  ScriptsTab.Value=0  // force switch to Worlds
+		  dim fileToOpen as FolderItem = handleItem.Tag
+		  call HandleFileOpen(fileToOpen)
+		  return true
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub LoadMap(mapScript as string)
+		  ClearErrorDisplay
+		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
+		  script.Context = mWorld
+		  Script.Source = mWorld.CleanupWorld(mapScript)
+		  mWorld.Reset
+		  
+		  // probably never have slow looping world scripts, but just in case, disable running another script
+		  RunButton.Enabled=false
+		  LoadMapButton.Enabled = false
+		  
+		  mLoadingWorld = true  // so don't trigger endless updates whilst adding things
+		  script.Run  // to redefine the world
+		  mLoadingWorld = false
+		  
+		  RunButton.Enabled=true
+		  LoadMapButton.Enabled = true
+		  
+		  mScripter.UseWorld mWorld  // needs to get sizes from here
+		  RedrawWorld
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function OpenDoc(f as FolderItem) As String
+		  dim t as TextInputStream
+		  t = f.OpenAsTextFile
+		  dim cleanedString as string = t.ReadAll
+		  return cleanedString.ReplaceAll( chr(9), SpacesReplacingTab )
+		  // implicitly closes as t goes out of scope
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RedrawWorld()
+		  // get the world to draw everything
+		  mWorld.DrawInContext mScripter
+		End Sub
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub RunKarel()
@@ -832,111 +1061,6 @@ End
 		  
 		  
 		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub WorldUpdated(whichWorld as KarelWorld)
-		  // Part of the KarelWorldObserver interface.
-		  if not mLoadingWorld then
-		    RedrawWorld
-		  end if
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub LoadMap(mapScript as string)
-		  ClearErrorDisplay
-		  mScripter.UseGraphics DestCanvas.Graphics  // at whatever size it currently exists
-		  script.Context = mWorld
-		  Script.Source = mWorld.CleanupWorld(mapScript)
-		  mWorld.Reset
-		  
-		  // probably never have slow looping world scripts, but just in case, disable running another script
-		  RunButton.Enabled=false
-		  LoadMapButton.Enabled = false
-		  
-		  mLoadingWorld = true  // so don't trigger endless updates whilst adding things
-		  script.Run  // to redefine the world
-		  mLoadingWorld = false
-		  
-		  RunButton.Enabled=true
-		  LoadMapButton.Enabled = true
-		  
-		  mScripter.UseWorld mWorld  // needs to get sizes from here
-		  RedrawWorld
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub RedrawWorld()
-		  // get the world to draw everything
-		  mWorld.DrawInContext mScripter
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub StepNeeded(msg as String)
-		  // Part of the KarelStepApprover interface.
-		  
-		  StepButton.Enabled= true
-		  StepAboutPrompt.Visible = true
-		  StepActionMsg.text = msg
-		  StepActionMsg.Visible = true
-		  // spins waiting for that button to be enabled, this will be called from a separate non-GUI thread running Karel
-		  Do
-		    app.YieldToNextThread
-		  loop until mStepButtonPressed or StepCheck.value=false
-		  StepButton.Enabled = false
-		  mStepButtonPressed = false
-		  StepAboutPrompt.Visible = false
-		  StepActionMsg.Visible = false
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ErrorShutdown(whichWorld as KarelWorld, errorMsg as string)
-		  StatusDisplay.Text = errorMsg
-		  beep
-		  mAmRunning = false
-		  // have to fix up names and state of menus and buttons here because don't go through the normal exit logic in the thread
-		  // SimpleKarelRunner.KarelThread.Run which usually does the cleanup
-		  RunButton.Caption = mSaveRunCaption
-		  karelRun.Text = mSaveRunMenu
-		  LoadMapButton.Enabled = true
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub SetMovePauseFromSlider()
-		  // slider ascends from left to right but we want delay to decrease from left to right, to give an ascending SPEED control
-		  // eg: a range of 0..2000 is 0..2 seconds with default of 1500 = 0.5 second initial pause
-		  dim flippedMilliSeconds as integer = SpeedSlider.Maximum - SpeedSlider.Value
-		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub ClearErrorDisplay()
-		  StatusDisplay.Text = ""
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub StopKarel()
-		  mWorld.ErrorShutdown "Stop was pressed"
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function OpenDoc(f as FolderItem) As String
-		  dim t as TextInputStream
-		  t = f.OpenAsTextFile
-		  dim cleanedString as string = t.ReadAll
-		  return cleanedString.ReplaceAll( chr(9), SpacesReplacingTab )
-		  // implicitly closes as t goes out of scope
-		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
@@ -1002,25 +1126,26 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function HandleSaveAs() As Boolean
-		  if ScriptsTab.Value=0 then
-		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled World.txt")
-		    if f is nil then return false  // cancelled
-		    
-		    SaveDoc(f, WorldEntry.Text)
-		    mCurrentWorldFile = f
-		    mWorldDirty = false
-		    
-		  else
-		    dim f as FolderItem = GetSaveFolderItem(KarelFileTypes.Text, "Untitled Script.txt")
-		    if f is nil then return false  // cancelled
-		    
-		    Savedoc(f, ScriptEntry.Text)
-		    mCurrentScriptFile = f
-		    mScriptDirty = false
+		Protected Sub SetMovePauseFromSlider()
+		  // slider ascends from left to right but we want delay to decrease from left to right, to give an ascending SPEED control
+		  // eg: a range of 0..2000 is 0..2 seconds with default of 1500 = 0.5 second initial pause
+		  dim flippedMilliSeconds as integer = SpeedSlider.Maximum - SpeedSlider.Value
+		  mScripter.MovePause = flippedMilliSeconds / 1000.0  // milliseconds to seconds
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SetupDynamicFolderMenus()
+		  mWorldsFolder = FindSpecialFolder("KarelWorlds")
+		  mScriptsFolder = FindSpecialFolder("KarelScripts")
+		  
+		  if mWorldsFolder<>nil then
+		    FolderItemMenuItem.MakeMenuForFlatFolder App.MenuBar, "Worlds", 5, mWorldsFolder, AddressOf handleWorldsMenu, AddressOf FileIsOKAsScript
 		  end if
-		  return true
-		End Function
+		  if mScriptsFolder<>nil then
+		    FolderItemMenuItem.MakeMenuForFlatFolder App.MenuBar, "Scripts", 6, mScriptsFolder, AddressOf handleScriptsMenu, AddressOf FileIsOKAsScript
+		  end if
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
@@ -1052,171 +1177,43 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function FindSpecialFolder(folderName as string) As FolderItem
-		  // runs through list of standard folders looking for children.
+		Sub StepNeeded(msg as String)
+		  // Part of the KarelStepApprover interface.
 		  
-		  static foldersToCheck() as FolderItem = Array( _
-		  app.ExecutableFile.Parent, _
-		  SpecialFolder.Documents, _
-		  SpecialFolder.SharedDocuments, _
-		  SpecialFolder.UserHome, _
-		  SpecialFolder.ApplicationData)
-		  
-		  for each fld as FolderItem in foldersToCheck
-		    if fld<>nil then
-		      // on different platforms, the special folders above may return nil
-		      dim maybeF as FolderItem = fld.Child(folderName)
-		      if maybeF <> nil and maybeF.Exists then
-		        return maybeF
-		      end if
-		    end if
-		  next
-		  
-		  #if TargetWin32
-		    // loop again looking for shortcuts, just returning one of them works if they are shortcut to a directory
-		    dim linkName as string = folderName+".lnk"
-		    for each fld as FolderItem in foldersToCheck
-		      if fld<>nil then
-		        // on different platforms, the special folders above may return nil
-		        dim maybeF as FolderItem = fld.Child(linkName)
-		        if maybeF <> nil and maybeF.Exists then
-		          return maybeF
-		        end if
-		      end if
-		    next
-		  #endif
-		  return nil
-		End Function
+		  StepButton.Enabled= true
+		  StepAboutPrompt.Visible = true
+		  StepActionMsg.text = msg
+		  StepActionMsg.Visible = true
+		  // spins waiting for that button to be enabled, this will be called from a separate non-GUI thread running Karel
+		  Do
+		    app.YieldToNextThread
+		  loop until mStepButtonPressed or StepCheck.value=false
+		  StepButton.Enabled = false
+		  mStepButtonPressed = false
+		  StepAboutPrompt.Visible = false
+		  StepActionMsg.Visible = false
+		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub SetupDynamicFolderMenus()
-		  mWorldsFolder = FindSpecialFolder("KarelWorlds")
-		  mScriptsFolder = FindSpecialFolder("KarelScripts")
+	#tag Method, Flags = &h0
+		Sub StopKarel()
+		  mWorld.ErrorShutdown "Stop was pressed"
 		  
-		  if mWorldsFolder<>nil then
-		    FolderItemMenuItem.MakeMenuForFlatFolder App.MenuBar, "Worlds", 5, mWorldsFolder, AddressOf handleWorldsMenu, AddressOf FileIsOKAsScript
-		  end if
-		  if mScriptsFolder<>nil then
-		    FolderItemMenuItem.MakeMenuForFlatFolder App.MenuBar, "Scripts", 6, mScriptsFolder, AddressOf handleScriptsMenu, AddressOf FileIsOKAsScript
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub WorldUpdated(whichWorld as KarelWorld)
+		  // Part of the KarelWorldObserver interface.
+		  if not mLoadingWorld then
+		    RedrawWorld
 		  end if
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Function handleWorldsMenu(handleItem as DynamicDelegatingMenuItem) As Boolean
-		  ScriptsTab.Value=0  // force switch to Worlds
-		  dim fileToOpen as FolderItem = handleItem.Tag
-		  call HandleFileOpen(fileToOpen)
-		  return true
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function handleScriptsMenu(handleItem as DynamicDelegatingMenuItem) As Boolean
-		  ScriptsTab.Value=1  // force switch to script
-		  dim fileToOpen as FolderItem = handleItem.Tag
-		  call HandleFileOpen(fileToOpen)
-		  return true
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function FileIsOKAsScript(fi as FolderItem) As String
-		  // implements delegate FolderItemMenuItem.FolderItemToMenuTitle
-		  if fi.Directory then return ""
-		  
-		  dim candidateName as string = fi.Name
-		  if candidateName.left(1)="." then return ""
-		  
-		  if candidateName.right(4)=".txt" then
-		    return candidateName.left( candidateName.len-4 )
-		  end if
-		  
-		  if candidateName.right(5)=".text" then
-		    return candidateName.left( candidateName.len-5 )
-		  end if
-		  
-		  return ""  // default is fail to add
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function HandleFileOpen(f as FolderItem = nil) As Boolean
-		  if not SaveIfDirty("opening a different one") then return True  // cancelled a dialog
-		  
-		  // can be called with known FolderItem
-		  if f is nil then
-		    f = GetOpenFolderItem(KarelFileTypes.Text)
-		  end if
-		  if f is nil then return True
-		  
-		  if ScriptsTab.Value=0 then
-		    mCurrentWorldFile = f
-		    WorldEntry.Text = OpenDoc(f)
-		    mWorldDirty = false
-		  else
-		    mCurrentScriptFile = f
-		    ScriptEntry.Text = OpenDoc(f)
-		    mScriptDirty = false
-		  end if
-		  Return True
-		  
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub AdjustWorldSizeToMatchScriptVisibility()
-		  dim rightEdge as integer
-		  dim indentRight as integer = DestCanvas.Left
-		  if ScriptsTab.Visible then
-		    rightEdge = ScriptsTab.Left - indentRight
-		  else
-		    rightEdge = Width - indentRight
-		  end if
-		  DestCanvas.Width = rightEdge - DestCanvas.Left
-		  
-		  WorldResizedTimer.Mode = timer.ModeSingle
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub   AdjustWorldSizeToMatchControlsVisibility()
-		  dim bottomEdge as integer
-		  dim indentBottom as integer = DestCanvas.Top  // fixed indent from next visible control is 
-		  if ControlGrouper.Visible then
-		    bottomEdge = ControlGrouper.Top - indentBottom
-		  else
-		    bottomEdge = ControlGrouper.Top + ControlGrouper.Height  
-		    // bottom of control grouper is where we draw the line to leave room for error message
-		  end if
-		  DestCanvas.height = bottomEdge - DestCanvas.top
-		  
-		  WorldResizedTimer.Mode = timer.ModeSingle
-		End Sub
-	#tag EndMethod
-
-
-	#tag Property, Flags = &h0
-		mScripter As KarelScripter
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected mWorld As KarelWorld
-	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		mAmRunning As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected mSaveRunCaption As string
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected mCurrentWorldFile As FolderItem
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -1224,11 +1221,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected mWorldDirty As Boolean
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected mScriptDirty As Boolean
+		Protected mCurrentWorldFile As FolderItem
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -1236,11 +1229,19 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected mStepButtonPressed As Boolean
+		Protected mSaveRunCaption As string
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected mWorldsFolder As FolderItem
+		Protected mSaveRunMenu As string
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mScriptDirty As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		mScripter As KarelScripter
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -1248,14 +1249,23 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected mSaveRunMenu As string
+		Protected mStepButtonPressed As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mWorld As KarelWorld
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mWorldDirty As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mWorldsFolder As FolderItem
 	#tag EndProperty
 
 
 	#tag Constant, Name = kImageFilters, Type = String, Dynamic = False, Default = \"image/jpeg;image/png;/image/gif", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = kSampleMap1, Type = String, Dynamic = False, Default = \"World 5 5\rBeepers 3 3 1\rRobot 4 3 1 0\rWall 2 2 1\rWall 3 2 1\rWall 1 1 4\rWall 2 1 4\rWall 2 2 4\rWall 3 1 4\rWall 3 2 4\rWall 3 3 4\rWall 4 1 4\rWall 4 2 4\rWall 4 3 4\rWall 4 4 4", Scope = Public
 	#tag EndConstant
 
 	#tag Constant, Name = kSampleKarel1, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rTurnLeft\rMove\rPickBeeper\rTurnLeft\rTurnLeft\rMove\rMove\rTurnLeft\rMove\rTurnLeft\rMove\rPutBeeper\rTurnLeft\rTurnLeft\rMove", Scope = Public
@@ -1264,10 +1274,13 @@ End
 	#tag Constant, Name = kSampleKarel2, Type = String, Dynamic = False, Default = \"TurnOn\rdim i as integer\rfor i \x3D 1 to 3\r  TurnLeft\r  Move\rNext", Scope = Public
 	#tag EndConstant
 
-	#tag Constant, Name = kSampleMap2, Type = String, Dynamic = False, Default = \"World 5 5\rRobot 3 3 1 0\rWall 3 3 4\rwall 3 3 1\rwall 3 4 4\rwall 2 3 1", Scope = Public
+	#tag Constant, Name = kSampleKarel3, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rif frontIsBlocked then\r  say \"blocked\"\rend if", Scope = Public
 	#tag EndConstant
 
-	#tag Constant, Name = kSampleKarel3, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rif frontIsBlocked then\r  say \"blocked\"\rend if", Scope = Public
+	#tag Constant, Name = kSampleMap1, Type = String, Dynamic = False, Default = \"World 5 5\rBeepers 3 3 1\rRobot 4 3 1 0\rWall 2 2 1\rWall 3 2 1\rWall 1 1 4\rWall 2 1 4\rWall 2 2 4\rWall 3 1 4\rWall 3 2 4\rWall 3 3 4\rWall 4 1 4\rWall 4 2 4\rWall 4 3 4\rWall 4 4 4", Scope = Public
+	#tag EndConstant
+
+	#tag Constant, Name = kSampleMap2, Type = String, Dynamic = False, Default = \"World 5 5\rRobot 3 3 1 0\rWall 3 3 4\rwall 3 3 1\rwall 3 4 4\rwall 2 3 1", Scope = Public
 	#tag EndConstant
 
 	#tag Constant, Name = SpacesReplacingTab, Type = String, Dynamic = False, Default = \"    ", Scope = Public
