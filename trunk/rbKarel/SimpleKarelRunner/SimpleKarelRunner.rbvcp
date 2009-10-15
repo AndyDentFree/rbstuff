@@ -32,7 +32,6 @@ Picture=rbKarelapp128;icons/rbKarel-app-128.png;&h7B9DD9D5;&h59B819D7;false;0;&h
 Class=KarelStepLogger;../Externals/KarelStepLogger.xml;&hE0A61D2;&h6FAA62C2;false
 Class=DynamicDelegatingMenuItem;../../Common/DynamicDelegatingMenuItem.xml;&h48E980F4;&h4A64710B;false
 Class=FolderItemMenuItem;../../Common/FolderItemMenuItem.xml;&h316F20B9;&h4A64710B;false
-BuildSteps=Build Automation;Build Automation.rbbas;&h4F5B7727;&h0;false
 DefaultWindow=SimpleKarelRunner
 AppMenuBar=KarelRunnerMenubar
 MajorVersion=1
