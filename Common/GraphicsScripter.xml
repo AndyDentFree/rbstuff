@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<RBProject version="2009r2.1">
+<RBProject version="2009r5">
 <block type="Module" ID="510044857">
  <ObjName>GraphicsScripter</ObjName>
  <ObjContainerID>1248096523</ObjContainerID>
@@ -1551,6 +1551,8 @@
    <NoteLine></NoteLine>
    <NoteLine>Can create mask gradients </NoteLine>
    <NoteLine></NoteLine>
+   <NoteLine>2009 Released as part of RBKarel, has the Einhugur portions removed so the entire rbKarel program</NoteLine>
+   <NoteLine>can be used without the Einhugur PictureEffects plugin</NoteLine>
    <NoteLine>---</NoteLine>
    <NoteLine></NoteLine>
    <NoteLine>This code requires REALBasic 5.5 or higher.</NoteLine>
@@ -1560,26 +1562,6 @@
    <NoteLine></NoteLine>
    <NoteLine>Andy Dent</NoteLine>
    <NoteLine>dent@oofile.com.au</NoteLine>
-  </ItemSource>
-  <ItemFlags>0</ItemFlags>
- </Note>
- <Note>
-  <ItemName>EinhugurFunctionsMissing</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <NoteLine>EinhugurFunctionsMissing</NoteLine>
-   <NoteLine>I haven't added the following yet because of the complexity of parameters</NoteLine>
-   <NoteLine></NoteLine>
-   <NoteLine>ApplyMatrix</NoteLine>
-   <NoteLine>Blend</NoteLine>
-   <NoteLine>PageCurl</NoteLine>
-   <NoteLine></NoteLine>
-   <NoteLine></NoteLine>
-   <NoteLine>the following aren't exposed as they seem somewhat irrelevant to scripts</NoteLine>
-   <NoteLine>EnsurePictureBits</NoteLine>
-   <NoteLine>EnsurePictureCompatible</NoteLine>
   </ItemSource>
   <ItemFlags>0</ItemFlags>
  </Note>
