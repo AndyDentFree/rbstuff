@@ -193,6 +193,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          Scope           =   0
          TabIndex        =   4
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Speed:"
          TextAlign       =   0
          TextColor       =   &h000000
@@ -255,6 +256,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          Scope           =   0
          TabIndex        =   6
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "dynamic msg shows here"
          TextAlign       =   0
          TextColor       =   &h000000
@@ -287,6 +289,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
          Scope           =   0
          TabIndex        =   7
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "About to:"
          TextAlign       =   0
          TextColor       =   &h000000
@@ -357,6 +360,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Width           =   473
    End
    Begin RbScript Script
+      Enabled         =   True
       EncodingFont    =   ""
       Height          =   32
       Index           =   -2147483648
@@ -364,11 +368,15 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       LockedInPosition=   False
       Scope           =   0
       Source          =   ""
+      TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   59
+      Visible         =   True
       Width           =   32
    End
    Begin Thread KarelThread
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   -18
@@ -376,8 +384,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Priority        =   5
       Scope           =   0
       StackSize       =   0
+      TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   114
+      Visible         =   True
       Width           =   32
    End
    Begin TabPanel ScriptsTab
@@ -522,6 +533,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Scope           =   0
       TabIndex        =   10
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ""
       TextAlign       =   0
       TextColor       =   &hFF0033
@@ -558,6 +570,7 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Width           =   18
    End
    Begin Timer WorldResizedTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   -24
@@ -565,8 +578,11 @@ Begin Window SimpleKarelRunner Implements KarelWorldObserver,KarelStepApprover
       Mode            =   1
       Period          =   2
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   158
+      Visible         =   True
       Width           =   32
    End
    Begin DisclosureTriangle DiscloseControlButtons
@@ -745,51 +761,6 @@ End
 	#tag MenuHandler
 		Function KarelRun() As Boolean Handles KarelRun.Action
 			RunButton.Push
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesKarel1() As Boolean Handles SamplesKarel1.Action
-			ScriptEntry.Text = kSampleKarel1
-			ScriptsTab.Value = 1
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesKarel2() As Boolean Handles SamplesKarel2.Action
-			ScriptEntry.Text = kSampleKarel2
-			ScriptsTab.Value = 1
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesKarel3() As Boolean Handles SamplesKarel3.Action
-			ScriptEntry.Text = kSampleKarel3
-			ScriptsTab.Value = 1
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesMap1() As Boolean Handles SamplesMap1.Action
-			WorldEntry.Text = kSampleMap1
-			ScriptsTab.Value = 0
-			Return True
-			
-		End Function
-	#tag EndMenuHandler
-
-	#tag MenuHandler
-		Function SamplesMap2() As Boolean Handles SamplesMap2.Action
-			WorldEntry.Text = kSampleMap2
-			ScriptsTab.Value = 0
 			Return True
 			
 		End Function
@@ -1266,21 +1237,6 @@ End
 
 
 	#tag Constant, Name = kImageFilters, Type = String, Dynamic = False, Default = \"image/jpeg;image/png;/image/gif", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = kSampleKarel1, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rTurnLeft\rMove\rPickBeeper\rTurnLeft\rTurnLeft\rMove\rMove\rTurnLeft\rMove\rTurnLeft\rMove\rPutBeeper\rTurnLeft\rTurnLeft\rMove", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = kSampleKarel2, Type = String, Dynamic = False, Default = \"TurnOn\rdim i as integer\rfor i \x3D 1 to 3\r  TurnLeft\r  Move\rNext", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = kSampleKarel3, Type = String, Dynamic = False, Default = \"TurnOn\rTurnLeft\rif frontIsBlocked then\r  say \"blocked\"\rend if", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = kSampleMap1, Type = String, Dynamic = False, Default = \"World 5 5\rBeepers 3 3 1\rRobot 4 3 1 0\rWall 2 2 1\rWall 3 2 1\rWall 1 1 4\rWall 2 1 4\rWall 2 2 4\rWall 3 1 4\rWall 3 2 4\rWall 3 3 4\rWall 4 1 4\rWall 4 2 4\rWall 4 3 4\rWall 4 4 4", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = kSampleMap2, Type = String, Dynamic = False, Default = \"World 5 5\rRobot 3 3 1 0\rWall 3 3 4\rwall 3 3 1\rwall 3 4 4\rwall 2 3 1", Scope = Public
 	#tag EndConstant
 
 	#tag Constant, Name = SpacesReplacingTab, Type = String, Dynamic = False, Default = \"    ", Scope = Public
