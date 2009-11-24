@@ -1,4 +1,11 @@
-#summary Simple walk-through
+#summary All you need to use rbKarel
+
+= Super-quick start =
+Run the program
+  * choose a world eg: Worlds menu -> Mountains
+  * press Load World - see the world picture change
+  * choose a script, eg: Scripts menu -> Mountain Climber
+  * press Run and see Karel run
 
 = Introduction =
 
@@ -11,7 +18,7 @@ What impressed me about Karel the Robot was the way students were able to learn 
 Created by Richard E. Pattis in his book Karel The Robot: A Gentle Introduction to the Art of Programming in 1981 as a way for students to learn Java, the language and simulator has since been ported to a number of other languages. rbKarel is a RealBasic project which contains the core Kerel concepts as well as a number of enhancements.
 
 
-= Karel =
+= Karel Scripts =
 
 Karel understands 4 basic instructions:
   * `Move` - moves Karel forward one square in the direction he is facing
@@ -84,3 +91,10 @@ sub turnandplacebeeper()
   Next
 end sub
 }}}
+
+= Karel Worlds =
+Worlds are defined by a much simpler RBScript with only four verbs
+  * `World rows columns` - defines size of map
+  * `Robot vertical_coordinate horizontal_coordinate facing_direction num_beepers` - positions the one and only robot
+  * `Beepers vertical_coordinate horizontal_coordinate count`
+  * `Wall vertical_coordinate horizontal_coordinate relative_position` - walls are between coordinates so a relative position is given to indicate where they are if you were looking in that direction from the position.
