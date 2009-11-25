@@ -41,3 +41,4 @@ All in a version compatible with the Personal edition of REALbasic, for entry-le
 == Karel Links ==
   * [http://karel.sourceforge.net/ Java version]
   * [http://www.cs.mtsu.edu/~untch/karel/ Karel home page]
+  * [http://www.rbdeveloper.com/browse/8.1/ RBDeveloper Issue 8.1 Nov/Dec 2009] Cover article
