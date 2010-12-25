@@ -58,7 +58,7 @@ Begin Window ScriptDemoWindow
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "(5V&J1A&!J1B) | (3.3V&!J1A&J1B) | (0V&!J1A&!J1B)"
+      Text            =   "5v(J1A&!J1B) | 3.3V(!J1A&J1B) | 0V(!J1A&!J1B)"
       TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0
@@ -232,43 +232,6 @@ Begin Window ScriptDemoWindow
       Visible         =   True
       Width           =   59
    End
-   Begin StaticText ScriptDisplay
-      Active          =   ""
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   354
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   138
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Multiline       =   True
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextAlign       =   0
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   118
-      Transparent     =   False
-      Underline       =   ""
-      Visible         =   True
-      Width           =   499
-      Window          =   0
-      _mWindow        =   0
-   End
    Begin StaticText StaticText3
       Active          =   ""
       AutoDeactivate  =   True
@@ -354,6 +317,50 @@ Begin Window ScriptDemoWindow
       TabPanelIndex   =   0
       Top             =   79
       Width           =   32
+   End
+   Begin TextArea ScriptDisplay
+      AcceptTabs      =   ""
+      Alignment       =   0
+      AutoDeactivate  =   True
+      BackColor       =   &hFFFFFF
+      Bold            =   ""
+      Border          =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   364
+      HelpTag         =   ""
+      HideSelection   =   True
+      Index           =   -2147483648
+      Italic          =   ""
+      Left            =   141
+      LimitText       =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   True
+      Scope           =   0
+      ScrollbarHorizontal=   True
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   155
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   562
    End
 End
 #tag EndWindow
