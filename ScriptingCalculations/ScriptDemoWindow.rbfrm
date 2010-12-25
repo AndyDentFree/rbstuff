@@ -58,7 +58,7 @@ Begin Window ScriptDemoWindow
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "5v(J1A&!J1B) | 3.3V(!J1A&J1B) | 0V(!J1A&!J1B)"
+      Text            =   "5v(J1A&!J1B) + 3.3V(!J1A&J1B) + 0V(!J1A&!J1B)"
       TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0
