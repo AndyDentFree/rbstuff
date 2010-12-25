@@ -19,21 +19,18 @@ Protected Class ScriptedVoltageCalculator
 
 	#tag Method, Flags = &h0
 		Sub GenerateScript()
-		  // eg Vcc = (5V&J1A&!J1B) | (3.3V&!J1A&J1B) | (0V&!JA1&!J1B).
+		  // eg 5v(J1A&!J1B) | 3.3V(!J1A&J1B) | 0V(!J1A&!J1B)
 		  // succession of replaces as individual variables to make it easier to see in debugger
 		  // generates (5 and J1A and  not J1B)  or  (3.3 and  not J1A and J1B)  or  (0 and  not J1A and  not J1B)
 		  dim step1 as string = OriginalScript.ReplaceAll("|", " or ")
 		  dim step2 as string = step1.ReplaceAll("&", " and ")
 		  dim step3 as string = step2.ReplaceAll("!", " not ")
 		  // now rework the formula to rename the voltages because we can't have variable names starting with a digit
-		  dim step4 as string = step3.ReplaceAll("5V and", "V5 *")  
-		  dim step5 as string = step4.ReplaceAll("3.3V and", "V3_3 *")
-		  dim step6 as string = step5.ReplaceAll("0V and", "V0 *")
-		  // make a script in two lines, first to do all the boolean operations and set the flags in the V5 etc.
-		  // then the second line totals up the Voltages which have been turned on by being ANDed with a true expression
+		  dim step4 as string = step3.ReplaceAll("5V", "V5.ValueIf")  
+		  dim step5 as string = step4.ReplaceAll("3.3V", "V3_3.ValueIf")
+		  dim step6 as string = step5.ReplaceAll("0V", "V0.ValueIf")
 		  GeneratedScript = ScriptPreamble + EndOfLine + _
-		  "dim ignoredBool as Boolean = " + step6 + EndOfLine + _
-		  "VCC = V5.Value + V3_3.Value + V0.Value"
+		  "VCC = " + step6 
 		End Sub
 	#tag EndMethod
 
@@ -78,7 +75,7 @@ Protected Class ScriptedVoltageCalculator
 	#tag EndProperty
 
 
-	#tag Constant, Name = ScriptPreamble, Type = String, Dynamic = False, Default = \"Class Voltage\r  Sub Constructor(inVoltage as double)\r    VoltageValue \x3D inVoltage\r  End Sub\r\r  Function operator_multiply(rhs as Boolean) As Boolean\r    // this was originally an operator_and but that doesn\'t work as the boolean associativity kicked in if you\r    // had an expression like V5 & J1a & !J1b\r    WasAndedWithTrue \x3D rhs\r    return rhs\r  End Function\r\r  Function Value() As double\r    If WasAndedWithTrue then\r    return VoltageValue\r    else\r    return 0.0\r    end if\r  End Function\r\r  Private VoltageValue As double\r  Private WasAndedWithTrue As Boolean\rEnd Class\r\rdim V5 as Voltage \x3D new Voltage(5.0)\rdim V3_3 as Voltage \x3D  new Voltage(3.3)\rdim V0 as Voltage \x3D new Voltage(0.0)", Scope = Private
+	#tag Constant, Name = ScriptPreamble, Type = String, Dynamic = False, Default = \"Class Voltage\r  Sub Constructor(inVoltage as double)\r    VoltageValue \x3D inVoltage\r  End Sub\r\r  Function operator_or(rhs as Voltage) As double\r    // combine two Voltages using or as originally specified\r    return Value * rhs.Value\r  End Function\r  \r  Function operator_multiply(rhs as Voltage) As double\r    // combine two Voltages using multiply\x2C which makes sense\r    return Value * rhs.Value\r  End Function\r\r  Function operator_multiply(rhs as double) As double\r    // combine two Voltages or other constants using a double which might be another Voltage\r    return Value * rhs\r  End Function\r\r  Function ValueIf(test as Boolean) as double\r    ValueIsActive \x3D test\r    return Value()\r  End Function\r\r  Function operator_convert() as double\r    return VoltageValue\r  End Function\r\r  Function Value() As double\r    If ValueIsActive then\r      return VoltageValue\r    else\r      return 0.0\r    end if\r  End Function\r\r\r  Private VoltageValue As double\r  Private ValueIsActive As Boolean\rEnd Class\r\rdim V5 as Voltage \x3D new Voltage(5.0)\rdim V3_3 as Voltage \x3D  new Voltage(3.3)\rdim V0 as Voltage \x3D new Voltage(0.0)\r// end of preamble definining class and setting up variables", Scope = Private
 	#tag EndConstant
 
 
